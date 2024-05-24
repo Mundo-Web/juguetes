@@ -85,10 +85,10 @@ class IndexController extends Controller
 
 
       if ($filtro == 0) {
-        $productos = Products::paginate(9);
+        $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
         $categoria = Category::all();
       } else {
-        $productos = Products::where('categoria_id', '=', $filtro)->paginate(9);
+        $productos = Products::where('categoria_id', '=', $filtro)->where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
         $categoria = Category::findOrFail($filtro);
       }
 
@@ -97,10 +97,10 @@ class IndexController extends Controller
       if ($rangefrom !== null && $rangeto !== null) {
 
         if ($filtro == 0) {
-          $productos = Products::all();
+          $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
           $categoria = Category::all();
         } else {
-          $productos = Products::where('categoria_id', '=', $filtro)->get();
+          $productos = Products::where('categoria_id', '=', $filtro)->where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
           $categoria = Category::findOrFail($filtro);
         }
 
