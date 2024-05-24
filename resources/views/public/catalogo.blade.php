@@ -43,7 +43,7 @@
 
               <div>
                 <div
-                  class="overflow-y-scroll flex flex-col h-[150px] scroll__categorias items-start font-semibol text-[14px] text-[#6C7275] gap-2">
+                  class="overflow-y-scroll lg:overflow-y-hidden flex flex-col h-[150px] lg:h-full scroll__categorias items-start font-semibol text-[14px] text-[#6C7275] gap-2">
                   <ul class="flex flex-col gap-2">
 
                     @foreach ($categorias as $item)
@@ -396,7 +396,7 @@
 
         modal.classList.add("modal--show-filtro");
         body.classList.add("overflow-hidden");
-
+        
         modal.style.display = "flex";
       }
 
