@@ -25,8 +25,8 @@
             <thead>
               <tr>
                 <th>Producto</th>
-                <th>Extracto</th>
-                <th>Descripcion</th>
+                {{-- <th>Extracto</th>
+                <th>Descripcion</th> --}}
                 <th>Precio</th>
                 <th>Descuento</th>
                 <th>Costo por articulo</th>
@@ -44,8 +44,8 @@
               @foreach ($products as $item)
                 <tr>
                   <td>{{ $item->producto }}</td>
-                  <td>{{ $item->extract }}</td>
-                  <td>{{ $item->description }}</td>
+                  {{-- <td>{{ $item->extract }}</td>
+                  <td>{{ $item->description }}</td> --}}
                   <td>{{ $item->precio }}</td>
                   <td>{{ $item->descuento }}</td>
                   <td>{{ $item->costo_x_art }}</td>
@@ -130,8 +130,8 @@
             <tfoot>
               <tr>
                 <th>Producto</th>
-                <th>Extracto</th>
-                <th>Descripcion</th>
+                {{-- <th>Extracto</th>
+                <th>Descripcion</th> --}}
                 <th>Precio</th>
                 <th>Descuento</th>
                 <th>Costo por articulo</th>
