@@ -85,10 +85,10 @@ class IndexController extends Controller
 
 
       if ($filtro == 0) {
-        $productos = Products::paginate(3);
+        $productos = Products::paginate(9);
         $categoria = Category::all();
       } else {
-        $productos = Products::where('categoria_id', '=', $filtro)->paginate(3);
+        $productos = Products::where('categoria_id', '=', $filtro)->paginate(9);
         $categoria = Category::findOrFail($filtro);
       }
 
@@ -121,9 +121,9 @@ class IndexController extends Controller
 
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $productos = new LengthAwarePaginator(
-          $cleanedData->forPage($currentPage, 3), // Obtener los productos por página
+          $cleanedData->forPage($currentPage, 9), // Obtener los productos por página
           $cleanedData->count(), // Contar todos los elementos
-          3, // Número de elementos por página
+          9, // Número de elementos por página
           $currentPage, // Página actual
           ['path' => request()->url()] // URL base para la paginación
         );
