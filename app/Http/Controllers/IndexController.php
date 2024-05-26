@@ -862,5 +862,8 @@ class IndexController extends Controller
     }  
   }
 
-
+  public function librodereclamaciones()
+  {
+    return view('public.librodereclamaciones');
+  }
 }

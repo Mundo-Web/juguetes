@@ -27,6 +27,7 @@ use App\Http\Controllers\GalerieController;
 use App\Http\Controllers\LogosClientController;
 
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LibroReclamacionesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\ValoresAtributosController;
 
 use App\Http\Controllers\TagController;
 use App\Models\AboutUs;
+use App\Models\LibroReclamaciones;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,8 @@ Route::get('/servicios', [IndexController::class, 'servicios'] )->name('servicio
 Route::get('/comentario', [IndexController::class, 'comentario'] )->name('comentario');
 Route::post('/comentario/nuevo', [IndexController::class, 'hacerComentario'] )->name('nuevocomentario');
 Route::get('/contacto', [IndexController::class, 'contacto'] )->name('contacto');
+Route::get('/libro-de-reclamaciones', [IndexController::class, 'librodereclamaciones'] )->name('librodereclamaciones');
+
 /* Proceso de pago */
 Route::get('/carrito', [IndexController::class, 'carrito'] )->name('carrito');
 Route::get('/pago', [IndexController::class, 'pago'] )->name('pago');
@@ -67,6 +71,7 @@ Route::post('carrito/buscarProducto', [CarritoController::class, 'buscarProducto
 Route::get('/404', [IndexController::class, 'error'] )->name('error');
 /* Formulario de contacto */
 Route::post('guardarContactos', [IndexController::class, 'guardarContacto'] )->name('guardarContactos');
+Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePublic'] )->name('guardarFormReclamo');
 
 
 
@@ -82,6 +87,10 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
+
+         //Libro de reclamaciones
+         Route::resource('/reclamo', LibroReclamacionesController::class);
+         Route::post('/reclamo/borrar', [LibroReclamacionesController::class, 'borrar'])->name('reclamo.borrar');
 
         //Datos Generales
         Route::resource('/datosgenerales', GeneralController::class);

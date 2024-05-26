@@ -67,6 +67,8 @@
             <p class="font-normal text-[14px]">{{ $item->country }}</p>
             <p class="font-normal text-[14px]">{{ $item->cellphone }}</p>
             @endforeach
+
+            <a href="{{route('librodereclamaciones')}}"><img class="w-28" src="{{ asset('images/img/reclamaciones.png') }}"/></a>
         </div>
     </div>
 
