@@ -189,7 +189,7 @@
     </section>
 
 @section('scripts_importados')
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+
     <script>
         function alerta(message) {
             Swal.fire({

@@ -25,8 +25,10 @@
   {{-- Sweet Alert --}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+   {{-- Recaptcha--}}
   {!! NoCaptcha::renderJs() !!}
-  
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Index</title>
 </head>
