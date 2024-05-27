@@ -180,8 +180,8 @@
 
 
                 <div>
-                    <input type="submit" value="Enviar a libro de reclamaciones" id="btnAjax"
-                        class="col-span-4 text-white bg-[#74A68D] py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block" />
+                    <button type="submit" value="Enviar a libro de reclamaciones" id="btnAjax"
+                        class="col-span-4 text-white bg-[#74A68D] py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block">Enviar a libro de reclamaciones </button>
                 </div>
 
             </div>
