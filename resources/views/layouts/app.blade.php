@@ -43,7 +43,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
   <!-- TinyMCE -->
-  <script src="https://cdn.tiny.cloud/1/kj7rz3ruf2k1dwv5rrw0v3iekjqj1h0xy6wn1ago86ohjn3l/tinymce/7/tinymce.min.js"
+  <script src="https://cdn.tiny.cloud/1/ghrt2o720w7v1cwfkm9r7pl85ultx89hqfla88bsjvt0m6zc/tinymce/7/tinymce.min.js"
     referrerpolicy="origin"></script>
     {{-- kj7rz3ruf2k1dwv5rrw0v3iekjqj1h0xy6wn1ago86ohjn3l --}}
  <!-- Select2 -->
