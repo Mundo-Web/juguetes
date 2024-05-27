@@ -19,4 +19,16 @@ class Attributes extends Model
     {
         return $this->hasMany(Attributes::class, 'attribute_id');
     }
+
+    public function attributeValues() 
+    {
+        return $this->hasMany(AttributesValues::class, 'attribute_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Products::class, 'attribute_product_values', 'attribute_id', 'product_id')
+            ->withPivot('attribute_value_id');
+            
+    }
 }

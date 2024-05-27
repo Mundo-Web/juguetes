@@ -34,8 +34,13 @@
                                     <td class="dark:bg-slate-800">{{$item->email}}</td>
                                     <td>{{$item->cellphone}}</td>
                                     <td class="flex flex-row items-center justify-center dark:bg-slate-800">
-                                        <button method="POST" onclick="borrarmensaje({{ $item->id }})"
-                                          class="bg-red-600 p-2 rounded text-white"><i class="fa-regular fa-trash-can"></i></button>
+
+                                        <a href="{{ route('reclamo.show', $item->id) }}"
+                                            class="bg-green-300 px-3 py-2 rounded text-white  "><i
+                                                class="fa-regular fa-eye"></i></a>
+                                                
+                                        {{-- <button method="POST" onclick="borrarmensaje({{ $item->id }})"
+                                          class="bg-red-600 p-2 rounded text-white"><i class="fa-regular fa-trash-can"></i></button> --}}
                                         <!--a href="" class="bg-yellow-400 p-2 rounded text-white mr-6"><i class="fa-regular fa-pen-to-square"></i></a-->
                                     </td>
                                 </tr>    

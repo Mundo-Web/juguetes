@@ -864,6 +864,20 @@ class IndexController extends Controller
 
   public function librodereclamaciones()
   {
-    return view('public.librodereclamaciones');
+    $departamentofiltro = DB::select('select * from departments where active = ? order by 2', [1]);
+    
+    return view('public.librodereclamaciones', compact('departamentofiltro'));
+  }
+
+  public function obtenerProvincia($departmentId)
+  {
+      $provinces = DB::select('select * from provinces where active = ? and department_id = ? order by description', [1, $departmentId]);
+      return response()->json($provinces);
+  }
+
+  public function obtenerDistritos($provinceId)
+  {
+      $distritos = DB::select('select * from districts where active = ? and province_id = ? order by description', [1, $provinceId]);
+      return response()->json($distritos);
   }
 }

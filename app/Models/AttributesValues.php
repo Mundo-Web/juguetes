@@ -22,5 +22,5 @@ class AttributesValues extends Model
     {
         return $this->belongsTo(Attributes::class, 'attribute_id');
     }
-
+    
 }

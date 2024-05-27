@@ -56,20 +56,29 @@
 
                 <div class="flex flex-col col-span-4 lg:col-span-2 gap-2">
                     <label for="department" class="font-medium text-[12px] text-[#6C7275]">Departamento</label>
-                    <input id="department" type="text" placeholder="Departamento" required name="department"
-                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                    <select id="selectDepartamento" placeholder="Departamento" required name="department"
+                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]">
+                        <option value="">Seleccionar departamento </option>
+                        @foreach ($departamentofiltro as $item)
+                            <option value="{{ $item->id }}">{{ $item->description }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="flex flex-col col-span-4 lg:col-span-1 gap-2">
                     <label for="province" class="font-medium text-[12px] text-[#6C7275]">Provincia</label>
-                    <input id="province" type="text" placeholder="Provincia" required name="province"
-                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                    <select id="selectProvincia" type="text" placeholder="Provincia" required name="province"
+                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]">
+                        <option value="">Seleccionar provincia </option>
+                    </select>
                 </div>
 
                 <div class="flex flex-col col-span-4 lg:col-span-1 gap-2">
                     <label for="district" class="font-medium text-[12px] text-[#6C7275]">Distrito</label>
-                    <input id="district" type="text" placeholder="Distrito" required name="district"
-                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                    <select id="selectDistrito" type="text" placeholder="Distrito" required name="district"
+                        class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]">
+                        <option value="">Seleccionar distrito </option>
+                    </select>
                 </div>
 
                 <div class="flex flex-col col-span-4 gap-2">
@@ -151,12 +160,23 @@
                         class="border-gray-200 border-[1.5px] rounded-xl focus:outline-none" placeholder="Detalle de reclamo"></textarea>
                 </div>
 
+
+                <div class="flex flex-row col-span-4 gap-2 ">
+                    <input id="termsandconditions" type="checkbox" required 
+                        class="border-2 rounded-sm w-5 h-5" />
+                    <label for="termsandconditions" class="font-medium text-sm text-[#6C7275]">Estoy de acuerdo con los <a
+                            class="font-bold" href="#">terminos y condiciones</a></label>
+
+                </div>
                 {{-- <div class="flex flex-col col-span-4 gap-2">
                     <label for="archivo" class="font-medium text-[12px] text-[#6C7275]">Adjuntar archivos
                         (opcional)</label>
                     <input id="archivo" type="file"  name="archivo"
                         class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
                 </div> --}}
+
+                {!! NoCaptcha::renderJs() !!}
+                {!! NoCaptcha::display() !!}
 
 
                 <div>
@@ -169,6 +189,7 @@
     </section>
 
 @section('scripts_importados')
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
         function alerta(message) {
             Swal.fire({
@@ -190,49 +211,108 @@
         }
 
         $('#formLibroReclamo').submit(function(event) {
-            // Evita que se envíe el formulario automáticamente
-            //console.log('evcnto')
-
             event.preventDefault();
-            let formData = new FormData(this);
 
-            if (!validarEmail($('#email').val())) {
-                return;
-            };
+            // Ejecuta reCAPTCHA antes de enviar el formulario
+            grecaptcha.ready(function() {
+                grecaptcha.execute('{{ env('NOCAPTCHA_SITEKEY') }}', {
+                    action: 'submit'
+                }).then(function(token) {
+                    let formData = new FormData($('#formLibroReclamo')[0]);
+                    formData.append('g-recaptcha-response', token);
 
-            /* console.log(formDataArray); */
-            $.ajax({
-                url: '{{ route('guardarFormReclamo') }}',
-                method: 'POST',
-                data: formData,
-                processData: false, // necesario para enviar archivos
-                contentType: false, // necesario para enviar archivos   
-                success: function(response) {
-                    $('#formLibroReclamo')[0].reset();
-                    Swal.fire({
-                        title: response.message,
-                        icon: "success",
-                    });
+                    if (!validarEmail($('#email').val())) {
+                        return;
+                    }
 
-                },
-                error: function(error) {
-                    const obj = error.responseJSON.message;
-                    const keys = Object.keys(error.responseJSON.message);
-                    let flag = false;
-                    keys.forEach(key => {
-                        if (!flag) {
-                            const e = obj[key][0];
+                    $.ajax({
+                        url: '{{ route('guardarFormReclamo') }}',
+                        method: 'POST',
+                        data: formData,
+                        processData: false, // necesario para enviar archivos
+                        contentType: false, // necesario para enviar archivos   
+                        success: function(response) {
+                            $('#formLibroReclamo')[0].reset();
                             Swal.fire({
-                                title: error.message,
-                                text: e,
-                                icon: "error",
+                                title: response.message,
+                                icon: "success",
                             });
-                            flag = true; // Marcar como mostrado
+                        },
+                        error: function(error) {
+                            const obj = error.responseJSON.message;
+                            const keys = Object.keys(error.responseJSON.message);
+                            let flag = false;
+                            keys.forEach(key => {
+                                if (!flag) {
+                                    const e = obj[key][0];
+                                    Swal.fire({
+                                        title: error.message,
+                                        text: e,
+                                        icon: "error",
+                                    });
+                                    flag = true; // Marcar como mostrado
+                                }
+                            });
                         }
                     });
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#selectDepartamento').change(function() {
+                var departmentId = $(this).val();
+                if (departmentId) {
+                    $.ajax({
+                        url: '/obtenerProvincia/' + departmentId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#selectProvincia').prop('disabled', false).empty().append(
+                                '<option value="">Selecciona una provincia</option>');
+                            $.each(data, function(key, value) {
+                                $('#selectProvincia').append('<option value="' + value
+                                    .id +
+                                    '">' + value.description + '</option>');
+                            });
+                            $('#selectDistrito').prop('disabled', true).empty().append(
+                                '<option value="">Selecciona un distrito</option>');
+                        }
+                    });
+                } else {
+                    $('#selectProvincia').prop('disabled', true).empty().append(
+                        '<option value="">Selecciona una provincia</option>');
+                    $('#selectDistrito').prop('disabled', true).empty().append(
+                        '<option value="">Selecciona un distrito</option>');
                 }
             });
-        })
+
+            $('#selectProvincia').change(function() {
+                var provinceId = $(this).val();
+                if (provinceId) {
+                    $.ajax({
+                        url: '/obtenerDistritos/' + provinceId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#selectDistrito').prop('disabled', false).empty().append(
+                                '<option value="">Selecciona un distrito</option>');
+                            $.each(data, function(key, value) {
+                                $('#selectDistrito').append('<option value="' + value
+                                    .id +
+                                    '">' + value.description + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#selectDistrito').prop('disabled', true).empty().append(
+                        '<option value="">Selecciona un distrito</option>');
+                }
+            });
+        });
     </script>
 @stop
 

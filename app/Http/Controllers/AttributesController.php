@@ -56,6 +56,7 @@ class AttributesController extends Controller
       $AboutUs->titulo = $request->titulo;
       $AboutUs->descripcion = $request->descripcion;
       $AboutUs->color = $request->color;
+      $AboutUs->type = $request->type;
       $AboutUs->save();
 
       return redirect()->route('attributes.index')->with('success', 'Publicación creado exitosamente.');

@@ -119,6 +119,25 @@ class ProductsController extends Controller
     });
 
     $producto = Products::create($cleanedData);
+
+    if (isset($atributos)) {
+      foreach ($atributos as $atributo => $valores) {
+        $idAtributo = Attributes::where('titulo', $atributo)->first();
+
+        foreach ($valores as $valor) {
+          $idValorAtributo = AttributesValues::where('valor', $valor)->first();
+
+          if ($idAtributo && $idValorAtributo) {
+            DB::table('attribute_product_values')->insert([
+              'product_id' => $producto->id,
+              'attribute_id' => $idAtributo->id,
+              'attribute_value_id' => $idValorAtributo->id,
+            ]);
+          }
+        }
+      }
+    }
+
     $this->GuardarEspecificaciones($producto->id, $especificaciones);
     if(!is_null($tagsSeleccionados)){
       $this->TagsXProducts($producto->id, $tagsSeleccionados);
@@ -278,6 +297,27 @@ class ProductsController extends Controller
       return !is_null($value);
     });
     $product->update($cleanedData);
+
+    DB::delete('delete from attribute_product_values where product_id = ?', [$product->id]);
+
+    if (isset($atributos)) {
+      foreach ($atributos as $atributo => $valores) {
+        $idAtributo = Attributes::where('titulo', $atributo)->first();
+
+        foreach ($valores as $valor) {
+          $idValorAtributo = AttributesValues::where('valor', $valor)->first();
+
+          if ($idAtributo && $idValorAtributo) {
+            DB::table('attribute_product_values')->insert([
+              'product_id' => $product->id,
+              'attribute_id' => $idAtributo->id,
+              'attribute_value_id' => $idValorAtributo->id,
+            ]);
+          }
+        }
+      }
+    }
+
     DB::delete('delete from tags_xproducts where producto_id = ?', [$id]);
     if(!is_null($tagsSeleccionados)){
       $this->TagsXProducts($id, $tagsSeleccionados);

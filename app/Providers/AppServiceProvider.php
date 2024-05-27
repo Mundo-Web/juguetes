@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\General;
 use App\Models\LibroReclamaciones;
 use App\Models\Message;
+use App\Models\PolyticsCondition;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Facades\View;
@@ -29,7 +30,8 @@ class AppServiceProvider extends ServiceProvider
             // Obtener los datos del footer
             $datosgenerales = General::all(); // Suponiendo que tienes un modelo Footer y un método footerData() en él
             // Pasar los datos a la vista
-            $view->with('datosgenerales', $datosgenerales);
+            $politicDev = PolyticsCondition::first();
+            $view->with('datosgenerales', $datosgenerales)->with('politicDev', $politicDev);
         });
 
         View::composer('components.public.header', function ($view) {

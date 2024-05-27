@@ -28,6 +28,7 @@ use App\Http\Controllers\LogosClientController;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LibroReclamacionesController;
+use App\Http\Controllers\PolyticsConditionController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
@@ -73,8 +74,12 @@ Route::get('/404', [IndexController::class, 'error'] )->name('error');
 Route::post('guardarContactos', [IndexController::class, 'guardarContacto'] )->name('guardarContactos');
 Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePublic'] )->name('guardarFormReclamo');
 
+Route::get('/obtenerProvincia/{departmentId}', [IndexController::class, 'obtenerProvincia'])->name('obtenerProvincia');
+Route::get('/obtenerDistritos/{provinceId}', [IndexController::class, 'obtenerDistritos'])->name('obtenerDistritos');
 
-
+Route::get('/politicas-de-devolucion/edit', [PolyticsConditionController::class, 'edit'])->name('dev.edit');
+Route::post('/politicas-de-devolucion/update', [PolyticsConditionController::class, 'update'])->name('dev.update');
+Route::get('/politicas-de-devolucion', [PolyticsConditionController::class, 'show'])->name('dev.show');
 
 Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () {
 

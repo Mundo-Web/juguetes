@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->string('valores')->nullable();
             $table->string('color')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('visible')->default(true);
             $table->boolean('status')->default(true);
             $table->timestamps();

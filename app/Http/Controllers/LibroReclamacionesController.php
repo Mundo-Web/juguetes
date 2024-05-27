@@ -7,9 +7,11 @@ use App\Http\Requests\StoreLibroReclamacionesRequest;
 use App\Http\Requests\UpdateLibroReclamacionesRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Str;
+
 
 class LibroReclamacionesController extends Controller
 {
@@ -43,7 +45,28 @@ class LibroReclamacionesController extends Controller
     function storePublic(Request $request)
     {
        
-        $validatedData = $request->validate([
+        // $validatedData = $request->validate([
+        //     'fullname' => 'required|string',
+        //     'type_document' => 'required|string',
+        //     'number_document'=> 'required|string',
+        //     'cellphone'=> 'required|numeric',
+        //     'email'=> 'required|string',
+        //     'department'=> 'required|string',
+        //     'province'=> 'required|string',
+        //     'district'=> 'required|string',
+        //     'address'=> 'required|string',
+        //     'typeitem'=> 'required|string',
+        //     'amounttotal' => 'required|numeric',
+        //     'category_product_service'=> 'required|string',
+        //     'description'=> 'required|string',
+        //     'type_claim'=> 'required|string',
+        //     'date_incident'=> 'required|string',
+        //     'address_incident'=> 'required|string',
+        //     'detail_incident'=> 'required|string',
+        // ]);
+    
+        $validatedData = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
             'fullname' => 'required|string',
             'type_document' => 'required|string',
             'number_document'=> 'required|string',
@@ -62,7 +85,6 @@ class LibroReclamacionesController extends Controller
             'address_incident'=> 'required|string',
             'detail_incident'=> 'required|string',
         ]);
-    
         // if ($request->hasFile("archivo")) {
 
         //     $file = $request->file('archivo');
@@ -75,6 +97,13 @@ class LibroReclamacionesController extends Controller
         //     $validatedData['archivo'] = $route . $nombreImagen;
 
         //     dd($validatedData);
+        if ($validatedData->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validatedData->errors()
+            ], 422);
+        }
+
         LibroReclamaciones::create($validatedData);
 
         return response()->json(['message' => 'Mensaje enviado']);
