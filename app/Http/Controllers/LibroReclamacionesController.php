@@ -74,9 +74,9 @@ class LibroReclamacionesController extends Controller
             'secret' => $recaptchaSecret,
             'response' => $recaptchaToken,
         ]);
-
+       
         $recaptchaData = $recaptchaResponse->json();
-
+        dd($recaptchaData);
         if (!$recaptchaData['success']) {
             return response()->json(['message' => ['captcha' => 'La verificación de reCAPTCHA ha fallado.']], 422);
         }
