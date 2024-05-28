@@ -68,7 +68,7 @@ class GeneralController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+            
             $general = General::findOrfail($id); 
 
             // Actualizar los campos del registro con los datos del formulario

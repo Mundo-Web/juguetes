@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PolyticsCondition;
-use App\Http\Requests\StorePolyticsConditionRequest;
-use App\Http\Requests\UpdatePolyticsConditionRequest;
+use App\Models\TermsAndCondition;
+use App\Http\Requests\StoreTermsAndConditionRequest;
+use App\Http\Requests\UpdateTermsAndConditionRequest;
 use Illuminate\Http\Request;
+use Laravel\Prompts\Terminal;
 
-class PolyticsConditionController extends Controller
+class TermsAndConditionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +29,7 @@ class PolyticsConditionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePolyticsConditionRequest $request)
+    public function store(StoreTermsAndConditionRequest $request)
     {
         //
     }
@@ -36,35 +37,33 @@ class PolyticsConditionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(TermsAndCondition $termsAndCondition)
     {
-        $politicDev = PolyticsCondition::first();
-        return view('public.popupPolyticsCondition', compact('politicDev'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(TermsAndCondition $termsAndCondition)
     {
-        $terms = PolyticsCondition::first();
+        $terms = TermsAndCondition::first();
         if (!$terms) {
-            $terms = PolyticsCondition::create(['content' => '']);
+            $terms = TermsAndCondition::create(['content' => '']);
         }
-        return view('pages.polyticDev.edit', compact('terms'));
+        return view('pages.termscondition.edit', compact('terms'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request , $id)
-    {   
-       
+    {
         $request->validate([
             'content' => 'required',
         ]);
     
-        $terms = PolyticsCondition::findOrfail($id); 
+        $terms = TermsAndCondition::findOrfail($id); 
         $terms->update($request->all());
         $terms->save();
 
@@ -74,7 +73,7 @@ class PolyticsConditionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PolyticsCondition $polyticsCondition)
+    public function destroy(TermsAndCondition $termsAndCondition)
     {
         //
     }

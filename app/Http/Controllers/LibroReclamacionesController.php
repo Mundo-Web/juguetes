@@ -44,7 +44,7 @@ class LibroReclamacionesController extends Controller
 
     function storePublic(Request $request)
     {
-       
+        dd($request);
         // $validatedData = $request->validate([
         //     'fullname' => 'required|string',
         //     'type_document' => 'required|string',

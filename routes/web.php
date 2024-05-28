@@ -77,9 +77,11 @@ Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePub
 Route::get('/obtenerProvincia/{departmentId}', [IndexController::class, 'obtenerProvincia'])->name('obtenerProvincia');
 Route::get('/obtenerDistritos/{provinceId}', [IndexController::class, 'obtenerDistritos'])->name('obtenerDistritos');
 
-Route::get('/politicas-de-devolucion/edit', [PolyticsConditionController::class, 'edit'])->name('dev.edit');
-Route::post('/politicas-de-devolucion/update', [PolyticsConditionController::class, 'update'])->name('dev.update');
-Route::get('/politicas-de-devolucion', [PolyticsConditionController::class, 'show'])->name('dev.show');
+// Route::get('/politicas-de-devolucion/edit', [PolyticsConditionController::class, 'edit'])->name('dev.edit');
+// Route::put('/politicas-de-devolucion/update', [PolyticsConditionController::class, 'update'])->name('dev.update');
+// Route::get('/politicas-de-devolucion', [PolyticsConditionController::class, 'show'])->name('dev.show');
+
+
 
 Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () {
 
@@ -89,6 +91,8 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
         Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
 
+        Route::resource('/politicas-de-devolucion', PolyticsConditionController::class);
+            
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
