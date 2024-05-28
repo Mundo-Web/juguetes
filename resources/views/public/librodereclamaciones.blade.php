@@ -218,9 +218,9 @@
 
             event.preventDefault();
             let formData = new FormData(this);
-            formData.append('g-recaptcha-response', token);
+            // formData.append('g-recaptcha-response', token);
 
-            console.log(formData);
+            // console.log(formData);
             
             if (!validarEmail($('#email').val())) {
                 return;

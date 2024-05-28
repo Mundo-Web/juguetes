@@ -64,7 +64,7 @@ class LibroReclamacionesController extends Controller
         //     'address_incident'=> 'required|string',
         //     'detail_incident'=> 'required|string',
         // ]);
-    
+            dd($request);
         $validatedData = Validator::make($request->all(), [
             'g-recaptcha-response' => 'required|captcha',
             'fullname' => 'required|string',
