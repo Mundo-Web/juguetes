@@ -7,6 +7,7 @@ use App\Http\Requests\StoreLibroReclamacionesRequest;
 use App\Http\Requests\UpdateLibroReclamacionesRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -64,47 +65,18 @@ class LibroReclamacionesController extends Controller
             'address_incident'=> 'required|string',
             'detail_incident'=> 'required|string',
             'g-recaptcha-response' => 'required|captcha',
+            
         ]);
     
-        $validatedData = Validator::make($request->all(), [
-            // 'g-recaptcha-response' => 'required|captcha',
-            // 'fullname' => 'required|string',
-            // 'type_document' => 'required|string',
-            // 'number_document'=> 'required|string',
-            // 'cellphone'=> 'required|numeric',
-            // 'email'=> 'required|string',
-            // 'department'=> 'required|string',
-            // 'province'=> 'required|string',
-            // 'district'=> 'required|string',
-            // 'address'=> 'required|string',
-            // 'typeitem'=> 'required|string',
-            // 'amounttotal' => 'required|numeric',
-            // 'category_product_service'=> 'required|string',
-            // 'description'=> 'required|string',
-            // 'type_claim'=> 'required|string',
-            // 'date_incident'=> 'required|string',
-            // 'address_incident'=> 'required|string',
-            // 'detail_incident'=> 'required|string',
-        ]);
-        // if ($request->hasFile("archivo")) {
+        // $recaptchaToken = $request->input('g-recaptcha-response');
+        // $recaptchaSecret = env('NOCAPTCHA_SECRET');
+        // $recaptchaResponse = Http::post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret' => $recaptchaSecret,
+        //     'response' => $recaptchaToken,
+        // ]);
 
-        //     $file = $request->file('archivo');
-        //     $route = 'storage/images/libroreclamaciones/';
-        //     $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
+        // $recaptchaData = $recaptchaResponse->json();
       
-        //     $this->saveImg($file, $route, $nombreImagen);
-      
-        //     $routeforshow = 'images/libroreclamaciones/';
-        //     $validatedData['archivo'] = $route . $nombreImagen;
-
-        //     dd($validatedData);
-        // if ($validatedData->fails()) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'errors' => $validatedData->errors()
-        //     ], 422);
-        // }
-
         LibroReclamaciones::create($validatedData);
 
         return response()->json(['message' => 'Mensaje enviado']);
