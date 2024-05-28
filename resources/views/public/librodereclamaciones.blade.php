@@ -197,12 +197,12 @@
 @section('scripts_importados')
 
     <script>
-        function alerta(message) {
-            Swal.fire({
-                title: message,
-                icon: "error",
-            });
-        }
+        // function alerta(message) {
+        //     Swal.fire({
+        //         title: message,
+        //         icon: "error",
+        //     });
+        // }
 
         function validarEmail(value) {
             console.log(value)
