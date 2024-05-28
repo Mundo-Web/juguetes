@@ -68,18 +68,18 @@ class LibroReclamacionesController extends Controller
             
         ]);
     
-        $recaptchaToken = $request->input('g-recaptcha-response');
-        $recaptchaSecret = env('NOCAPTCHA_SECRET');
-        $recaptchaResponse = Http::post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $recaptchaSecret,
-            'response' => $recaptchaToken,
-        ]);
+        // $recaptchaToken = $request->input('g-recaptcha-response');
+        // $recaptchaSecret = env('NOCAPTCHA_SECRET');
+        // $recaptchaResponse = Http::post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret' => $recaptchaSecret,
+        //     'response' => $recaptchaToken,
+        // ]);
        
-        $recaptchaData = $recaptchaResponse->json();
-        dd($recaptchaData);
-        if (!$recaptchaData['success']) {
-            return response()->json(['message' => ['captcha' => 'La verificación de reCAPTCHA ha fallado.']], 422);
-        }
+        // $recaptchaData = $recaptchaResponse->json();
+       
+        // if (!$recaptchaData['success']) {
+        //     return response()->json(['message' => ['captcha' => 'La verificación de reCAPTCHA ha fallado.']], 422);
+        // }
       
         LibroReclamaciones::create($validatedData);
 
