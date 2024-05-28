@@ -169,7 +169,7 @@
                 <div class="flex flex-row col-span-4 gap-2 ">
                     <input id="termsandconditions" type="checkbox" required class="border-2 rounded-sm w-5 h-5" />
                     <label for="termsandconditions" class="font-medium text-sm text-[#6C7275]">Estoy de acuerdo con los <a
-                            class="font-bold" href="#">terminos y condiciones</a></label>
+                            class="font-bold" href="{{route('terms_condition')}}">terminos y condiciones</a></label>
 
                 </div>
                 {{-- <div class="flex flex-col col-span-4 gap-2">
