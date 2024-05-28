@@ -107,13 +107,13 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col col-span-4 lg:col-span-1 gap-2">
+                <div class="flex flex-col col-span-4 lg:col-span-2 gap-2">
                     <label for="amounttotal" class="font-medium text-[12px] text-[#6C7275]">Monto reclamado</label>
                     <input id="amounttotal" type="text" placeholder="Monto total reclamado" required name="amounttotal"
                         class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
                 </div>
 
-                <div class="flex flex-col col-span-4 lg:col-span-1 gap-2">
+                {{-- <div class="flex flex-col col-span-4 lg:col-span-1 gap-2">
                     <label for="category_product_service" class="font-medium text-[12px] text-[#6C7275]">Tipo de
                         bien</label>
                     <select id="category_product_service" type="text" required name="category_product_service"
@@ -121,7 +121,7 @@
                         <option>Producto</option>
                         <option>Servicio</option>
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="flex flex-col col-span-4 lg:col-span-2 gap-2">
                     <label for="description" class="font-medium text-[12px] text-[#6C7275]">Descripcion de
@@ -255,9 +255,9 @@
                     });
 
                     Swal.fire({
-                        title: 'Error',
+                        title: 'Fallo al enviar el mensaje',
                         html: errorMessages,
-                        icon: 'error',
+                        icon: 'warning',
                     });
                 } else {
                     Swal.fire({

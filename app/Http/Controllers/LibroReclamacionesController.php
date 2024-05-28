@@ -58,7 +58,7 @@ class LibroReclamacionesController extends Controller
             'address'=> 'required|string',
             'typeitem'=> 'required|string',
             'amounttotal' => 'required|numeric',
-            'category_product_service'=> 'required|string',
+            // 'category_product_service'=> 'required|string',
             'description'=> 'required|string',
             'type_claim'=> 'required|string',
             'date_incident'=> 'required|string',
