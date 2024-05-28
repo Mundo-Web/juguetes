@@ -217,9 +217,7 @@
         }
 
         $('#formLibroReclamo').submit(function(event) {
-            // Evita que se envíe el formulario automáticamente
-            //console.log('evcnto')
-
+        
             event.preventDefault();
             let formData = new FormData(this);
             // formData.append('g-recaptcha-response', token);
@@ -236,8 +234,8 @@
                 url: '{{ route('guardarFormReclamo') }}',
                 method: 'POST',
                 data: formData,
-                processData: false, // necesario para enviar archivos
-                contentType: false, // necesario para enviar archivos   
+                processData: false,
+                contentType: false, 
                 success: function(response) {
                     $('#formLibroReclamo')[0].reset();
                     Swal.fire({
