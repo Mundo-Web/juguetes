@@ -7,6 +7,11 @@
 
 @section('content')
     <section class="w-11/12 mx-auto font-poppins">
+        @if ($errors->has('g-recaptcha-response'))
+            <span class="help-block">
+                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+            </span>
+        @endif
         <h2 class="col-span-4 font-bold text-4xl leading-none md:leading-tight text-center pt-3">Libro de Reclamaciones</h2>
         <form class="flex flex-col gap-5" id="formLibroReclamo" action="" method="POST" enctype='multipart/form-data'>
             <div class=" my-16 grid grid-cols-1  lg:grid-cols-4 gap-5 justify-center items-center">
@@ -162,8 +167,7 @@
 
 
                 <div class="flex flex-row col-span-4 gap-2 ">
-                    <input id="termsandconditions" type="checkbox" required 
-                        class="border-2 rounded-sm w-5 h-5" />
+                    <input id="termsandconditions" type="checkbox" required class="border-2 rounded-sm w-5 h-5" />
                     <label for="termsandconditions" class="font-medium text-sm text-[#6C7275]">Estoy de acuerdo con los <a
                             class="font-bold" href="#">terminos y condiciones</a></label>
 
@@ -175,10 +179,10 @@
                         class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
                 </div> --}}
 
-                
+
                 <div class="flex flex-row col-span-4 gap-2 ">
                     {!! NoCaptcha::renderJs() !!}
-                     {!! NoCaptcha::display() !!}
+                    {!! NoCaptcha::display() !!}
                 </div>
 
                 <div class="flex flex-row col-span-2 gap-2 ">
@@ -211,7 +215,7 @@
             }
             return true;
         }
-        
+
         $('#formLibroReclamo').submit(function(event) {
             // Evita que se envíe el formulario automáticamente
             //console.log('evcnto')
@@ -221,12 +225,12 @@
             // formData.append('g-recaptcha-response', token);
 
             // console.log(formData);
-            
+
             if (!validarEmail($('#email').val())) {
                 return;
             };
-             
-            
+
+
             /* console.log(formDataArray); */
             $.ajax({
                 url: '{{ route('guardarFormReclamo') }}',
