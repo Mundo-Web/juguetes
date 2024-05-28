@@ -45,25 +45,26 @@ class LibroReclamacionesController extends Controller
     function storePublic(Request $request)
     {
         
-        // $validatedData = $request->validate([
-        //     'fullname' => 'required|string',
-        //     'type_document' => 'required|string',
-        //     'number_document'=> 'required|string',
-        //     'cellphone'=> 'required|numeric',
-        //     'email'=> 'required|string',
-        //     'department'=> 'required|string',
-        //     'province'=> 'required|string',
-        //     'district'=> 'required|string',
-        //     'address'=> 'required|string',
-        //     'typeitem'=> 'required|string',
-        //     'amounttotal' => 'required|numeric',
-        //     'category_product_service'=> 'required|string',
-        //     'description'=> 'required|string',
-        //     'type_claim'=> 'required|string',
-        //     'date_incident'=> 'required|string',
-        //     'address_incident'=> 'required|string',
-        //     'detail_incident'=> 'required|string',
-        // ]);
+        $validatedData = $request->validate([
+            'fullname' => 'required|string',
+            'type_document' => 'required|string',
+            'number_document'=> 'required|string',
+            'cellphone'=> 'required|numeric',
+            'email'=> 'required|string',
+            'department'=> 'required|string',
+            'province'=> 'required|string',
+            'district'=> 'required|string',
+            'address'=> 'required|string',
+            'typeitem'=> 'required|string',
+            'amounttotal' => 'required|numeric',
+            'category_product_service'=> 'required|string',
+            'description'=> 'required|string',
+            'type_claim'=> 'required|string',
+            'date_incident'=> 'required|string',
+            'address_incident'=> 'required|string',
+            'detail_incident'=> 'required|string',
+            'g-recaptcha-response' => 'required|captcha',
+        ]);
     
         $validatedData = Validator::make($request->all(), [
             // 'g-recaptcha-response' => 'required|captcha',
@@ -104,7 +105,7 @@ class LibroReclamacionesController extends Controller
         //     ], 422);
         // }
 
-        LibroReclamaciones::create($request->all());
+        LibroReclamaciones::create($validatedData);
 
         return response()->json(['message' => 'Mensaje enviado']);
         

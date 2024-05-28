@@ -44,9 +44,8 @@
         <div class="basis-1/6 flex flex-col gap-5">
             <h3 class="font-medium text-[16px]">Info</h3>
 
-            <a href="#" class="font-normal text-[14px]">Política de envíos</a>
-            <a id="openModalBtn" class="font-normal text-[14px]">Política de devolucion</a>
-            <a href="#" class="font-normal text-[14px]">Soporte</a>
+            <a href="{{route('terms_condition')}}" class="font-normal text-[14px]">Terminos y Condiciones</a>
+            <a href="{{route('politicas_dev')}}" class="font-normal text-[14px]">Política de devolucion</a>
             <a href="#" class="font-normal text-[14px]">FAQs</a>
         </div>
 
@@ -95,63 +94,3 @@
         </div>
     </div>
 </footer>
-
- <!-- Modal -->
- <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50">
-    <div class="bg-black bg-opacity-50 absolute inset-0" id="modalOverlay"></div>
-
-    <div class="bg-white shadow-lg rounded-sm border border-slate-200 relative z-10 max-w-2xl w-full mx-4 p-6">
-        <header class="px-5 py-4 border-b border-slate-100 flex justify-between items-center">
-            <h2 class="font-semibold text-slate-800 dark:text-slate-100 text-2xl tracking-tight">Políticas de Devolución</h2>
-            <button id="closeModalBtn" class="text-gray-800s hover:text-gray-700 dark:hover:text-gray-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </header>
-
-        <div class="p-4 overflow-y-auto max-h-96">
-            <p class="text-gray-700 dark:text-gray-300">
-                {!! $politicDev->content !!}
-            </p>
-        </div>
-
-        {{-- <div class="flex justify-end">
-            <button id="closeModalBtnFooter" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                Cerrar
-            </button>
-        </div> --}}
-    </div>
-</div>
-
-
-<script>
-    // JavaScript para manejar la apertura y cierre del modal
-    document.addEventListener('DOMContentLoaded', function () {
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const closeModalBtnFooter = document.getElementById('closeModalBtnFooter');
-        const modal = document.getElementById('modal');
-        // const modalOverlay = document.getElementById('modalOverlay');
-
-        openModalBtn.addEventListener('click', function () {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        });
-
-        closeModalBtn.addEventListener('click', function () {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-
-        closeModalBtnFooter.addEventListener('click', function () {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        });
-
-        // modalOverlay.addEventListener('click', function () {
-        //     modal.classList.add('hidden');
-        //     modal.classList.remove('flex');
-        // });
-    });
-</script>
