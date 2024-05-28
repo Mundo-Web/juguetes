@@ -182,8 +182,8 @@
                 </div>
 
                 <div class="flex flex-row col-span-2 gap-2 ">
-                    <input type="submit" value="Enviar a libro de reclamaciones" id="btnAjax"
-                        class="col-span-4 text-white bg-[#74A68D] py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block" />
+                    <button type="submit" value="Enviar a libro de reclamaciones" id="btnAjax"
+                        class="col-span-4 text-white bg-[#74A68D] py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block">Enviar a libro de reclamaciones </button>
                 </div>
 
             </div>
@@ -213,50 +213,53 @@
         }
         
         $('#formLibroReclamo').submit(function(event) {
-            // Evita que se envíe el formulario automáticamente
-            //console.log('evcnto')
-
             event.preventDefault();
-            let formData = new FormData(this);
-            
 
-            if (!validarEmail($('#email').val())) {
-                return;
-            };
+            // Ejecuta reCAPTCHA antes de enviar el formulario
+            grecaptcha.ready(function() {
+                grecaptcha.execute('{{ env('NOCAPTCHA_SITEKEY') }}', {
+                    action: 'submit'
+                }).then(function(token) {
+                    let formData = new FormData($('#formLibroReclamo')[0]);
+                    formData.append('g-recaptcha-response', token);
 
-            /* console.log(formDataArray); */
-            $.ajax({
-                url: '{{ route('guardarFormReclamo') }}',
-                method: 'POST',
-                data: formData,
-                processData: false, // necesario para enviar archivos
-                contentType: false, // necesario para enviar archivos   
-                success: function(response) {
-                    $('#formLibroReclamo')[0].reset();
-                    Swal.fire({
-                        title: response.message,
-                        icon: "success",
-                    });
+                    if (!validarEmail($('#email').val())) {
+                        return;
+                    }
 
-                },
-                error: function(error) {
-                    const obj = error.responseJSON.message;
-                    const keys = Object.keys(error.responseJSON.message);
-                    let flag = false;
-                    keys.forEach(key => {
-                        if (!flag) {
-                            const e = obj[key][0];
+                    $.ajax({
+                        url: '{{ route('guardarFormReclamo') }}',
+                        method: 'POST',
+                        data: formData,
+                        processData: false, // necesario para enviar archivos
+                        contentType: false, // necesario para enviar archivos   
+                        success: function(response) {
+                            $('#formLibroReclamo')[0].reset();
                             Swal.fire({
-                                title: error.message,
-                                text: e,
-                                icon: "error",
+                                title: response.message,
+                                icon: "success",
                             });
-                            flag = true; // Marcar como mostrado
+                        },
+                        error: function(error) {
+                            const obj = error.responseJSON.message;
+                            const keys = Object.keys(error.responseJSON.message);
+                            let flag = false;
+                            keys.forEach(key => {
+                                if (!flag) {
+                                    const e = obj[key][0];
+                                    Swal.fire({
+                                        title: error.message,
+                                        text: e,
+                                        icon: "error",
+                                    });
+                                    flag = true; // Marcar como mostrado
+                                }
+                            });
                         }
                     });
-                }
+                });
             });
-        })
+        });
     </script>
 
 
