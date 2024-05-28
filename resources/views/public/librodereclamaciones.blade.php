@@ -245,19 +245,25 @@
 
                 },
                 error: function(error) {
-                    const obj = error.responseJSON.message;
-                    const keys = Object.keys(error.responseJSON.message);
-                    let flag = false;
+                if (error.responseJSON && error.responseJSON.errors) {
+                    const errors = error.responseJSON.errors;
+                    const keys = Object.keys(errors);
+                    let errorMessages = '';
+
                     keys.forEach(key => {
-                        if (!flag) {
-                            const e = obj[key][0];
-                            Swal.fire({
-                                title: error.message,
-                                text: e,
-                                icon: "error",
-                            });
-                            flag = true; // Marcar como mostrado
-                        }
+                        errorMessages += `<p>${errors[key][0]}</p>`;
+                    });
+
+                    Swal.fire({
+                        title: 'Error',
+                        html: errorMessages,
+                        icon: 'error',
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado',
+                        icon: 'error',
                     });
                 }
             });
