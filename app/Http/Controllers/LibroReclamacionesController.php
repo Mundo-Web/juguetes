@@ -66,7 +66,7 @@ class LibroReclamacionesController extends Controller
         // ]);
     
         $validatedData = Validator::make($request->all(), [
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
             // 'fullname' => 'required|string',
             // 'type_document' => 'required|string',
             // 'number_document'=> 'required|string',
@@ -97,12 +97,12 @@ class LibroReclamacionesController extends Controller
         //     $validatedData['archivo'] = $route . $nombreImagen;
 
         //     dd($validatedData);
-        if ($validatedData->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validatedData->errors()
-            ], 422);
-        }
+        // if ($validatedData->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'errors' => $validatedData->errors()
+        //     ], 422);
+        // }
 
         LibroReclamaciones::create($validatedData);
 
