@@ -104,7 +104,7 @@ class LibroReclamacionesController extends Controller
         //     ], 422);
         // }
 
-        LibroReclamaciones::create($validatedData);
+        LibroReclamaciones::create($request->all());
 
         return response()->json(['message' => 'Mensaje enviado']);
         
