@@ -150,7 +150,7 @@ class LibroReclamacionesController extends Controller
             <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Mundo web</title>
+              <title>Decotab</title>
               <link rel="preconnect" href="https://fonts.googleapis.com" />
               <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
               <link
@@ -190,7 +190,7 @@ class LibroReclamacionesController extends Controller
                           margin: 40px;
                         "
                       >
-                        <img src="https://decotab.pe/mail/Logo P.png" alt="mundo web" />
+                        <img src="https://decotab.pe/mail/logodecotab.png" alt="mundo web" />
                       </th>
                     </tr>
                   </thead>

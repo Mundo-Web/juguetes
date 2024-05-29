@@ -19,12 +19,12 @@
         <a href="carrito.html" class="font-semibold text-[14px] text-[#141718]">Carrito</a>
       </div>
       
-      <div class="flex flex-col">
+      {{-- <div class="flex flex-col">
         <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
 
         <input id="email" type="email" placeholder="Correo electrónico" required name="email" value=""
           class=" py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-      </div>
+      </div> --}}
 
       <div class="flex md:gap-20">
         <div class="flex justify-between items-center md:basis-7/12 w-full md:w-auto">
