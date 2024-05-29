@@ -76,12 +76,12 @@
             <p class="font-normal text-[12px]">
                 Copyright &copy; 2023 Mundo Web. Reservados todos los derechos
             </p>
-            <p class="hidden md:block">|</p>
+            {{-- <p class="hidden md:block">|</p>
 
             <div class="flex gap-5">
                 <a href="#" class="font-normal text-[12px] text-[#6C7275]">Política de privacidad</a>
                 <a href="#" class="font-normal text-[12px] text-[#6C7275]">Términos y Condiciones</a>
-            </div>
+            </div> --}}
         </div>
 
         <div class="flex flex-wrap gap-2 pb-5">
