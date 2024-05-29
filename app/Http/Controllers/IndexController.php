@@ -408,6 +408,7 @@ class IndexController extends Controller
 
     $productos = Products::where('id', '=', $id)->get();
     // $especificaciones = Specifications::where('product_id', '=', $id)->get();
+    $product = Products::findOrFail($id);
     $especificaciones = Specifications::where('product_id', '=', $id)
     ->where(function ($query) {
         $query->whereNotNull('tittle')
@@ -432,7 +433,7 @@ class IndexController extends Controller
 
 
 
-    return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env'));
+    return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product'));
   }
 
   //  --------------------------------------------
@@ -657,11 +658,8 @@ class IndexController extends Controller
                 <tr>
                   <td
                     style="
-                      display: flex;
-                      align-items: start;
-                      justify-content: center;
-                      padding-top: 20px;
-                    "
+                    text-align: center;
+                  "
                   >
                     <a
                       href="https://decotab.pe/"
@@ -821,14 +819,11 @@ class IndexController extends Controller
                   </td>
                 </tr>
                 <tr>
-                  <td
-                    style="
-                      display: flex;
-                      align-items: start;
-                      justify-content: center;
-                      padding-top: 20px;
-                    "
-                  >
+                <td
+                  style="
+                  text-align: center;
+                "
+                >
                     <a
                       href="https://decotab.pe/"
                       style="
@@ -892,4 +887,9 @@ class IndexController extends Controller
     $termsAndCondicitions = TermsAndCondition::first();
      return view('public.terminosycondiciones', compact('termsAndCondicitions'));
   }
+
+
+
+
+
 }

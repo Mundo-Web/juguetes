@@ -12,12 +12,20 @@
 
 
   <main>
-    <section class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
+    <section class="font-poppins w-11/12 mx-auto my-8 flex flex-col gap-5">
       <div>
         <a href="index.html" class="font-normal text-[14px] text-[#6C7275]">Home</a>
         <span>/</span>
         <a href="carrito.html" class="font-semibold text-[14px] text-[#141718]">Carrito</a>
       </div>
+      
+      <div class="flex flex-col">
+        <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
+
+        <input id="email" type="email" placeholder="Correo electrónico" required name="email" value=""
+          class=" py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+      </div>
+
       <div class="flex md:gap-20">
         <div class="flex justify-between items-center md:basis-7/12 w-full md:w-auto">
           <p

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EmailConfig;
 use App\Models\LibroReclamaciones;
 use App\Http\Requests\StoreLibroReclamacionesRequest;
 use App\Http\Requests\UpdateLibroReclamacionesRequest;
@@ -67,9 +68,10 @@ class LibroReclamacionesController extends Controller
             'g-recaptcha-response' => 'required|captcha',
             
         ]);
-    
-        LibroReclamaciones::create($validatedData);
+        
 
+        LibroReclamaciones::create($validatedData);
+        $this-> envioCorreoLibrodeReclamacion($validatedData);
         return response()->json(['message' => 'Mensaje enviado']);
         
     }
@@ -135,4 +137,168 @@ class LibroReclamacionesController extends Controller
         return response()->json(['success' => true]);
 
     }
+
+
+    private function envioCorreoLibrodeReclamacion($data){
+        
+        $name = $data['fullname'];
+        $mensaje = "Tu reclamo ha sido recepcionado";
+        $mail = EmailConfig::config($name, $mensaje);
+        try {
+            $mail->addAddress($data['email']);
+            $mail->Body = '<html lang="es">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Mundo web</title>
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+              <link
+                href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+                rel="stylesheet"
+              />
+              <style>
+                * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                }
+              </style>
+            </head>
+            <body>
+              <main>
+                <table
+                  style="
+                    width: 600px;
+                    height: 700px;
+                    margin: 0 auto;
+                    text-align: center;
+                    background-image: url(https://decotab.pe/mail/ImagenFondo.png);
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: cover;
+                  "
+                >
+                  <thead>
+                    <tr>
+                      <th
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          justify-content: center;
+                          align-items: center;
+                          margin: 40px;
+                        "
+                      >
+                        <img src="https://decotab.pe/mail/Logo P.png" alt="mundo web" />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="height: 10px">
+                        <p
+                          style="
+                            color: #ffffff;
+                            font-weight: 500;
+                            font-size: 18px;
+                            text-align: center;
+                            width: 500px;
+                            margin: 0 auto;
+                            font-family: Montserrat, sans-serif;
+                            line-height: 30px;
+                          "
+                        >
+                          <span style="display: block">Hola </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="height: 10px">
+                        <p
+                          style="
+                            color: #ffffff;
+                            font-size: 40px;
+                            font-family: Montserrat, sans-serif;
+                            line-height: 60px;
+                          "
+                        >
+                          <span style="display: block">' . $name . ' </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="height: 10px">
+                        <p
+                          style="
+                            color: #74a68d;
+                            font-size: 40px;
+                            font-family: Montserrat, sans-serif;
+                            font-weight: bold;
+                            line-height: 60px;
+                          "
+                        >
+                          !Gracias
+                          <span style="color: #ffffff">por escribirnos!</span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="height: 10px">
+                        <p
+                          style="
+                            color: #ffffff;
+                            font-weight: 500;
+                            font-size: 18px;
+                            text-align: center;
+                            width: 250px;
+                            margin: 0 auto;
+                            font-family: Montserrat, sans-serif;
+                            line-height: 30px;
+                          "
+                        >
+                          En breve estaremos comunicandonos contigo.
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                    <td
+                      style="
+                      text-align: center;
+                    "
+                    >
+                        <a
+                          href="https://decotab.pe/"
+                          style="
+                            text-decoration: none;
+                            background-color: #74a68d;
+                            color: white;
+                            padding: 10px 16px;
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 10px;
+                            font-weight: 600;
+                            font-family: Montserrat, sans-serif;
+                            font-size: 16px;
+                            border-radius: 30px;
+                          "
+                        >
+                          <span>Visita nuestra web</span>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </main>
+            </body>
+          </html>
+          ';
+            $mail->isHTML(true);
+            $mail->send();
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }  
+      }
 }

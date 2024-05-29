@@ -29,6 +29,7 @@ use App\Http\Controllers\LogosClientController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LibroReclamacionesController;
 use App\Http\Controllers\PolyticsConditionController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
@@ -119,7 +120,11 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::post('/categorias/updateVisible', [CategoryController::class, 'updateVisible'] )->name('categorias.updateVisible');
         Route::get('/categorias/contarCategorias', [CategoryController::class, 'contarCategoriasDestacadas'] )->name('categorias.contarCategoriasDestacadas');
 
-
+        //Precios
+        Route::resource('/prices', PriceController::class);
+        Route::post('/getProvincia', [PriceController::class, 'getProvincias'])->name('prices.getProvincias');
+        Route::post('/getDistrito', [PriceController::class, 'getDistrito'])->name('prices.getDistrito');
+        Route::post('/calculeEnvio', [PriceController::class, 'calculeEnvio'])->name('prices.calculeEnvio');
 
         //Servicios
         Route::resource('/servicios', ServiceController::class);
