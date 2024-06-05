@@ -45,7 +45,7 @@
             <h3 class="font-medium text-[16px]">Info</h3>
 
             <a href="{{route('terms_condition')}}" class="font-normal text-[14px]">Terminos y Condiciones</a>
-            <a href="{{route('politicas_dev')}}" class="font-normal text-[14px]">Política de devolucion</a>
+            <a href="{{route('politicas_dev')}}" class="font-normal text-[14px]">Política de cambio</a>
             <a href="#" class="font-normal text-[14px]">FAQs</a>
         </div>
 
