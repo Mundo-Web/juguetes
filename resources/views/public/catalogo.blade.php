@@ -61,7 +61,7 @@
               </div>
             </div>
             {{--   --}}
-            <div class="flex flex-col gap-5">
+            {{-- <div class="flex flex-col gap-5">
               <p class="font-semibold text-[16px]">Precio</p>
               <a href="#" class="font-semibold text-[14px] underline">Todos los precios</a>
               <div class="flex flex-col gap-2">
@@ -78,8 +78,7 @@
                                         "
                       for="precio_0">s/ 0.00 - s/99.99</li>
                   </a>
-                  <!-- Agrega el siguiente código dentro de tu archivo HTML -->
-                  {{-- <input id="precio_0" type="checkbox" class="w-5 h-5 accent-[#EB5D2C] cursor-pointer" /> --}}
+              
                 </div>
                 <div class="flex justify-between items-center">
                   <a href="/catalogo/{{ $filtro }}/?rangefrom=100&rangeto=199.99">
@@ -91,8 +90,7 @@
                                         "
                       for="precio_1">s/ 100.00 - s/199.99</li>
                   </a>
-                  <!-- Agrega el siguiente código dentro de tu archivo HTML -->
-                  {{-- <input id="precio_1" type="checkbox" class="w-5 h-5 accent-[#EB5D2C] cursor-pointer" /> --}}
+                 
                 </div>
 
                 <div class="flex justify-between items-center">
@@ -107,8 +105,7 @@
                                         "
                       for="precio_2">s/ 200.00 - s/299.99</li>
                   </a>
-                  <!-- Agrega el siguiente código dentro de tu archivo HTML -->
-                  {{-- <input id="precio_2" type="checkbox" class="w-5 h-5 accent-[#EB5D2C] cursor-pointer" /> --}}
+                 
                 </div>
 
                 <div class="flex justify-between items-center">
@@ -123,8 +120,7 @@
                                     "
                       for="precio_3">s/ 300.00 - s/399.99</li>
                   </a>
-                  <!-- Agrega el siguiente código dentro de tu archivo HTML -->
-                  {{-- <input id="precio_3" type="checkbox" class="w-5 h-5 accent-[#EB5D2C] cursor-pointer" /> --}}
+                 
                 </div>
 
                 <div class="flex justify-between items-center">
@@ -137,11 +133,10 @@
                                         "
                       for="precio_4">s/ 400.00 +</li>
                   </a>
-                  <!-- Agrega el siguiente código dentro de tu archivo HTML -->
-                  {{-- <input id="precio_4" type="checkbox" value="" class="w-5 h-5 accent-[#EB5D2C] cursor-pointer" /> --}}
+                  
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </aside>
