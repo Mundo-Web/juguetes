@@ -11,16 +11,16 @@
     <nav class="menu-list">
         <ul>
             <li>
-                <a href="/" class="{{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home</a>
+                <a href="/" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home</a>
             </li>
             <li>
-                <a href="{{ route('catalogo', 0) }}" >Catálogo</a>
+                <a href="{{ route('catalogo', 0) }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'catalogo' ? 'text-[#FF5E14]' : ''}}">Catálogo</a>
             </li>
             <li>
-                <a href="{{ route('contacto') }}" class="{{$pagina == 'contacto' ? 'text-[#FF5E14] ' : ''}}">Contacto</a>
+                <a href="{{ route('contacto') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'contacto' ? 'text-[#FF5E14]' : ''}}">Contacto</a>
             </li>
             <li>
-                <a href="{{ route('comentario') }}" class="">Comentar</a>
+                <a href="{{ route('comentario') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'comentario' ? 'text-[#FF5E14]' : ''}}">Comentar</a>
             </li>
         </ul>
     </nav>
@@ -56,15 +56,15 @@
       <div class="hidden md:block">
         <div>
           <nav class="text-black flex gap-5">
-            <a href="{{ route('index') }}" class="font-medium font-poppins text-[14px]  hover:bg-slate-300 {{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home
+            <a href="{{ route('index') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home
             </a>
             <a href="{{ route('catalogo', 0) }}"
-              class="font-medium font-poppins text-[14px] hover:bg-slate-300 {{$pagina == 'catalogo' ? 'text-[#FF5E14]' : ''}}">Catálogo
+              class="font-medium font-poppins text-[14px] hover:bg-slate-300 py-1 px-3  {{$pagina == 'catalogo' ? 'text-[#FF5E14]' : ''}}">Catálogo
             </a>
-            <a href="{{ route('contacto') }}" class="font-medium font-poppins text-[14px] hover:bg-slate-300 {{$pagina == 'contacto' ? 'text-[#FF5E14]' : ''}}">Contacto
+            <a href="{{ route('contacto') }}" class="font-medium font-poppins py-1 px-3  text-[14px] hover:bg-slate-300 {{$pagina == 'contacto' ? 'text-[#FF5E14]' : ''}}">Contacto
             </a>
 
-            <a href="{{ route('comentario') }}" class="font-medium font-poppins text-[14px] hover:bg-slate-300 {{$pagina == 'comentario' ? 'text-[#FF5E14]' : ''}}">Comentar
+            <a href="{{ route('comentario') }}" class="font-medium font-poppins py-1 px-3  text-[14px] hover:bg-slate-300 {{$pagina == 'comentario' ? 'text-[#FF5E14]' : ''}}">Comentar
             </a>
           </nav>
         </div>
