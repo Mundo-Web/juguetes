@@ -7,7 +7,7 @@
 
 @section('content')
 
-  <div class="w-full md:w-11/12 md:mx-auto">
+  {{-- <div class="w-full md:w-11/12 md:mx-auto">
     <div style="background-image: url('{{ asset('images/img/header_catalogo.png') }}')"
       class="bg-cover bg-center bg-no-repeat min-h-[600px] flex flex-col justify-center items-center">
       <div class="flex justify-start py-10 md:py-16 w-11/12 mx-auto">
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <main class="z-[70]">
     <div class="flex flex-col md:flex-row md:gap-10 w-11/12 mx-auto mt-10 font-poppins">
