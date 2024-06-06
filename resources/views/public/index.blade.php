@@ -63,7 +63,7 @@
     @endif
 
     <!------Valores agregados------>
-    <section>
+    <section class="hidden lg:block">
       <div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <div class="group bg-colorBackgroundMainTop hover:bg-white p-14 md:duration-1000">
