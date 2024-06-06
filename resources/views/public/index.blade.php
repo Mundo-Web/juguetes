@@ -333,11 +333,12 @@
           <!------Categorias destacadas - carrusel------>
           <section class="block lg:hidden">
             <div class="swiper categorias">
-              <!-- <div class="swiper-pagination-categorias mb-24"></div> -->
+              {{-- <div class="swiper-pagination-categorias mb-24"></div>  --}}
               <div class="swiper-wrapper mb-[32x]">
                 @foreach ($category as $item)
-                  <a href="/catalogo/{{ $item->id }}">
+                  
                     <div class="swiper-slide mt-0 mb-4">
+                      <a href="/catalogo/{{ $item->id }}">
                       <div class="flex flex-col p-4">
                         <div class="flex flex-col bg-[#F8F6F2] rounded-2xl">
                           <h2 class="font-semibold text-[24px] text-center mt-5">
@@ -354,8 +355,9 @@
                           </div>
                         </div>
                       </div>
+                    </a>
                     </div>
-                  </a>
+                 
                 @endforeach
               </div>
               <div class="swiper-pagination-categorias"></div>
