@@ -126,27 +126,40 @@ var carrouselCategorias = new Swiper(".categorias", {
 
 /* --------------------------------------------- */
 
-var carrosuelDestacados = new Swiper(".productos-destacados", {
-  slidesPerView: 4,
+var carrosuelDestacados = new Swiper('.productos-home', {
+  slidesPerView: 5,
   spaceBetween: 10,
   loop: true,
   grab: false,
 
   centeredSlides: false,
   initialSlide: 0, // Empieza en el cuarto slide (índice 3)
-  pagination: {
-    el: ".swiper-pagination-productos-destacados",
-    clickable: true,
+  // pagination: {
+  //   el: '.swiper-pagination-productos-home',
+  //   clickable: true,
+  // },
+  navigation: {
+    nextEl: '.swiper-button-next-productos-home',
+    prevEl: '.swiper-button-prev-productos-home',
+  },
+  scrollbar: {
+    el: '.swiper-scrollbar-productos-home',
   },
   breakpoints: {
-    0: {
-      slidesPerView: 1,
+    512: {
+      slidesPerView: 1
     },
     768: {
-      slidesPerView: 2,
+      slidesPerView: 2
     },
     1024: {
-      slidesPerView: 4,
+      slidesPerView: 3
+    },
+    1280: {
+      slidesPerView: 4
+    },
+    1536: {
+      slidesPerView: 5
     },
   },
 });
@@ -268,25 +281,25 @@ var CarrosuelCatalogo = new Swiper(".producto-catalogo", {
 
 var input = document.querySelector(".input-box");
 
-input.onclick = function() {
-this.classList.toggle("open");
-let list = this.nextElementSibling;
-if (list.style.maxHeight) {
+input.onclick = function () {
+  this.classList.toggle("open");
+  let list = this.nextElementSibling;
+  if (list.style.maxHeight) {
     list.style.maxHeight = null;
     list.style.boxShadow = null;
-} else {
+  } else {
     list.style.maxHeight = list.scrollHeight + "px";
     list.style.boxShadow =
-    "0 1px 2px 0 rgba(0, 0, 0, 0.15),0 1px 3px 1px rgba(0, 0, 0, 0.1)";
-}
+      "0 1px 2px 0 rgba(0, 0, 0, 0.15),0 1px 3px 1px rgba(0, 0, 0, 0.1)";
+  }
 };
 
 var rad = document.querySelectorAll(".radio");
 rad.forEach((item) => {
-item.addEventListener("change", () => {
+  item.addEventListener("change", () => {
     input.innerHTML = item.nextElementSibling.innerHTML;
     input.click();
-});
+  });
 });
 
 
@@ -371,17 +384,17 @@ rad.forEach((item) => {
 
 
 
- const cuentas = document.querySelectorAll(".cuentas");
- const depositoCuenta = document.querySelector(".deposito__cuenta");
- const radioInputTarjeta = document.querySelector(".inputVoucher");
- cuentas.forEach((cuenta) => {
-   cuenta.addEventListener("click", (e) => {
-     if (e.target.classList.contains("inputVoucher")) {
-       depositoCuenta.classList.remove("hidden");
-     } else {
-       depositoCuenta.classList.add("hidden");
-     }
-   });
- });
+const cuentas = document.querySelectorAll(".cuentas");
+const depositoCuenta = document.querySelector(".deposito__cuenta");
+const radioInputTarjeta = document.querySelector(".inputVoucher");
+cuentas.forEach((cuenta) => {
+  cuenta.addEventListener("click", (e) => {
+    if (e.target.classList.contains("inputVoucher")) {
+      depositoCuenta.classList.remove("hidden");
+    } else {
+      depositoCuenta.classList.add("hidden");
+    }
+  });
+});
 
 

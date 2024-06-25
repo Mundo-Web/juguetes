@@ -386,7 +386,8 @@
               Transforma tu Espacio 🏡✨
             </h2>
             <p class="font-normal text-lg">
-              Descubre nuestros paneles de piedra, mármol, Wall Panel Mix y piedra PU. Dale vida a tus interiores con estilo y durabilidad. ¡Haz de tu hogar un lugar único y sofisticado!
+              Descubre nuestros paneles de piedra, mármol, Wall Panel Mix y piedra PU. Dale vida a tus interiores con
+              estilo y durabilidad. ¡Haz de tu hogar un lugar único y sofisticado!
             </p>
           </div>
           <div data-aos="zoom-in-left"
@@ -398,26 +399,26 @@
           </div>
 
           <div class="col-span-1 md:col-span-4 order-2 md:order-3">
-            <!-- grilla de productos destacados -->
-            {{-- <div class="grid grid-cols-2 md:block gap-5">
-              @foreach ($destacados as $item)
-                <x-product.container :item="$item" />
-              @endforeach
-            </div>
-
-            <!-- carrousel productos destacados -->
-            <div class="block md:hidden"> --}}
-              <div class="swiper productos-destacados my-5">
-                <div class="swiper-pagination-productos-destacados mb-80 md:mb-32"></div>
-                <div class="swiper-wrapper mt-[80px]">
-                  @foreach ($destacados as $item)
-                    <div class="swiper-slide rounded-2xl">
-                      <x-product.container :item="$item" />
-                    </div>
-                  @endforeach
-                </div>
+            <div class="productos-home swiper my-5 mt-16">
+              <div class="swiper-wrapper mt-2 mb-4">
+                @foreach ($destacados as $item)
+                  <div class="swiper-slide rounded-2xl">
+                    <x-product.container :item="$item" />
+                  </div>
+                @endforeach
               </div>
-            {{-- </div> --}}
+              <div class="swiper-scrollbar-productos-home h-2"></div>
+              <div class="mt-4 text-end">
+                <button type="button"
+                  class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  ←
+                </button>
+                <button type="button"
+                  class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  →
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -437,7 +438,8 @@
             </h2>
 
             <p class="font-normal text-lg basis-3/6">
-              Renueva tu hogar con estilo y calidad a precios irresistibles. ¡No te pierdas nuestras promociones y crea el espacio de tus sueños!
+              Renueva tu hogar con estilo y calidad a precios irresistibles. ¡No te pierdas nuestras promociones y crea el
+              espacio de tus sueños!
             </p>
           </div>
 
@@ -451,7 +453,27 @@
 
           <div class="col-span-1 md:col-span-4 order-2 md:order-3">
             <!-- grilla de productos en oferta -->
-            <div class="md:hidden grid grid-cols-2 gap-5">
+            <div class="productos-home swiper my-5 mt-16">
+              <div class="swiper-wrapper mt-2 mb-4">
+                @foreach ($descuentos as $item)
+                  <div class="swiper-slide rounded-2xl">
+                    <x-product.container :item="$item" />
+                  </div>
+                @endforeach
+              </div>
+              <div class="swiper-scrollbar-productos-home h-2"></div>
+              <div class="mt-4 text-end">
+                <button type="button"
+                  class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  ←
+                </button>
+                <button type="button"
+                  class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  →
+                </button>
+              </div>
+            </div>
+            {{-- <div class="md:hidden grid grid-cols-2 gap-5">
 
               @foreach ($descuentos as $item)
                 <x-product.container :item="$item" />
@@ -474,7 +496,7 @@
                 </div>
                 <!-- <div class="swiper-pagination-productos-oferta"></div> -->
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </section>
