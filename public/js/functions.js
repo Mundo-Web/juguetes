@@ -127,7 +127,7 @@ var carrouselCategorias = new Swiper(".categorias", {
 /* --------------------------------------------- */
 
 var carrosuelDestacados = new Swiper('.productos-home', {
-  slidesPerView: 5,
+  slidesPerView: 1,
   spaceBetween: 10,
   loop: true,
   grab: false,

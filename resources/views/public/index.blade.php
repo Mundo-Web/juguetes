@@ -61,6 +61,8 @@
       </div>
     @endif
 
+    <div id="categorias"></div>
+    
     <!------Valores agregados------>
     <section class="hidden lg:block focus-within:group">
       <div>
@@ -152,13 +154,9 @@
       </div>
     </section>
 
-
     <!------Categorias destacadas - Grilla------>
-    @if ($category->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes categorías destacadas visibles</div>
-            </div> --}}
-    @else
+    
+    @if (!$category->isEmpty())
       <section class="mt-20">
         <h2 class="block lg:hidden font-poppins font-semibold text-[40px] w-11/12 mx-auto">
           Categorías

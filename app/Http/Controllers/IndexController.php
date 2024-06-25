@@ -44,7 +44,7 @@ class IndexController extends Controller
   public function index()
   {
     // $productos = Products::all();
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     $productos =  Products::with('tags')->get();
     $categorias = Category::all();
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
