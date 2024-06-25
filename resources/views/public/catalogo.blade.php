@@ -1,4 +1,4 @@
-@extends('components.public.matrix',['pagina'=>'catalogo'])
+@extends('components.public.matrix', ['pagina' => 'catalogo'])
 
 @section('css_importados')
 
@@ -158,15 +158,14 @@
         <div class="flex flex-col gap-2">
 
           @if ($filtro == 0)
-            <h2 class="font-medium text-[40px]">Productos</h2>
+            <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡</h2>
           @else
-            <h2 class="font-medium text-[40px]">Productos - {{ $categoria->name }}</h2>
+            <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡 - {{ $categoria->name }}</h2>
           @endif
 
 
           <p class="font-normal text-[18px]">
-            En Deco Tab, somos especialistas en <b>Wall Panel</b>, <b>mármol UV</b> y <b>piedra PU</b>. Revisa las mejores
-            imágenes y precios de estos productos que son la mejor opción para decorar tus ambientes.
+            En Deco Tab, somos especialistas en <b>Wall Panel</b>, <b>mármol UV</b> y <b>piedra PU</b>. Revisa las mejores imágenes y precios de estos productos que son la mejor opción para decorar tus ambientes.
           </p>
         </div>
 
@@ -175,7 +174,8 @@
           <div class="grid grid-cols-2 lg:grid-cols-3 my-5 gap-10">
 
             @foreach ($productos as $item)
-              <div class="flex flex-col relative">
+              <x-product.container :item="$item" />
+              {{-- <div class="flex flex-col relative">
 
                 <div
                   class="bg-colorBackgroundProducts rounded-2xl py-12 md:pb-8 px-5 product_container basis-4/5 flex flex-col justify-center relative">
@@ -185,7 +185,6 @@
                   </a>
                   <div>
                     <div class="relative">
-                      {{-- <img src="{{ asset($item->imagen) }}" alt="cusco" class="w-full h-[100%]" /> --}}
                       @if ($item->imagen)
                         <img src="{{ asset($item->imagen) }}" alt="{{ $item->name }}"
                           class="w-full h-30 object-contain py-10" />
@@ -208,13 +207,7 @@
                 <div class="my-2 flex flex-col items-start gap-2 basis-1/5 -mt-6">
                   <div class="flex items-center gap-2 ">
                     <div class="flex gap-2 py-6 ">
-                      {{-- <img src="./images/svg/start.svg" alt="estrella" />
-                                            <img src="./images/svg/start.svg" alt="estrella" />
-                                            <img src="./images/svg/start.svg" alt="estrella" />
-                                            <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                            <img src="./images/svg/start_sin_color.svg" alt="estrella" /> --}}
                     </div>
-                    {{-- <p class="font-semibold text-[14px] text-[#6C7275]">(35)</p> --}}
                   </div>
                   <h2 class="font-semibold text-[16px] text-[#141718]">
                     {{ $item->producto }}
@@ -229,7 +222,7 @@
                   </p>
                 </div>
 
-              </div>
+              </div> --}}
             @endforeach
 
           </div>
@@ -276,8 +269,7 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                               d="M16.2923 11.3882L9.00065 18.3327M9.00065 18.3327L1.70898 11.3882M9.00065 18.3327L9.00065 1.66602"
-                              stroke="#EB5D2C" stroke-width="3.33333" stroke-linecap="round"
-                              stroke-linejoin="round" />
+                              stroke="#EB5D2C" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round" />
                           </svg>
                         </span>
                       </summary>
@@ -391,7 +383,7 @@
 
         modal.classList.add("modal--show-filtro");
         body.classList.add("overflow-hidden");
-        
+
         modal.style.display = "flex";
       }
 

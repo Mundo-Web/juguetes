@@ -14,6 +14,7 @@ class Products extends Model
     'descuento',
     'stock',
     'imagen',
+    'imagen_ambiente',
     'destacar',
     'recomendar',
     'atributes',

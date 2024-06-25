@@ -1,29 +1,37 @@
+@php
+  $isIndex = Route::currentRouteName() == 'index';
+@endphp
+
 <div class="navigation z-20">
   <button aria-label="hamburguer" type="button" class="hamburger" id="position" onclick="show()">
     <!-- <div id="bar1" class="bar"></div>
       <div id="bar2" class="bar"></div>
       <div id="bar3" class="bar"></div> -->
 
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 2L2 18M18 18L2 2" stroke="white" stroke-width="2.66667" stroke-linecap="round" />
-        </svg>
-    </button>
-    <nav class="menu-list">
-        <ul>
-            <li>
-                <a href="/" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home</a>
-            </li>
-            <li>
-                <a href="{{ route('catalogo', 0) }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'catalogo' ? 'text-[#FF5E14]' : ''}}">Catálogo</a>
-            </li>
-            <li>
-                <a href="{{ route('contacto') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'contacto' ? 'text-[#FF5E14]' : ''}}">Contacto</a>
-            </li>
-            <li>
-                <a href="{{ route('comentario') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'comentario' ? 'text-[#FF5E14]' : ''}}">Comentar</a>
-            </li>
-        </ul>
-    </nav>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 2L2 18M18 18L2 2" stroke="white" stroke-width="2.66667" stroke-linecap="round" />
+    </svg>
+  </button>
+  <nav class="menu-list">
+    <ul>
+      <li>
+        <a href="/"
+          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Home</a>
+      </li>
+      <li>
+        <a href="{{ route('catalogo', 0) }}"
+          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">Catálogo</a>
+      </li>
+      <li>
+        <a href="{{ route('contacto') }}"
+          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">Contacto</a>
+      </li>
+      <li>
+        <a href="{{ route('comentario') }}"
+          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">Comentar</a>
+      </li>
+    </ul>
+  </nav>
 </div>
 
 
@@ -34,37 +42,40 @@
       <img src="{{ asset('images/img/menu_hamburguer.png') }}" alt="menu hamburguesa" class="w-44" />
     </button>
 
-    </div>
-    @foreach ($datosgenerales as $item)
-        <div class="bg-colorBackgroundHeader">
-            <div class="flex justify-center md:justify-end gap-5 w-11/12 mx-auto py-4">
-                <div class="text-white font-normal font-poppins text-[14px] text-center w-full">
-                    {{ $item->htop }}
-                </div>
-            </div>
+  </div>
+  @foreach ($datosgenerales as $item)
+    <div class="bg-[#272727]">
+      <div class="flex justify-center md:justify-end gap-5 w-11/12 mx-auto py-4">
+        <div class="text-white font-normal font-poppins text-[14px] text-center w-full">
+          {{ $item->htop }}
         </div>
-    @endforeach
-    <div>
-        <div class="flex justify-between items-center w-11/12 mx-auto my-5">
-            <div class="hidden md:block">
-                <a href="{{ route('index') }}">
-                    <img src="{{ asset('images/svg/logo_decotab_header.svg') }}" alt="decotab" />
-                </a>
+      </div>
+    </div>
+  @endforeach
+  <div class="relative">
+    <div class="{{$isIndex ? 'absolute' : 'relative'}} top-0 flex justify-between items-center w-[100%] px-10 py-5 z-20">
+      <div class="hidden md:block">
+        <a href="{{ route('index') }}">
+          <img src="{{ asset($isIndex ? 'images/svg/logo_decotab_header_light.svg': 'images/svg/logo_decotab_header.svg') }}" alt="decotab" />
+        </a>
 
         <!--  <p class="font-medium text-[24px] font-poppins">DecoTab</p> -->
       </div>
       <div class="hidden md:block">
         <div>
-          <nav class="text-black flex gap-5">
-            <a href="{{ route('index') }}" class="font-medium font-poppins text-[14px] py-1 px-3  hover:bg-slate-300  {{$pagina == 'index' ? 'text-[#FF5E14]' : ''}}">Home
+          <nav class="{{$isIndex ? 'text-white' : 'text-[#272727]'}} flex gap-5">
+            <a href="{{ route('index') }}"
+              class="font-medium font-poppins text-[14px] py-1 px-3 hover:opacity-75  {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Home
             </a>
             <a href="{{ route('catalogo', 0) }}"
-              class="font-medium font-poppins text-[14px] hover:bg-slate-300 py-1 px-3  {{$pagina == 'catalogo' ? 'text-[#FF5E14]' : ''}}">Catálogo
+              class="font-medium font-poppins text-[14px hover:opacity-75 py-1 px-3  {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">Catálogo
             </a>
-            <a href="{{ route('contacto') }}" class="font-medium font-poppins py-1 px-3  text-[14px] hover:bg-slate-300 {{$pagina == 'contacto' ? 'text-[#FF5E14]' : ''}}">Contacto
+            <a href="{{ route('contacto') }}"
+              class="font-medium font-poppins py-1 px-3  text-[14px hover:opacity-75 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">Contacto
             </a>
 
-            <a href="{{ route('comentario') }}" class="font-medium font-poppins py-1 px-3  text-[14px] hover:bg-slate-300 {{$pagina == 'comentario' ? 'text-[#FF5E14]' : ''}}">Comentar
+            <a href="{{ route('comentario') }}"
+              class="font-medium font-poppins py-1 px-3  text-[14px hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">Comentar
             </a>
           </nav>
         </div>
@@ -92,7 +103,7 @@
               @click.prevent="open = !open" :aria-expanded="open">
               <div class="flex items-center truncate">
                 <span
-                  class="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{{ Auth::user()->name }}</span>
+                  class="truncate ml-2 text-sm text-white font-medium dark:text-slate-300 group-hover:opacity-75 dark:group-hover:text-slate-200">{{ Auth::user()->name }}</span>
                 <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
                   <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                 </svg>
@@ -140,7 +151,7 @@
 
         <div class="flex justify-center items-center pl-2">
           <label for="check" class="inline-block cursor-pointer">
-            <img src="{{ asset('images/svg/header_bag.svg') }}" alt="bag"
+            <img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_bag.svg') }}" alt="bag"
               class="max-w-full h-auto cursor-pointer" id="openCarrito" />
           </label>
           <!-- ----- carritos  148 sad -->

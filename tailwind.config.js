@@ -19,7 +19,7 @@ export default {
                 medium: "500",
                 regular: "400",
                 semibold: "600",
-              },
+            },
             boxShadow: {
                 DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
                 md: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
@@ -61,22 +61,22 @@ export default {
                 colorBackgroundMainTop: "#21201E",
                 colorBackgroundProducts: "#F8F6F2",
                 colorBackgroundNewProduct: "#38CB89",
-              },
-              textColor: {
+            },
+            textColor: {
                 colorSubtitle: "#113E55",
                 colorSubtitleLittle: "#173525",
                 colorAdd: "#2D694B",
                 colorTextBlack: "#151515",
-              },
-              borderColor: {
+            },
+            borderColor: {
                 selectCheck: "#173525",
                 colorBorder: "#151515",
-              },
+            },
 
-              backgroundImage: {
+            backgroundImage: {
                 "close-menu": "url(../images/prueba/icon-close.svg)",
                 "open-menu": "url(../images/prueba/icon-hamburger.svg)",
-              },
+            },
 
             screens: {
                 xs: '320px',
@@ -106,9 +106,38 @@ export default {
             zIndex: {
                 60: '60',
             },
+            keyframes: {
+                slideInFromBottom: {
+                    '0%': { transform: 'translateY(100%)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                slideInFromLeft: {
+                    '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                slideInFromRight: {
+                    '0%': { transform: 'translateX(100%)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+            },
+            animation: {
+                slideInFromBottom: 'slideInFromBottom 0.5s ease-out',
+                slideInFromLeft: 'slideInFromLeft 0.5s ease-out forwards',
+                slideInFromRight: 'slideInFromRight 0.5s ease-out forwards',
+            },
+            transform: {
+                'zoom-in': 'scale(1.05)',
+            },
+            transitionProperty: {
+                'transform': 'transform',
+            },
         },
     },
-
+    variants: {
+        extend: {
+            opacity: ['focus-within'],
+        },
+    },
     plugins: [
         forms,
         typography,
@@ -118,7 +147,7 @@ export default {
                 modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
             });
         }),
-        
-      
+
+
     ],
 };

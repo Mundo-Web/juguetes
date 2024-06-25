@@ -30,7 +30,7 @@
   }
   
   .product_container:hover .addProduct {
-    top: 10px;
+    top: -80px;
   }
   
   .addProduct2 {

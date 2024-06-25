@@ -45,9 +45,9 @@
   <!-- TinyMCE -->
   <script src="https://cdn.tiny.cloud/1/ghrt2o720w7v1cwfkm9r7pl85ultx89hqfla88bsjvt0m6zc/tinymce/7/tinymce.min.js"
     referrerpolicy="origin"></script>
-    <a></a>
-    {{-- kj7rz3ruf2k1dwv5rrw0v3iekjqj1h0xy6wn1ago86ohjn3l --}}
- <!-- Select2 -->
+  <a></a>
+  {{-- kj7rz3ruf2k1dwv5rrw0v3iekjqj1h0xy6wn1ago86ohjn3l --}}
+  <!-- Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <!-- Scripts -->
@@ -65,6 +65,11 @@
       document.querySelector('html').style.colorScheme = 'dark';
     }
   </script>
+
+  {{-- AOS Animation --}}
+  <link href="//unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="//unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
 
@@ -100,6 +105,10 @@
   </div>
 
   @livewireScripts
+
+  <script>
+    AOS.init();
+  </script>
 
 </body>
 

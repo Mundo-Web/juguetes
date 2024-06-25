@@ -82,7 +82,7 @@
 
 
 
-                  <div class="md:col-span-5">
+                  {{-- <div class="md:col-span-3">
                     <label for="imagen">Impagen Principal</label>
                     <div class="relative mb-2  mt-2">
                       <img src="{{ asset($product->imagen) }}" class="rounded-lg mb-2 w-52" alt="Imagen actual">
@@ -92,6 +92,63 @@
                     </div>
                   </div>
 
+                  <div class="md:col-span-2">
+                    <label for="imagen_ambiente">Impagen Principal</label>
+                    <div class="relative mb-2  mt-2">
+                      <img src="{{ asset($product->imagen_ambiente) }}" class="rounded-lg mb-2 w-52"
+                        alt="Imagen actual">
+                      <input id="imagen_ambiente" name="imagen_ambiente"
+                        class="p-2.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        aria-describedby="user_avatar_help" id="user_avatar" type="file">
+                    </div>
+                  </div> --}}
+
+                  <div class="md:col-span-5 flex items-center justify-center ">
+                    <div x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false"
+                      class="relative flex justify-center items-center h-[300px] w-[240px] border rounded-lg">
+                      @if ($product->imagen)
+                        <img id="imagen_previewer" x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                          x-transition:leave="transition ease-in duration-300 transform"
+                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                          src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
+                          class="w-full h-full object-contain absolute inset-0 rounded-lg" />
+                      @else
+                        <img id="imagen_previewer" x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                          x-transition:leave="transition ease-in duration-300 transform"
+                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                          src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                          class="w-full h-full object-contain absolute inset-0 rounded-lg" />
+                      @endif
+                      @if ($product->imagen_ambiente)
+                        <img id="imagen_ambiente_previewer" x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                          x-transition:leave="transition ease-in duration-300 transform"
+                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                          src="{{ asset($product->imagen_ambiente) }}" alt="{{ $product->name }}"
+                          class="w-full h-full object-cover absolute inset-0 rounded-lg" />
+                      @else
+                        <img id="imagen_ambiente_previewer" x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                          x-transition:leave="transition ease-in duration-300 transform"
+                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                          src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                          class="w-full h-full object-cover absolute inset-0 rounded-lg" />
+                      @endif
+                    </div>
+                  </div>
+
+                  <div class="md:col-span-5">
+                    <label class="block mb-1" for="imagen">Imagen del producto</label>
+                    <input id="imagen" name="imagen"
+                      class="mb-2 p-2.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      aria-describedby="user_avatar_help" id="user_avatar" type="file">
+                    <label class="block mb-1" for="imagen_ambiente">Imagen de ambiente</label>
+                    <input id="imagen_ambiente" name="imagen_ambiente"
+                      class="mb-2 p-2.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      aria-describedby="user_avatar_help" id="user_avatar" type="file">
+                  </div>
 
                   <div class="">
 
@@ -555,6 +612,17 @@
           .nextSibling); // Insertar el input antes del siguiente elemento después del botón
 
       })
+    })
+    $('#imagen').on('change', () => {
+      const file = document.getElementById('imagen').files[0] ?? null
+      const url = URL.createObjectURL(file)
+      console.log(url)
+      $('#imagen_previewer').attr('src', url)
+    })
+    $('#imagen_ambiente').on('change', () => {
+      const file = document.getElementById('imagen_ambiente').files[0] ?? null
+      const url = URL.createObjectURL(file)
+      $('#imagen_ambiente_previewer').attr('src', url)
     })
   </script>
 </x-app-layout>
