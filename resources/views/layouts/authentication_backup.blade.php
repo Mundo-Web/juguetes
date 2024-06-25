@@ -84,7 +84,7 @@
         </main> 
 
         @livewireScripts
-        <script src="{{asset('js/functions.js')}}"></script>
+        <script src="{{asset('js/functions.js')}}?v={{uniqid()}}"></script>
     </body>
 
 </html>
