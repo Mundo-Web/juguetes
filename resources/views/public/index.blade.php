@@ -636,12 +636,12 @@
 @section('scripts_importados')
 
   <script>
-    $(document).ready(function() {
+    // $(document).ready(function() {
       function capitalizeFirstLetter(string) {
         string = string.toLowerCase()
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
-    })
+    // })
     $('#disminuir').on('click', function() {
       console.log('disminuyendo')
       let cantidad = Number($('#cantidadSpan span').text())

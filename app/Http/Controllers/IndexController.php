@@ -71,7 +71,7 @@ class IndexController extends Controller
 
     $rangefrom = $request->query('rangefrom');
     $rangeto = $request->query('rangeto');
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     
 
 
@@ -131,9 +131,10 @@ class IndexController extends Controller
         );
       }
 
+      $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+        ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-
-      return view('public.catalogo', compact('url_env','general', 'faqs', 'categorias', 'testimonie', 'filtro', 'productos', 'categoria', 'rangefrom', 'rangeto'));
+      return view('public.catalogo', compact('url_env','general', 'faqs', 'categorias', 'testimonie', 'filtro', 'productos', 'categoria', 'rangefrom', 'rangeto', 'destacados'));
     } catch (\Throwable $th) {
     }
   }
@@ -141,9 +142,12 @@ class IndexController extends Controller
   public function comentario()
   {
     $comentarios = Testimony::where('status', '=' ,1)->where('visible', '=' ,1)->paginate(15);
+    $categorias = Category::all();
     $contarcomentarios = count($comentarios);
     $url_env = $_ENV['APP_URL'];
-    return view('public.comentario', compact('comentarios', 'contarcomentarios', 'url_env'));
+    $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+    return view('public.comentario', compact('comentarios', 'contarcomentarios', 'url_env', 'categorias', 'destacados'));
   }
 
   public function hacerComentario(Request $request){
@@ -179,15 +183,22 @@ class IndexController extends Controller
   public function contacto()
   {
     $general = General::all();
+    $categorias = Category::all();
     $url_env = $_ENV['APP_URL'];
-    return view('public.contact', compact('general','url_env'));
+    $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+
+    return view('public.contact', compact('general','url_env', 'categorias', 'destacados'));
   }
 
   public function carrito()
   {
     //
+    $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+    $categorias = Category::all();
     $url_env = $_ENV['APP_URL'];
-    return view('public.checkout_carrito', compact('url_env'));
+    return view('public.checkout_carrito', compact('url_env', 'categorias', 'destacados'));
   }
 
   public function pago()
@@ -205,9 +216,14 @@ class IndexController extends Controller
     $provincias = DB::select('select * from provinces where active = ? order by 3', [1]);
     $departamento = DB::select('select * from departments where active = ? order by 2', [1]);
 
+    $categorias = Category::all();
+
+    $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+
 
     $url_env = $_ENV['APP_URL'];
-    return view('public.checkout_pago', compact('url_env', 'distritos', 'provincias', 'departamento', 'detalleUsuario'));
+    return view('public.checkout_pago', compact('url_env', 'distritos', 'provincias', 'departamento', 'detalleUsuario', 'categorias', 'destacados'));
   }
 
   public function procesarPago(Request $request)
@@ -431,9 +447,20 @@ class IndexController extends Controller
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $url_env = $_ENV['APP_URL'];
 
+    $capitalizeFirstLetter = function ($string)
+    {
+      // Convert the entire string to lowercase
+      $string = strtolower($string);
+      // Capitalize the first letter and concatenate with the rest of the string
+      return ucfirst($string);
+    };
 
+    $categorias = Category::all();
 
-    return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product'));
+    $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
+    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+
+    return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados'));
   }
 
   //  --------------------------------------------

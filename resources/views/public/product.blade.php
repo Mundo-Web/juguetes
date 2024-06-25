@@ -153,9 +153,9 @@
                                     <tr>
                                         <td
                                             class="border w-1/5 border-gray-400 px-3 py-2 font-semibold text-[16px] text-gray-900">
-                                            {{ capitalizeFirstLetter($item->tittle) }}:</td>
+                                            {{ $capitalizeFirstLetter($item->tittle) }}:</td>
                                         <td class="border w-4/5 border-gray-400 px-3 py-2 font-normal text-[15px]">
-                                            {{ capitalizeFirstLetter($item->specifications) }}</td>
+                                            {{ $capitalizeFirstLetter($item->specifications) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -374,14 +374,14 @@
 @section('scripts_importados')
 
     <script>
-        $(document).ready(function() {
+        // $(document).ready(function() {
 
 
             function capitalizeFirstLetter(string) {
                 string = string.toLowerCase()
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-        })
+        // })
         $('#disminuir').on('click', function() {
             let cantidad = Number($('#cantidadSpan span').text())
             if (cantidad > 0) {
