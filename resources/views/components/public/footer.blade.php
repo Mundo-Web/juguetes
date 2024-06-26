@@ -37,7 +37,7 @@
             <h3 class="font-medium text-[16px]">Page</h3>
 
             <a href="/" class="font-normal text-[14px]">Home</a>
-            <a href="{{ route('catalogo', 0) }}" class="font-normal text-[14px]">Catálogo</a>
+            <a href="{{ route('catalogo.all') }}" class="font-normal text-[14px]">Catálogo</a>
             <a href="{{ route('contacto') }}" class="font-normal text-[14px]">Contacto</a>
         </div>
 

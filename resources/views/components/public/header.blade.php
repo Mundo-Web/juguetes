@@ -19,7 +19,7 @@
           class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Homero</a>
       </li>
       <li>
-        <a href="{{ route('catalogo', 0) }}"
+        <a href="{{ route('catalogo.all') }}"
           class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">Catálogo</a>
       </li>
       <li>
@@ -63,7 +63,7 @@
               <a href="{{ route('index') }}"
                 class="py-5 mt-[3px] font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Home</a>
               <div @mouseenter="openCatalogo = true" @mouseleave="openCatalogo = false" class="px-3 py-5">
-                <a href="{{ route('catalogo', 0) }}"
+                <a href="{{ route('catalogo.all') }}"
                   class="font-medium font-poppins text-[14px] hover:opacity-75 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}"
                   aria-haspopup="true">
                   Catálogo
@@ -77,8 +77,8 @@
                     <ul class="col-span-3">
                       @foreach ($categorias as $categoria)
                         <li class="hover:bg-gray-100">
-                          <a class="font-medium text-sm text-black flex items-center py-1 px-3"
-                            href="{{ route('catalogo', $categoria->id) }}"
+                          <a class="h4 text-black flex items-center py-1 px-3"
+                            href="{{ route('catalogo', $categoria->slug) }}"
                             @click="openCatalogo = false">{{ $categoria->name }}</a>
                         </li>
                       @endforeach
@@ -87,10 +87,12 @@
                   <div class="col-span-9">
                     <div class="productos-home swiper">
                       <div class="swiper-wrapper mt-2 mb-4">
-                        @foreach ($destacados as $item)
-                          <div class="swiper-slide rounded-2xl">
-                            <x-product.container :item="$item" />
-                          </div>
+                        @foreach ($categorias as $category)
+                          @if ($category->destacar)
+                            <div class="swiper-slide rounded-2xl">
+                              <x-category.container :item="$category" />
+                            </div>
+                          @endif
                         @endforeach
                       </div>
                       <div class="swiper-scrollbar-productos-home h-2"></div>
@@ -137,8 +139,9 @@
                 @click.outside="open = false" @keydown.escape.window="open = false" x-show="open">
                 <ul>
                   <li class="hover:bg-gray-100">
-                    <a class="font-medium text-sm text-black flex items-center py-1 px-3" href="{{ route('pedidos') }}"
-                      @click="open = false" @focus="open = true" @focusout="open = false">Mis pedidos</a>
+                    <a class="font-medium text-sm text-black flex items-center py-1 px-3"
+                      href="{{ route('pedidos') }}" @click="open = false" @focus="open = true"
+                      @focusout="open = false">Mis pedidos</a>
                   </li>
                   <li class="hover:bg-gray-100">
                     <a class="font-medium text-sm text-black flex items-center py-1 px-3"

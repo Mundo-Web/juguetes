@@ -128,7 +128,7 @@ class CategoryController extends Controller
 
             $img =  $manager->read($request->file('imagen'));
 
-            $img->coverDown(640, 640, 'center');
+            // $img->coverDown(640, 640, 'center');
             
             if (!file_exists($rutanueva)) {
                 mkdir($rutanueva, 0777, true); // Se crea la ruta con permisos de lectura, escritura y ejecución

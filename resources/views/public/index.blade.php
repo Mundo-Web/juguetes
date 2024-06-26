@@ -62,7 +62,7 @@
     @endif
 
     <div id="categorias"></div>
-    
+
     <!------Valores agregados------>
     <section class="hidden lg:block focus-within:group">
       <div>
@@ -155,7 +155,7 @@
     </section>
 
     <!------Categorias destacadas - Grilla------>
-    
+
     @if (!$category->isEmpty())
       <section class="mt-20">
         <h2 class="block lg:hidden font-poppins font-semibold text-[40px] w-11/12 mx-auto">
@@ -166,7 +166,7 @@
 
             <section class="mt-10 hidden lg:block relative">
 
-              <div class="grid grid-cols-1 gap-4 w-10/12 mx-auto">
+              <div class="grid grid-cols-1 gap-4 w-10/12 mx-auto" data-aos="fade-up">
 
                 @foreach ($category->take(1) as $index => $slide)
                   <div class="col-span-2 row-span-2">
@@ -190,9 +190,9 @@
                         </p>
 
                         <div>
-                          <a href="/catalogo/{{ $slide->id }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-2 px-8 rounded-3xl border-[1px] border-colorBorder">Ir
-                            a categoría
+                          <a href="/catalogo/{{ $slide->slug }}"
+                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-2 px-8 rounded-3xl border-[1px] border-colorBorder">
+                            Ver categoría
                           </a>
                         </div>
                       </div>
@@ -209,7 +209,7 @@
               <div class="grid grid-cols-4 gap-4 w-10/12 mx-auto">
 
                 @foreach ($category->take(2) as $index => $slide)
-                  <div class="col-span-2 row-span-1">
+                  <div class="col-span-2 row-span-1" data-aos="fade-{{ $index == 0 ? 'right' : 'left' }}">
                     <div class="bg-[#F3F5F7] flex flex-row h-full rounded-xl">
                       <div class="flex justify-start items-center basis-1/2">
                         @if ($slide->name_image)
@@ -230,8 +230,9 @@
                         </p>
 
                         <div>
-                          <a href="/catalogo/{{ $slide->id }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">Comprar
+                          <a href="/catalogo/{{ $slide->slug }}"
+                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">
+                            Ver categoria
                           </a>
                         </div>
                       </div>
@@ -251,7 +252,8 @@
                   <!-- Columna 1 2 y 3-->
 
                   <div
-                    class="col-span-2 @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif">
+                    class="col-span-2 @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif"
+                    data-aos="fade-{{ $index == 0 ? 'right' : ($index == 1 ? 'down-left' : 'up-left') }}">
                     <div
                       class="bg-[#F3F5F7] flex  @if ($loop->first) flex-col @elseif(!$loop->first) flex-row @endif  h-full rounded-xl">
                       <div class="flex justify-start items-center basis-1/2">
@@ -273,8 +275,9 @@
                         </p>
 
                         <div>
-                          <a href="/catalogo/{{ $slide->id }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">Comprar
+                          <a href="/catalogo/{{ $slide->slug }}"
+                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">
+                            Ver categoria
                           </a>
                         </div>
                       </div>
@@ -296,7 +299,8 @@
                   <!-- Columna 1 2 3 y 4-->
 
                   <div
-                    class="@if ($loop->index == 0 || $loop->index == 1) col-span-2  @elseif($loop->index == 2 || $loop->index == 3) col-span-1 @endif  @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif">
+                    class="@if ($loop->index == 0 || $loop->index == 1) col-span-2  @elseif($loop->index == 2 || $loop->index == 3) col-span-1 @endif  @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif"
+                    data-aos="fade-{{ $index == 0 ? 'right' : ($index == 1 ? 'left' : ($index == 2 ? 'up-right' : 'up-left')) }}">
                     <div
                       class="bg-[#F3F5F7] flex  @if ($loop->index == 0 || $loop->index == 2 || $loop->index == 3) flex-col @elseif($loop->index == 1) flex-row @endif  h-full rounded-xl">
                       <div class="flex justify-start items-center basis-1/2">
@@ -318,7 +322,7 @@
                         </p>
 
                         <div>
-                          <a href="/catalogo/{{ $slide->id }} "
+                          <a href="/catalogo/{{ $slide->slug }} "
                             class=" font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%]  rounded-3xl border-[1px] border-colorBorder">Ver
                             categoría
                           </a>
@@ -390,7 +394,7 @@
           </div>
           <div data-aos="zoom-in-left"
             class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
-            <a href="/catalogo/0"
+            <a href="/catalogo"
               class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
               Ver todo
             </a>
@@ -443,7 +447,7 @@
 
           <div data-aos="zoom-in-left"
             class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
-            <a href="/catalogo/0"
+            <a href="/catalogo"
               class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
               Ver todo
             </a>
@@ -637,10 +641,10 @@
 
   <script>
     // $(document).ready(function() {
-      function capitalizeFirstLetter(string) {
-        string = string.toLowerCase()
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
+    function capitalizeFirstLetter(string) {
+      string = string.toLowerCase()
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     // })
     $('#disminuir').on('click', function() {
       console.log('disminuyendo')

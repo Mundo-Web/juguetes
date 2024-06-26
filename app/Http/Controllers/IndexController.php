@@ -48,9 +48,9 @@ class IndexController extends Controller
     $productos =  Products::with('tags')->get();
     $categorias = Category::all();
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     $descuentos = Products::where('descuento', '>', 0)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
     $general = General::all();
     $benefit = Strength::where('status', '=', 1)->get();
@@ -61,10 +61,10 @@ class IndexController extends Controller
 
 
 
-    return view('public.index', compact('url_env','productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category'));
+    return view('public.index', compact('url_env', 'productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category'));
   }
 
-  public function catalogo($filtro, Request $request)
+  public function catalogo(Request $request, ?string $filtro = '0')
   {
     $categorias = null;
     $productos = null;
@@ -72,7 +72,7 @@ class IndexController extends Controller
     $rangefrom = $request->query('rangefrom');
     $rangeto = $request->query('rangeto');
     $url_env = env('APP_URL');
-    
+
 
 
 
@@ -90,11 +90,14 @@ class IndexController extends Controller
         $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
         $categoria = Category::all();
       } else {
-        $productos = Products::where('categoria_id', '=', $filtro)->where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
-        $categoria = Category::findOrFail($filtro);
+        $productos = Products::select('products.*')
+          ->join('categories', 'products.categoria_id', '=', 'categories.id')
+          ->where('categories.slug', '=', $filtro)
+          ->where('products.status', '=', 1)
+          ->where('products.visible', '=', 1)
+          ->paginate(9);
+        $categoria = Category::where('slug', $filtro)->first();
       }
-
-
 
       if ($rangefrom !== null && $rangeto !== null) {
 
@@ -102,8 +105,13 @@ class IndexController extends Controller
           $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
           $categoria = Category::all();
         } else {
-          $productos = Products::where('categoria_id', '=', $filtro)->where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
-          $categoria = Category::findOrFail($filtro);
+          $productos = Products::select('products.*')
+            ->join('categories', 'products.categoria_id', '=', 'categories.id')
+            ->where('categories.slug', '=', $filtro)
+            ->where('products.status', '=', 1)
+            ->where('products.visible', '=', 1)
+            ->paginate(9);
+          $categoria = Category::where('slug', $filtro)->first();
         }
 
         $cleanedData = $productos->filter(function ($value) use ($rangefrom, $rangeto) {
@@ -134,47 +142,48 @@ class IndexController extends Controller
       $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
         ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-      return view('public.catalogo', compact('url_env','general', 'faqs', 'categorias', 'testimonie', 'filtro', 'productos', 'categoria', 'rangefrom', 'rangeto', 'destacados'));
+      return view('public.catalogo', compact('url_env', 'general', 'faqs', 'categorias', 'testimonie', 'filtro', 'productos', 'categoria', 'rangefrom', 'rangeto', 'destacados'));
     } catch (\Throwable $th) {
+      // dump($th->getMessage());
     }
   }
 
   public function comentario()
   {
-    $comentarios = Testimony::where('status', '=' ,1)->where('visible', '=' ,1)->paginate(15);
+    $comentarios = Testimony::where('status', '=', 1)->where('visible', '=', 1)->paginate(15);
     $categorias = Category::all();
     $contarcomentarios = count($comentarios);
     $url_env = $_ENV['APP_URL'];
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     return view('public.comentario', compact('comentarios', 'contarcomentarios', 'url_env', 'categorias', 'destacados'));
   }
 
-  public function hacerComentario(Request $request){
+  public function hacerComentario(Request $request)
+  {
     $user = auth()->user();
-    
+
     $newComentario = new Testimony();
     if (isset($user)) {
       $alert = null;
       $request->validate([
         'testimonie' => 'required',
-    ], [
+      ], [
         'testimonie.required' => 'Ingresa tu comentario',
-    ]);
+      ]);
 
-        $newComentario->name = $user->name;
-        $newComentario->testimonie = $request->testimonie;
-        $newComentario->visible = 0;
-        $newComentario->status = 1;
-        $newComentario->email = $user->email;
-        $newComentario->save();
+      $newComentario->name = $user->name;
+      $newComentario->testimonie = $request->testimonie;
+      $newComentario->visible = 0;
+      $newComentario->status = 1;
+      $newComentario->email = $user->email;
+      $newComentario->save();
 
-        $mensaje = "Gracias. Tu comentario pasará por una validación y será publicado.";
-        $alert = 1;
-
-    }else{  
-        $alert = 2;
-        $mensaje = "Inicia sesión para hacer un comentario";
+      $mensaje = "Gracias. Tu comentario pasará por una validación y será publicado.";
+      $alert = 1;
+    } else {
+      $alert = 2;
+      $mensaje = "Inicia sesión para hacer un comentario";
     }
 
     return redirect()->route('comentario')->with(['mensaje' => $mensaje, 'alerta' => $alert]);
@@ -186,16 +195,16 @@ class IndexController extends Controller
     $categorias = Category::all();
     $url_env = $_ENV['APP_URL'];
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-    return view('public.contact', compact('general','url_env', 'categorias', 'destacados'));
+    return view('public.contact', compact('general', 'url_env', 'categorias', 'destacados'));
   }
 
   public function carrito()
   {
     //
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     $categorias = Category::all();
     $url_env = $_ENV['APP_URL'];
     return view('public.checkout_carrito', compact('url_env', 'categorias', 'destacados'));
@@ -206,12 +215,12 @@ class IndexController extends Controller
     //
     $detalleUsuario = [];
     $user = auth()->user();
-    
+
     if (!is_null($user)) {
-      $detalleUsuario = UserDetails::where('email', $user->email)->get();  
+      $detalleUsuario = UserDetails::where('email', $user->email)->get();
     }
-    
-    
+
+
     $distritos  = DB::select('select * from districts where active = ? order by 3', [1]);
     $provincias = DB::select('select * from provinces where active = ? order by 3', [1]);
     $departamento = DB::select('select * from departments where active = ? order by 2', [1]);
@@ -219,7 +228,7 @@ class IndexController extends Controller
     $categorias = Category::all();
 
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
 
     $url_env = $_ENV['APP_URL'];
@@ -253,17 +262,17 @@ class IndexController extends Controller
 
       $email = $request->email;
       $existeUser = UserDetails::where('email', $email)->get()->toArray();
-      
+
       if (count($existeUser) === 0) {
         UserDetails::create($request->all());
         $datos = $request->all();
         $codigoAleatorio = $this->codigoVentaAleatorio();
         $this->guardarOrden();
-        $this-> envioCorreoCompra($datos);
+        $this->envioCorreoCompra($datos);
         return response()->json(['message' => 'Data procesada correctamente', 'codigoCompra' => $codigoAleatorio],);
       } else {
         $existeUsuario = User::where('email', $email)->get()->toArray();
-       
+
         if ($existeUsuario) {
           $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -289,7 +298,7 @@ class IndexController extends Controller
 
             $codigoAleatorio = $this->codigoVentaAleatorio();
             $this->guardarOrden();
-            $this-> envioCorreoCompra($datos);
+            $this->envioCorreoCompra($datos);
             return response()->json(['message' => 'Todos los datos estan correctos', 'codigoCompra' => $codigoAleatorio],);
           }
         } else {
@@ -357,38 +366,37 @@ class IndexController extends Controller
   public function actualizarPerfil(Request $request)
   {
 
-    $name= $request->name;
+    $name = $request->name;
     $lastname = $request->lastname;
     $email = $request->email;
     $user = User::findOrFail($request->id);
-    
 
-    if($request->password !== null || $request->newpassword !== null || $request->confirmnewpassword !== null){ 
-        if (!Hash::check($request->password, $user->password)) {
-            $imprimir = "La contraseña actual no es correcta";
-            $alert = "error";
-        }else{
-            $user->password = Hash::make($request->newpassword);
-            $imprimir = "Cambio de contraseña exitosa";
-            $alert = "success";
-        }
-    }
-    
 
-      if($user->name == $name &&  $user->lastname == $lastname ){
-        $imprimir = "Sin datos que actualizar";
-        $alert = "question";  
-      }else{
-        $user->name = $name;
-        $user->lastname = $lastname;
+    if ($request->password !== null || $request->newpassword !== null || $request->confirmnewpassword !== null) {
+      if (!Hash::check($request->password, $user->password)) {
+        $imprimir = "La contraseña actual no es correcta";
+        $alert = "error";
+      } else {
+        $user->password = Hash::make($request->newpassword);
+        $imprimir = "Cambio de contraseña exitosa";
         $alert = "success";
-        $imprimir = "Datos actualizados";  
       }
-    
+    }
+
+
+    if ($user->name == $name &&  $user->lastname == $lastname) {
+      $imprimir = "Sin datos que actualizar";
+      $alert = "question";
+    } else {
+      $user->name = $name;
+      $user->lastname = $lastname;
+      $alert = "success";
+      $imprimir = "Datos actualizados";
+    }
+
 
     $user->save();
-    return response()->json(['message'=> $imprimir,'alert' => $alert]);
-
+    return response()->json(['message' => $imprimir, 'alert' => $alert]);
   }
 
   public function micuenta()
@@ -409,7 +417,7 @@ class IndexController extends Controller
   {
     $user = Auth::user();
     $direcciones = UserDetails::where('email', $user->email)->get();
-    
+
     return view('public.dashboard_direccion', compact('user', 'direcciones'));
   }
 
@@ -426,11 +434,11 @@ class IndexController extends Controller
     // $especificaciones = Specifications::where('product_id', '=', $id)->get();
     $product = Products::findOrFail($id);
     $especificaciones = Specifications::where('product_id', '=', $id)
-    ->where(function ($query) {
+      ->where(function ($query) {
         $query->whereNotNull('tittle')
-            ->orWhereNotNull('specifications');
-    })
-    ->get();
+          ->orWhereNotNull('specifications');
+      })
+      ->get();
     $productosConGalerias = DB::select("
             SELECT products.*, galeries.*
             FROM products
@@ -447,8 +455,7 @@ class IndexController extends Controller
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $url_env = $_ENV['APP_URL'];
 
-    $capitalizeFirstLetter = function ($string)
-    {
+    $capitalizeFirstLetter = function ($string) {
       // Convert the entire string to lowercase
       $string = strtolower($string);
       // Capitalize the first letter and concatenate with the rest of the string
@@ -458,7 +465,7 @@ class IndexController extends Controller
     $categorias = Category::all();
 
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
-    ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
+      ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
     return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados'));
   }
@@ -516,32 +523,32 @@ class IndexController extends Controller
    * Save contact from blade
    */
   public function guardarContacto(Request $request)
-    {
-        
-        $data = $request->all();
-        $data['full_name'] = $request->name. ' ' . $request->last_name;
-    
-       try {
-        $reglasValidacion = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-        ];
-        $mensajes = [
-            'name.required' => 'El campo nombre es obligatorio.',
-            'email.required' => 'El campo correo electrónico es obligatorio.',
-            'email.email' => 'El formato del correo electrónico no es válido.',
-            'email.max' => 'El campo correo electrónico no puede tener más de :max caracteres.',
-        ];
-        $request->validate($reglasValidacion, $mensajes);
-        $formlanding = Message::create($data);
-        $this-> envioCorreo($formlanding);
+  {
 
-        return response()->json(['message'=> 'Mensaje enviado con exito']);
-       } catch (ValidationException $e) {
-       
-        return response()->json(['message'=> $e->validator->errors()], 400);
-       }
+    $data = $request->all();
+    $data['full_name'] = $request->name . ' ' . $request->last_name;
+
+    try {
+      $reglasValidacion = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+      ];
+      $mensajes = [
+        'name.required' => 'El campo nombre es obligatorio.',
+        'email.required' => 'El campo correo electrónico es obligatorio.',
+        'email.email' => 'El formato del correo electrónico no es válido.',
+        'email.max' => 'El campo correo electrónico no puede tener más de :max caracteres.',
+      ];
+      $request->validate($reglasValidacion, $mensajes);
+      $formlanding = Message::create($data);
+      $this->envioCorreo($formlanding);
+
+      return response()->json(['message' => 'Mensaje enviado con exito']);
+    } catch (ValidationException $e) {
+
+      return response()->json(['message' => $e->validator->errors()], 400);
     }
+  }
 
 
 
@@ -557,15 +564,16 @@ class IndexController extends Controller
   }
 
 
-  private function envioCorreo($data){
-        
+  private function envioCorreo($data)
+  {
+
     $name = $data['full_name'];
     $mensaje = "Gracias por comunicarte con Decotab";
     $mail = EmailConfig::config($name, $mensaje);
     // dd($mail);
     try {
-        $mail->addAddress($data['email']);
-        $mail->Body = '<html lang="es">
+      $mail->addAddress($data['email']);
+      $mail->Body = '<html lang="es">
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -715,22 +723,22 @@ class IndexController extends Controller
         </body>
       </html>
       ';
-        $mail->isHTML(true);
-        $mail->send();
-        
+      $mail->isHTML(true);
+      $mail->send();
     } catch (\Throwable $th) {
-        //throw $th;
-    }  
+      //throw $th;
+    }
   }
 
-  private function envioCorreoCompra($data){
-        
+  private function envioCorreoCompra($data)
+  {
+
     $name = $data['nombre'];
     $mensaje = "Gracias por comprar en Decotab";
     $mail = EmailConfig::config($name, $mensaje);
     try {
-        $mail->addAddress($data['email']);
-        $mail->Body = '<html lang="es">
+      $mail->addAddress($data['email']);
+      $mail->Body = '<html lang="es">
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -878,45 +886,41 @@ class IndexController extends Controller
         </body>
       </html>
       ';
-        $mail->isHTML(true);
-        $mail->send();
-        
+      $mail->isHTML(true);
+      $mail->send();
     } catch (\Throwable $th) {
-        //throw $th;
-    }  
+      //throw $th;
+    }
   }
 
   public function librodereclamaciones()
   {
     $departamentofiltro = DB::select('select * from departments where active = ? order by 2', [1]);
-    
+
     return view('public.librodereclamaciones', compact('departamentofiltro'));
   }
 
   public function obtenerProvincia($departmentId)
   {
-      $provinces = DB::select('select * from provinces where active = ? and department_id = ? order by description', [1, $departmentId]);
-      return response()->json($provinces);
+    $provinces = DB::select('select * from provinces where active = ? and department_id = ? order by description', [1, $departmentId]);
+    return response()->json($provinces);
   }
 
   public function obtenerDistritos($provinceId)
   {
-      $distritos = DB::select('select * from districts where active = ? and province_id = ? order by description', [1, $provinceId]);
-      return response()->json($distritos);
+    $distritos = DB::select('select * from districts where active = ? and province_id = ? order by description', [1, $provinceId]);
+    return response()->json($distritos);
   }
 
-  public function politicasDevolucion(){
+  public function politicasDevolucion()
+  {
     $politicDev = PolyticsCondition::first();
-     return view('public.politicasdeenvio', compact('politicDev'));
+    return view('public.politicasdeenvio', compact('politicDev'));
   }
 
-  public function TerminosyCondiciones(){
+  public function TerminosyCondiciones()
+  {
     $termsAndCondicitions = TermsAndCondition::first();
-     return view('public.terminosycondiciones', compact('termsAndCondicitions'));
+    return view('public.terminosycondiciones', compact('termsAndCondicitions'));
   }
-
-
-
-
-
 }
