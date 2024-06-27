@@ -216,7 +216,11 @@
                     </div>
                   </div>
                   <div class="overflow-y-scroll h-[calc(100vh-200px)] scroll__carrito">
-                    <div class="flex flex-col gap-10 align-top" id="itemsCarrito"></div>
+                    <table>
+                      <tbody id="itemsCarrito">
+                        {{-- <div class="flex flex-col gap-10 align-top" id="itemsCarrito"></div> --}}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 <div class="font-poppins flex flex-col gap-2 pt-2">
