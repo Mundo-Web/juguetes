@@ -19,46 +19,88 @@
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
       <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
         <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+          <div class="relative w-full shrink-0 max-w-md lg:max-w-lg mx-auto border rounded-lg bg-colorBackgroundProducts h-[600px]"
+            x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false"
+            data-aos="zoom-in-left">
             {{-- <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
               alt="" />
             <img class="w-full hidden dark:block"
               src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> --}}
-            @if ($productos[0]->imagen)
-              <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}" class="w-full object-contain" />
-            @else
-              <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa" class="w-full object-contain" />
-            @endif
+            <div class="relative flex justify-center items-center">
+              @if ($product->imagen)
+                <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-300 transform"
+                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                  src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
+                  class="w-full h-[600px] object-contain absolute inset-0 rounded-lg" />
+              @else
+                <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-300 transform"
+                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                  src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                  class="w-full h-[600px] object-contain absolute inset-0 rounded-lg" />
+              @endif
+              @if ($product->imagen_ambiente)
+                <img x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-300 transform"
+                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                  src="{{ asset($product->imagen_ambiente) }}" alt="{{ $product->name }}"
+                  class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
+              @else
+                <img x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
+                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-300 transform"
+                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                  src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                  class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
+              @endif
+            </div>
+
           </div>
 
           <div class="mt-6 sm:mt-8 lg:mt-0">
+            <p class="text-lg font-medium leading-8 text-indigo-600 mb-4">
+              @php
+                $productCategory = $product->categoria();
+              @endphp
+              <a href="/catalogo/{{ $productCategory->slug }}">{{ $productCategory->name }}</a>
+              @if ($product->subcategory_id)
+              @php
+                $productSubcategory = $product->subcategory();
+              @endphp
+                / <a href="/catalogo/{{ $productCategory->slug }}/{{$productSubcategory->slug}}">{{ $productSubcategory->name }}</a>
+              @endif
+            </p>
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white mb-2">
-              {{ $productos[0]->producto }}
+              {{ $product->producto }}
             </h1>
             <div>
-              <p class="mb-6 text-gray-500 dark:text-gray-400">{{ $productos[0]->extract }}</p>
+              <p class="mb-6 text-gray-500 dark:text-gray-400">{{ $product->extract }}</p>
             </div>
             <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
               <p id='infodescuento' class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                @if ($productos[0]->descuento > 0)
-                  S/. {{ $productos[0]->descuento }}
+                @if ($product->descuento > 0)
+                  S/. {{ $product->descuento }}
                   <span id='infoPrecio'
-                    class="ms-2 line-through font-medium text-[20px] text-[#6C7275]">{{ $productos[0]->precio }}</span>
+                    class="ms-2 line-through font-medium text-[20px] text-[#6C7275]">{{ $product->precio }}</span>
                 @else
-                  S/. {{ $productos[0]->precio }}
+                  S/. {{ $product->precio }}
                 @endif
               </p>
             </div>
 
-            <table class="mt-4 w-full text-left">
+            <table class="mt-4 w-full text-left mb-4">
 
               <body>
                 @foreach ($especificaciones as $item)
                   <tr class="bg-white border-b border-t dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="w-0 px-3 py-2 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                    <th scope="row" class="w-0 px-2 py-1.5 font-bold text-gray-900 whitespace-nowrap dark:text-white">
                       {{ $capitalizeFirstLetter($item->tittle) }}:
                     </th>
-                    <td class="px-6 py-4">
+                    <td class="px-2 py-1.5">
                       {{ $capitalizeFirstLetter($item->specifications) }}
                     </td>
                   </tr>
@@ -66,49 +108,63 @@
               </body>
             </table>
 
+            @if ($product->attributes->isNotEmpty())
+              @foreach ($product->attributes->unique() as $atributo)
+                <div class="block w-full">
+                  <p class="font-medium text-lg leading-8 text-gray-900 mb-4">{{ $atributo->titulo }}</p>
+                  <div class="text">
+                    <div class="flex items-center justify-start gap-3 md:gap-6 relative mb-6 ">
+                      @php
+                        $attributeValues = $atributo->attributeValues->whereIn(
+                            'id',
+                            $product->attributes->pluck('pivot.attribute_value_id'),
+                        );
+                      @endphp
 
-            <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <div class="flex">
-                <div class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                  <button id=disminuir type="button"><span class="text-[30px]">-</span></button>
+                      @foreach ($attributeValues as $valor)
+                        <button data-ui="checked active"
+                          class="p-2.5 border border-gray-200 rounded-full transition-all duration-300 hover:border-[{{$valor->color}}33]">
+                          <svg width="20" height="20" viewBox="0 0 40 40" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="20" fill="{{ $valor->color }}" />
+                          </svg>
+                        </button>
+                      @endforeach
+                    </div>
+                  </div>
                 </div>
-                <div id=cantidadSpan class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5]">
-                  <span class="text-[20px]">1</span>
+              @endforeach
+            @endif
+
+            <div class="mt-6 sm:gap-4 items-center sm:flex sm:mt-8">
+              <div class="flex mb-4">
+                <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                  <button class="py-2.5 px-5 text-lg font-semibold" id=disminuir type="button">-</button>
                 </div>
-                <div class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                  <button id=aumentar type="button"><span class="text-[30px]">+</span></button>
+                <div id=cantidadSpan class="py-2.5 px-5 flex justify-center items-center bg-[#F5F5F5] text-lg font-semibold">
+                  <span>1</span>
+                </div>
+                <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                  <button class="py-2.5 px-5 text-lg font-semibold" id=aumentar type="button">+</button>
                 </div>
               </div>
 
               <button id="btnAgregarCarrito"
-                class="text-white mt-4 sm:mt-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-                role="button">
-                <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                class="mb-4 group py-2.5 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-100 hover:shadow-indigo-200">
+                <svg class="stroke-indigo-600 transition-all duration-500" width="22" height="22"
+                  viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.7394 17.875C10.7394 18.6344 10.1062 19.25 9.32511 19.25C8.54402 19.25 7.91083 18.6344 7.91083 17.875M16.3965 17.875C16.3965 18.6344 15.7633 19.25 14.9823 19.25C14.2012 19.25 13.568 18.6344 13.568 17.875M4.1394 5.5L5.46568 12.5908C5.73339 14.0221 5.86724 14.7377 6.37649 15.1605C6.88573 15.5833 7.61377 15.5833 9.06984 15.5833H15.2379C16.6941 15.5833 17.4222 15.5833 17.9314 15.1605C18.4407 14.7376 18.5745 14.0219 18.8421 12.5906L19.3564 9.84059C19.7324 7.82973 19.9203 6.8243 19.3705 6.16215C18.8207 5.5 17.7979 5.5 15.7522 5.5H4.1394ZM4.1394 5.5L3.66797 2.75"
+                    stroke="" stroke-width="1.6" stroke-linecap="round" />
                 </svg>
                 Agregar al carrito
               </button>
-
-              <a href="#" title=""
-                class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                role="button">
-                <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                </svg>
-                Comprar
-              </a>
-
-
             </div>
 
             <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
             <div class=" text-gray-500 dark:text-gray-400">
-              {!! $productos[0]->description !!}
+              {!! $product->description !!}
             </div>
           </div>
         </div>
@@ -133,8 +189,8 @@
 
                 <div class="flex justify-center w-full">
 
-                  @if ($productos[0]->imagen)
-                    <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                  @if ($product->imagen)
+                    <img src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
                       class="w-full  object-contain " />
                   @else
                     <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
@@ -162,8 +218,8 @@
 
                 <div class="flex justify-center w-full">
 
-                  @if ($productos[0]->imagen)
-                    <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                  @if ($product->imagen)
+                    <img src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
                       class="w-full  object-contain " />
                   @else
                     <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
@@ -197,8 +253,8 @@
                   </div>
 
                   <div class="flex justify-center w-full">
-                    @if ($productos[0]->imagen)
-                      <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                    @if ($product->imagen)
+                      <img src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
                         class="w-full  object-contain " />
                     @else
                       <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
@@ -225,21 +281,21 @@
       <div class="basis-1/2 font-poppins flex flex-col gap-5">
         <div class="border-b-[1px] border-gray-300 flex flex-col gap-5">
           <h2 class="font-medium text-[40px] leading-none md:leading-tight">
-            {{ $productos[0]->producto }}
+            {{ $product->producto }}
           </h2>
           <p class="font-normal text-[16px]">
-            {{ $productos[0]->extract }}
+            {{ $product->extract }}
           </p>
-          @if ($productos[0]->descuento > 0)
+          @if ($product->descuento > 0)
             <!-- validamos si tiene descuento  -->
             <p id='infodescuento' class="font-medium text-[28px] mb-5">
-              s/ {{ $productos[0]->descuento }}
+              s/ {{ $product->descuento }}
               <span id='infoPrecio'
-                class="line-through font-medium text-[20px] text-[#6C7275]">{{ $productos[0]->precio }}</span>
+                class="line-through font-medium text-[20px] text-[#6C7275]">{{ $product->precio }}</span>
             </p>
           @else
             <p id='nodescuento' class="font-medium text-[28px] mb-5">
-              s/ {{ $productos[0]->precio }}
+              s/ {{ $product->precio }}
 
             </p>
           @endif
@@ -340,8 +396,8 @@
               Categoría
             </p>
             <p class="font-normal text-[12px] text-[#141718]">
-              @if ($productos[0]->categoria->name)
-                {{ $productos[0]->categoria->name }}
+              @if ($product->categoria->name)
+                {{ $product->categoria->name }}
               @else
                 S/C
               @endif
@@ -357,7 +413,7 @@
           Información adicional
         </h2>
         <div class="flex flex-col gap-5">
-          {!! $productos[0]->description !!}
+          {!! $product->description !!}
         </div>
       </div>
     </section> --}}
@@ -385,7 +441,7 @@
         <div class="col-span-1 md:col-span-4 order-2 md:order-3">
           <!-- ---- CARRUSEL --- -->
           <div>
-            <div class="swiper productos-destacados my-5">
+            {{-- <div class="swiper productos-destacados my-5">
               <div class="swiper-pagination-productos-destacados mb-80 md:mb-32"></div>
               <div class="swiper-wrapper mt-[80px]">
 
@@ -422,17 +478,17 @@
                       </div>
                       <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
                         <!-- <div class="flex items-center gap-2">
-                                                                                            <div class="flex gap-2 py-2">
-                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                                            </div>
-                                                                                            <p class="font-semibold text-[14px] text-[#6C7275]">
-                                                                                                (35)
+                                                                                                <div class="flex gap-2 py-2">
+                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                    <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                                                                                                    <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                                                                                                </div>
+                                                                                                <p class="font-semibold text-[14px] text-[#6C7275]">
+                                                                                                    (35)
   </p>
-                                                                                        </div> -->
+                                                                                            </div> -->
                         <h2 class="font-semibold text-[16px] text-[#141718]">
                           {{ $item->producto }}
                         </h2>
@@ -454,6 +510,26 @@
 
               </div>
               <!-- <div class="swiper-pagination-productos-destacados"></div>  -->
+            </div> --}}
+            <div class="productos-home swiper my-5 mt-16">
+              <div class="swiper-wrapper mt-2 mb-4">
+                @foreach ($ProdComplementarios as $item)
+                  <div class="swiper-slide rounded-2xl">
+                    <x-product.container :item="$item" />
+                  </div>
+                @endforeach
+              </div>
+              <div class="swiper-scrollbar-productos-home h-2"></div>
+              <div class="mt-4 text-end">
+                <button type="button"
+                  class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  ←
+                </button>
+                <button type="button"
+                  class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                  →
+                </button>
+              </div>
             </div>
           </div>
 
@@ -577,58 +653,58 @@
 
 
 
-    function PintarCarrito() {
+    // function PintarCarrito() {
 
-      let itemsCarrito = $('#itemsCarrito')
+    //   let itemsCarrito = $('#itemsCarrito')
 
-      articulosCarrito.forEach(element => {
-        let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-            <div class="flex justify-center items-center gap-5">
-              <div class="bg-[#F3F5F7] rounded-md p-4">
-                <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-              </div>
-              <div class="flex flex-col gap-3 py-2">
-                <h3 class="font-semibold text-[14px] text-[#151515]">
-                  ${element.producto}
-                </h3>
-                <p class="font-normal text-[12px] text-[#6C7275]">
+    //   articulosCarrito.forEach(element => {
+    //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
+    //         <div class="flex justify-center items-center gap-5">
+    //           <div class="bg-[#F3F5F7] rounded-md p-4">
+    //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
+    //           </div>
+    //           <div class="flex flex-col gap-3 py-2">
+    //             <h3 class="font-semibold text-[14px] text-[#151515]">
+    //               ${element.producto}
+    //             </h3>
+    //             <p class="font-normal text-[12px] text-[#6C7275]">
                   
-                </p>
-                <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-                  <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-                    <span  class="text-[20px]">-</span>
-                  </button>
-                  <div class="w-8 h-8 flex justify-center items-center">
-                    <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-                  </div>
-                  <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-                    <span class="text-[20px]">+</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-              <p class="font-semibold text-[14px] text-[#151515]">
-                S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-              </p>
-              <div class="flex items-center">
-                <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg>
-                </button>
+    //             </p>
+    //             <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
+    //               <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
+    //                 <span  class="text-[20px]">-</span>
+    //               </button>
+    //               <div class="w-8 h-8 flex justify-center items-center">
+    //                 <span  class="font-semibold text-[12px]">${element.cantidad }</span>
+    //               </div>
+    //               <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
+    //                 <span class="text-[20px]">+</span>
+    //               </button>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
+    //           <p class="font-semibold text-[14px] text-[#151515]">
+    //             S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
+    //           </p>
+    //           <div class="flex items-center">
+    //             <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
+    //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    //               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+    //             </svg>
+    //             </button>
 
-              </div>
-            </div>
-          </div>`
+    //           </div>
+    //         </div>
+    //       </div>`
 
-        itemsCarrito.append(plantilla)
+    //     itemsCarrito.append(plantilla)
 
-      });
+    //   });
 
-      calcularTotal()
-      mostrarTotalItems()
-    }
+    //   calcularTotal()
+    //   mostrarTotalItems()
+    // }
 
 
 

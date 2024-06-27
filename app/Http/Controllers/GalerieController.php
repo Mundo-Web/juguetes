@@ -66,7 +66,7 @@ class GalerieController extends Controller
 
 			return redirect()->route('galerie.index')->with('success', 'Publicación creado exitosamente.');
 		} catch (\Throwable $th) {
-			// throw $th;
+			return $th;
 		}
 	}
 	public function saveImg($file, $route, $nombreImagen)

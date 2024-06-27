@@ -54,30 +54,31 @@ use App\Models\LibroReclamaciones;
 */
 
 /* Las rutas publicas */
-Route::get('/', [IndexController::class, 'index'] )->name('index');
-Route::get('/nosotros', [IndexController::class, 'nosotros'] )->name('nosotros');
-Route::get('/servicios', [IndexController::class, 'servicios'] )->name('servicios');
-Route::get('/comentario', [IndexController::class, 'comentario'] )->name('comentario');
-Route::post('/comentario/nuevo', [IndexController::class, 'hacerComentario'] )->name('nuevocomentario');
-Route::get('/contacto', [IndexController::class, 'contacto'] )->name('contacto');
-Route::get('/libro-de-reclamaciones', [IndexController::class, 'librodereclamaciones'] )->name('librodereclamaciones');
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/nosotros', [IndexController::class, 'nosotros'])->name('nosotros');
+Route::get('/servicios', [IndexController::class, 'servicios'])->name('servicios');
+Route::get('/comentario', [IndexController::class, 'comentario'])->name('comentario');
+Route::post('/comentario/nuevo', [IndexController::class, 'hacerComentario'])->name('nuevocomentario');
+Route::get('/contacto', [IndexController::class, 'contacto'])->name('contacto');
+Route::get('/libro-de-reclamaciones', [IndexController::class, 'librodereclamaciones'])->name('librodereclamaciones');
 
 /* Proceso de pago */
-Route::get('/carrito', [IndexController::class, 'carrito'] )->name('carrito');
-Route::get('/pago', [IndexController::class, 'pago'] )->name('pago');
-Route::post('/procesar/pago',[IndexController::class, 'procesarPago'])->name('procesar.pago');
-Route::get('/agradecimiento', [IndexController::class, 'agradecimiento'] )->name('agradecimiento');
+Route::get('/carrito', [IndexController::class, 'carrito'])->name('carrito');
+Route::get('/pago', [IndexController::class, 'pago'])->name('pago');
+Route::post('/procesar/pago', [IndexController::class, 'procesarPago'])->name('procesar.pago');
+Route::get('/agradecimiento', [IndexController::class, 'agradecimiento'])->name('agradecimiento');
 /* Catálogo y producto */
-Route::get('/producto/{id}', [IndexController::class, 'producto'] )->name('producto');
-Route::get('/catalogo', [IndexController::class, 'catalogo'] )->name('catalogo.all');
+Route::get('/producto/{id}', [IndexController::class, 'producto'])->name('producto');
+Route::get('/catalogo', [IndexController::class, 'catalogo'])->name('catalogo.all');
 Route::get('/catalogo/{category}', [IndexController::class, 'catalogo'])->name('catalogo');
 Route::get('/catalogo/{category}/{subcategory}', [IndexController::class, 'catalogo'])->name('catalogo.sub');
-Route::post('carrito/buscarProducto', [CarritoController::class, 'buscarProducto'] )->name('carrito.buscarProducto');
+Route::post('carrito/buscarProducto', [CarritoController::class, 'buscarProducto'])->name('carrito.buscarProducto');
 /* Página 404 */
-Route::get('/404', [IndexController::class, 'error'] )->name('error');
+Route::get('/404', [IndexController::class, 'error'])->name('error');
 /* Formulario de contacto */
-Route::post('guardarContactos', [IndexController::class, 'guardarContacto'] )->name('guardarContactos');
-Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePublic'] )->name('guardarFormReclamo');
+Route::post('guardarContactos', [IndexController::class, 'guardarContacto'])->name('guardarContactos');
+Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePublic'])->name('guardarFormReclamo');
 
 Route::get('/obtenerProvincia/{departmentId}', [IndexController::class, 'obtenerProvincia'])->name('obtenerProvincia');
 Route::get('/obtenerDistritos/{provinceId}', [IndexController::class, 'obtenerDistritos'])->name('obtenerDistritos');
@@ -91,7 +92,7 @@ Route::get('/terminos-y-condiciones', [IndexController::class, 'TerminosyCondici
 Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () {
 
     Route::prefix('admin')->group(function () {
-        
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
         Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
@@ -105,23 +106,23 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
 
-         //Libro de reclamaciones
-         Route::resource('/reclamo', LibroReclamacionesController::class);
-         Route::post('/reclamo/borrar', [LibroReclamacionesController::class, 'borrar'])->name('reclamo.borrar');
+        //Libro de reclamaciones
+        Route::resource('/reclamo', LibroReclamacionesController::class);
+        Route::post('/reclamo/borrar', [LibroReclamacionesController::class, 'borrar'])->name('reclamo.borrar');
 
         //Datos Generales
         Route::resource('/datosgenerales', GeneralController::class);
 
         //Testimonies
         Route::resource('/testimonios', TestimonyController::class);
-        Route::post('/testimonios/deleteTestimony', [TestimonyController::class, 'deleteTestimony'] )->name('testimonios.deleteTestimony');
-        Route::post('/testimonios/updateVisible', [TestimonyController::class, 'updateVisible'] )->name('testimonios.updateVisible');
+        Route::post('/testimonios/deleteTestimony', [TestimonyController::class, 'deleteTestimony'])->name('testimonios.deleteTestimony');
+        Route::post('/testimonios/updateVisible', [TestimonyController::class, 'updateVisible'])->name('testimonios.updateVisible');
 
         //Categorías
         Route::resource('/categorias', CategoryController::class);
-        Route::post('/categorias/deleteCategory', [CategoryController::class, 'deleteCategory'] )->name('categorias.deleteCategory');
-        Route::post('/categorias/updateVisible', [CategoryController::class, 'updateVisible'] )->name('categorias.updateVisible');
-        Route::get('/categorias/contarCategorias', [CategoryController::class, 'contarCategoriasDestacadas'] )->name('categorias.contarCategoriasDestacadas');
+        Route::post('/categorias/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('categorias.deleteCategory');
+        Route::post('/categorias/updateVisible', [CategoryController::class, 'updateVisible'])->name('categorias.updateVisible');
+        Route::get('/categorias/contarCategorias', [CategoryController::class, 'contarCategoriasDestacadas'])->name('categorias.contarCategoriasDestacadas');
 
         Route::resource('/subcategories', SubCategoryController::class);
         Route::delete('/subcategories', [SubCategoryController::class, 'delete'])->name('subcategories.delete');
@@ -137,18 +138,18 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 
         //Servicios
         Route::resource('/servicios', ServiceController::class);
-        Route::post('/servicios/deleteService', [ServiceController::class, 'deleteService'] )->name('servicio.deleteService');
-        Route::post('/servicios/updateVisible', [ServiceController::class, 'updateVisible'] )->name('servicio.updateVisible');
+        Route::post('/servicios/deleteService', [ServiceController::class, 'deleteService'])->name('servicio.deleteService');
+        Route::post('/servicios/updateVisible', [ServiceController::class, 'updateVisible'])->name('servicio.updateVisible');
 
 
         //Blog
         Route::resource('/blog', BlogController::class);
-        Route::post('/blog/deleteBlog', [BlogController::class, 'deleteBlog'] )->name('blog.deleteBlog');
-        Route::post('/blog/updateVisible', [BlogController::class, 'updateVisible'] )->name('blog.updateVisible');
+        Route::post('/blog/deleteBlog', [BlogController::class, 'deleteBlog'])->name('blog.deleteBlog');
+        Route::post('/blog/updateVisible', [BlogController::class, 'updateVisible'])->name('blog.updateVisible');
 
         //Crud Logos
         Route::resource('/logos', LogosClientController::class);
-        Route::post('/logos/deleteLogo', [LogosClientController::class, 'deleteLogo'] )->name('logos.deleteLogo');
+        Route::post('/logos/deleteLogo', [LogosClientController::class, 'deleteLogo'])->name('logos.deleteLogo');
 
         //Equipo
         Route::resource('/staff', StaffController::class);
@@ -158,13 +159,13 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/strength', StrengthController::class);
         Route::post('/strength/updateVisible', [StrengthController::class, 'updateVisible'])->name('strength.updateVisible');
         Route::post('/strength/borrar', [StrengthController::class, 'borrar'])->name('strength.borrar');
-      
-        
+
+
         //Nosotros
         Route::resource('/aboutus', AboutUsController::class);
         Route::post('/aboutus/updateVisible', [AboutUsController::class, 'updateVisible'])->name('aboutus.updateVisible');
         Route::post('/aboutus/borrar', [AboutUsController::class, 'borrar'])->name('aboutus.borrar');
-       
+
         //Atributes
         Route::resource('/attributes', AttributesController::class);
         Route::post('/attributes/updateVisible', [AttributesController::class, 'updateVisible'])->name('attributes.updateVisible');
@@ -196,32 +197,28 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 
         //Galeria
         Route::resource('/galerie', GalerieController::class);
+        Route::post('/galerie', [GalerieController::class, 'store'])->name('galerie.store');
         Route::post('/galerie/updateVisible', [GalerieController::class, 'updateVisible'])->name('galerie.updateVisible');
         Route::post('/galerie/borrar', [GalerieController::class, 'borrar'])->name('galerie.borrar');
 
-        
-        Route::fallback(function() {
+
+        Route::fallback(function () {
             return view('pages/utility/404');
         });
-        
     });
-
-    
 });
 
 
 Route::middleware(['auth:sanctum', 'verified', 'can:Customer'])->group(function () {
 
- Route::get('/micuenta', [IndexController::class, 'micuenta'] )->name('micuenta');
- Route::get('/micuenta/pedidos', [IndexController::class, 'pedidos'] )->name('pedidos');
- Route::get('/micuenta/direccion', [IndexController::class, 'direccion'] )->name('direccion');
+    Route::get('/micuenta', [IndexController::class, 'micuenta'])->name('micuenta');
+    Route::get('/micuenta/pedidos', [IndexController::class, 'pedidos'])->name('pedidos');
+    Route::get('/micuenta/direccion', [IndexController::class, 'direccion'])->name('direccion');
 
- Route::post('/micuenta/cambiofoto', [IndexController::class, 'cambiofoto'] )->name('cambiofoto');
- Route::post('/micuenta/direccion/cambiofoto', [IndexController::class, 'cambiofoto'] )->name('cambiofoto');
- Route::post('/micuenta/pedidos/cambiofoto', [IndexController::class, 'cambiofoto'] )->name('cambiofoto');
-
-
- Route::post('/micuenta/actualizarPerfil', [IndexController::class, 'actualizarPerfil'] )->name('actualizarPerfil');
+    Route::post('/micuenta/cambiofoto', [IndexController::class, 'cambiofoto'])->name('cambiofoto');
+    Route::post('/micuenta/direccion/cambiofoto', [IndexController::class, 'cambiofoto'])->name('cambiofoto');
+    Route::post('/micuenta/pedidos/cambiofoto', [IndexController::class, 'cambiofoto'])->name('cambiofoto');
 
 
+    Route::post('/micuenta/actualizarPerfil', [IndexController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 });

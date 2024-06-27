@@ -430,7 +430,7 @@ class IndexController extends Controller
   public function producto(string $id)
   {
 
-    $productos = Products::where('id', '=', $id)->get();
+    // $productos = Products::where('id', '=', $id)->first();
     // $especificaciones = Specifications::where('product_id', '=', $id)->get();
     $product = Products::findOrFail($id);
     $especificaciones = Specifications::where('product_id', '=', $id)
@@ -447,10 +447,15 @@ class IndexController extends Controller
         ", ['productId' => $id]);
 
 
-    $IdProductosComplementarios = $productos->toArray();
-    $IdProductosComplementarios = $IdProductosComplementarios[0]['categoria_id'];
+    // $IdProductosComplementarios = $productos->toArray();
+    // $IdProductosComplementarios = $IdProductosComplementarios[0]['categoria_id'];
 
-    $ProdComplementarios = Products::where('categoria_id', '=', $IdProductosComplementarios)->get();
+    $ProdComplementarios = Products::select()
+    ->where('id', '<>', $id)
+    ->where('categoria_id', '=', $product->categoria_id)
+    ->where('status', '=', true)
+    ->where('visible', '=', true)
+    ->get();
     $atributos = Attributes::where("status", "=", true)->get();
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $url_env = env('APP_URL');
@@ -467,7 +472,7 @@ class IndexController extends Controller
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-    return view('public.product', compact('productos', 'atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados'));
+    return view('public.product', compact('atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados'));
   }
 
   //  --------------------------------------------

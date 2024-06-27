@@ -203,22 +203,23 @@
             </label>
             <input type="checkbox" class="bag__modal" id="check" />
             <div
-              class="bag hidden absolute top-0 right-0 z-[200] md:w-[450px] cartContainer border shadow-2xl rounded-xl">
-              <div class="p-4 flex flex-col h-screen justify-between">
-                <div class="flex justify-between ">
-                  <h2 class="font-medium text-[28px] text-[#151515] pb-5">Carrito</h2>
-                  <div id="closeCarrito" class="cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
+              class="bag hidden fixed top-0 right-0 z-[200] md:w-[450px] cartContainer border shadow-2xl rounded-l-2xl">
+              <div class="p-4 flex flex-col h-screen justify-between gap-2">
+                <div class="flex flex-col">
+                  <div class="flex justify-between ">
+                    <h2 class="font-medium text-[28px] text-[#151515] pb-5">Carrito</h2>
+                    <div id="closeCarrito" class="cursor-pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="overflow-y-scroll h-[calc(100vh-200px)] scroll__carrito">
+                    <div class="flex flex-col gap-10 align-top" id="itemsCarrito"></div>
                   </div>
                 </div>
-                <div></div>
-                <div class="overflow-y-scroll h-auto scroll__carrito">
-                  <div class="flex flex-col gap-10" id="itemsCarrito"></div>
-                </div>
-                <div class="font-poppins flex flex-col gap-2 pt-24">
+                <div class="font-poppins flex flex-col gap-2 pt-2">
                   <div class="text-[#141718] font-medium text-[20px] flex justify-between items-center">
                     <p>Total</p>
                     <p id="itemsTotal">S/ 0.00</p>
@@ -255,7 +256,7 @@
     $('#itemsCount').text(contarArticulos)
   }
   $(document).ready(function() {
-    if ({{ $isIndex }}) {
+    if ({{ $isIndex ? 1 : 0}}) {
       $(window).scroll(function() {
         var scroll = $(window).scrollTop();
         var categoriasOffset = $('#categorias').offset().top;

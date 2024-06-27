@@ -24,13 +24,19 @@ class Products extends Model
     'description',
     'costo_x_art',
     'peso',
-    'categoria_id'
+    'categoria_id',
+    'subcategory_id'
   ];
 
 
   public function categoria()
   {
-      return $this->belongsTo(Category::class);
+      return Category::find($this->categoria_id);
+  }
+
+  public function subcategory()
+  {
+      return Subcategory::find($this->subcategory_id);
   }
 
   public function galeria(){

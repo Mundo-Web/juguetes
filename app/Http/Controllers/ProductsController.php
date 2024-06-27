@@ -7,6 +7,7 @@ use App\Models\AttributesValues;
 use App\Models\Category;
 use App\Models\Products;
 use App\Models\Specifications;
+use App\Models\SubCategory;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -38,11 +39,9 @@ class ProductsController extends Controller
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $tags = Tag::where("status", "=", true)->get();
     $categoria = Category::all();
-    $especificacion = [[
-      'tittle' => '',
-      'specifications' => '',
-    ]];
-    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'categoria', 'tags', 'especificacion'));
+    $subcategories = SubCategory::all();
+    $especificacion = [json_decode('{"tittle":"", "specifications":""}', false)];
+    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'categoria', 'tags', 'especificacion', 'subcategories'));
   }
 
   public function edit(string $id)
@@ -52,10 +51,12 @@ class ProductsController extends Controller
     $atributos = Attributes::where("status", "=", true)->get();
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $especificacion = Specifications::where("product_id", "=", $id)->get();
+    if ($especificacion->count() == 0) $especificacion = [json_decode('{"tittle":"", "specifications":""}', false)];
     $tags = Tag::all();
     $categoria = Category::all();
+    $subcategories = SubCategory::all();
 
-    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'tags', 'categoria', 'especificacion'));
+    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'tags', 'categoria', 'especificacion', 'subcategories'));
   }
 
   public function saveImg($file, $route, $nombreImagen)
