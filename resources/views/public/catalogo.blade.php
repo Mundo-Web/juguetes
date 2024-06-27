@@ -80,7 +80,7 @@
       <section class="font-poppins my-10 w-full">
         <div class="flex flex-col gap-2">
 
-          @if ($filtro == 0)
+          @if ($category == 0)
             <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡</h2>
           @else
             <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡 - {{ $categoria->name }}</h2>

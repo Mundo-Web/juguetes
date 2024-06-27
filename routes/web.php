@@ -34,6 +34,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StrengthController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ValoresAtributosController;
 
 use App\Http\Controllers\TagController;
@@ -69,7 +70,8 @@ Route::get('/agradecimiento', [IndexController::class, 'agradecimiento'] )->name
 /* Catálogo y producto */
 Route::get('/producto/{id}', [IndexController::class, 'producto'] )->name('producto');
 Route::get('/catalogo', [IndexController::class, 'catalogo'] )->name('catalogo.all');
-Route::get('/catalogo/{filtro}', [IndexController::class, 'catalogo'])->name('catalogo');
+Route::get('/catalogo/{category}', [IndexController::class, 'catalogo'])->name('catalogo');
+Route::get('/catalogo/{category}/{subcategory}', [IndexController::class, 'catalogo'])->name('catalogo.sub');
 Route::post('carrito/buscarProducto', [CarritoController::class, 'buscarProducto'] )->name('carrito.buscarProducto');
 /* Página 404 */
 Route::get('/404', [IndexController::class, 'error'] )->name('error');
@@ -120,6 +122,12 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::post('/categorias/deleteCategory', [CategoryController::class, 'deleteCategory'] )->name('categorias.deleteCategory');
         Route::post('/categorias/updateVisible', [CategoryController::class, 'updateVisible'] )->name('categorias.updateVisible');
         Route::get('/categorias/contarCategorias', [CategoryController::class, 'contarCategoriasDestacadas'] )->name('categorias.contarCategoriasDestacadas');
+
+        Route::resource('/subcategories', SubCategoryController::class);
+        Route::delete('/subcategories', [SubCategoryController::class, 'delete'])->name('subcategories.delete');
+        Route::post('/subcategories', [SubCategoryController::class, 'save'])->name('subcategories.save');
+        Route::patch('/subcategories', [SubCategoryController::class, 'update'])->name('subcategories.update');
+        Route::get('/subcategories/count', [SubCategoryController::class, 'contarCategoriasDestacadas'])->name('subcategories.count');
 
         //Precios
         Route::resource('/prices', PriceController::class);

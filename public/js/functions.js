@@ -128,7 +128,7 @@ var carrouselCategorias = new Swiper(".categorias", {
 
 var carrosuelDestacados = new Swiper('.productos-home', {
   slidesPerView: 2,
-  spaceBetween: 10,
+  spaceBetween: 20,
   loop: true,
   grab: false,
 
@@ -150,6 +150,41 @@ var carrosuelDestacados = new Swiper('.productos-home', {
       slidesPerView: 2
     },
     768: {
+      slidesPerView: 3
+    },
+    1024: {
+      slidesPerView: 4
+    },
+    1280: {
+      slidesPerView: 5
+    },
+  },
+});
+
+new Swiper('.categories-header', {
+  slidesPerView: 1,
+  spaceBetween: 10,
+  loop: true,
+  grab: false,
+
+  centeredSlides: false,
+  initialSlide: 0, // Empieza en el cuarto slide (índice 3)
+  // pagination: {
+  //   el: '.swiper-pagination-categories-header',
+  //   clickable: true,
+  // },
+  navigation: {
+    nextEl: '.swiper-button-next-categories-header',
+    prevEl: '.swiper-button-prev-categories-header',
+  },
+  scrollbar: {
+    el: '.swiper-scrollbar-categories-header',
+  },
+  breakpoints: {
+    512: {
+      slidesPerView: 1
+    },
+    768: {
       slidesPerView: 2
     },
     1024: {
@@ -157,9 +192,6 @@ var carrosuelDestacados = new Swiper('.productos-home', {
     },
     1280: {
       slidesPerView: 4
-    },
-    1536: {
-      slidesPerView: 5
     },
   },
 });
@@ -281,7 +313,7 @@ var CarrosuelCatalogo = new Swiper(".producto-catalogo", {
 
 var input = document.querySelector(".input-box");
 
-input.onclick = function () {
+(input ?? {}).onclick = function () {
   this.classList.toggle("open");
   let list = this.nextElementSibling;
   if (list.style.maxHeight) {
@@ -306,7 +338,7 @@ rad.forEach((item) => {
 
 
 var inputDistrito = document.querySelector(".input-box-distrito");
-inputDistrito.onclick = function () {
+(inputDistrito ?? {}).onclick = function () {
   this.classList.toggle("open-distrito");
   let listDistrito = this.nextElementSibling;
   if (listDistrito.style.maxHeight) {
@@ -331,7 +363,7 @@ radDistrito.forEach((item) => {
 
 
 var inputProvincia = document.querySelector(".input-box-provincia");
-inputProvincia.onclick = function () {
+(inputProvincia ?? {}).onclick = function () {
   this.classList.toggle("open-provincia");
   let listProvincia = this.nextElementSibling;
   if (listProvincia.style.maxHeight) {
@@ -359,7 +391,7 @@ radProvincia.forEach((item) => {
 
 var input = document.querySelector(".input-box");
 
-input.onclick = function () {
+(input ?? {}).onclick = function () {
   console.log("click");
   this.classList.toggle("open");
   let list = this.nextElementSibling;

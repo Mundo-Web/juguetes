@@ -75,17 +75,44 @@
                     <span class="h4 text-[#272727] px-3 py-1">Categorias</span>
                     <hr class="mx-3 my-3">
                     <ul class="col-span-3">
-                      @foreach ($categorias as $categoria)
-                        <li class="hover:bg-gray-100">
-                          <a class="h4 text-black flex items-center py-1 px-3"
-                            href="{{ route('catalogo', $categoria->slug) }}"
-                            @click="openCatalogo = false">{{ $categoria->name }}</a>
-                        </li>
+                      @foreach ($categorias as $category)
+                        @if (count($category->subcategories()))
+                          <li class="relative group">
+                            <a class="flex justify-between text-lg font-bold text-black items-center py-1 px-3 hover:bg-gray-100"
+                              href="{{ route('catalogo', $category->slug) }}" @click="openCatalogo = false">
+                              <span>{{ $category->name }}</span>
+                              <span>+</span>
+                            </a>
+                            <ul class="ms-4 my-2 hidden group-hover:block"
+                              style="border-left: 4px solid rgba(0,0,0,.25)">
+                              @foreach ($category->subcategories() as $subcategory)
+                                <li>
+                                  @if ($subcategory->slug)
+                                    <a href="/catalogo/{{$category->slug}}/{{$subcategory->slug}}"
+                                      class="text-black flex items-center py-1 px-3 hover:bg-gray-100"
+                                      @click="openCatalogo = false">{{ $subcategory->name }}</a>
+                                  @else
+                                    <a href="{{ route('catalogo', $category->slug) }}"
+                                      class="text-black flex items-center py-1 px-3 hover:bg-gray-100"
+                                      @click="openCatalogo = false">{{ $subcategory->name }}</a>
+                                  @endif
+                                </li>
+                              @endforeach
+                            </ul>
+                          </li>
+                        @else
+                          <li>
+                            <a class="text-lg font-bold text-black flex items-center py-1 px-3 hover:bg-gray-100"
+                              href="{{ route('catalogo', $category->slug) }}"
+                              @click="openCatalogo = false">{{ $category->name }}</a>
+                          </li>
+                        @endif
                       @endforeach
                     </ul>
                   </div>
+
                   <div class="col-span-9">
-                    <div class="productos-home swiper">
+                    <div class="categories-header swiper">
                       <div class="swiper-wrapper mt-2 mb-4">
                         @foreach ($categorias as $category)
                           @if ($category->destacar)
@@ -95,14 +122,14 @@
                           @endif
                         @endforeach
                       </div>
-                      <div class="swiper-scrollbar-productos-home h-2"></div>
+                      <div class="swiper-scrollbar-categories-header h-2"></div>
                       <div class="mt-4 text-end">
                         <button type="button"
-                          class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                          class="swiper-button-prev-categories-header text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
                           ←
                         </button>
                         <button type="button"
-                          class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                          class="swiper-button-next-categories-header text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
                           →
                         </button>
                       </div>

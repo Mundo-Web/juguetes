@@ -51,7 +51,7 @@
                   <td>{{ $item->costo_x_art }}</td>
                   <td>{{ $item->stock }}</td>
                   <td>{{ $item->peso }}</td>
-                  <td class="px-3 py-2"><img class="w-20" src="{{ asset($item->imagen) }}" alt=""></td>
+                  <td class="px-3 py-2"><img class="w-20 h-20 object-cover object-center" src="{{ asset($item->imagen) }}" alt=""></td>
                   <td>
                     <form method="POST" action="">
                       @csrf

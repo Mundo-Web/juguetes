@@ -64,7 +64,7 @@ class IndexController extends Controller
     return view('public.index', compact('url_env', 'productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category'));
   }
 
-  public function catalogo(Request $request, ?string $filtro = '0')
+  public function catalogo(Request $request, ?string $category = '0', ?string $subcategory = '0')
   {
     $categorias = null;
     $productos = null;
@@ -86,32 +86,32 @@ class IndexController extends Controller
 
 
 
-      if ($filtro == 0) {
+      if ($category == 0) {
         $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
         $categoria = Category::all();
       } else {
         $productos = Products::select('products.*')
           ->join('categories', 'products.categoria_id', '=', 'categories.id')
-          ->where('categories.slug', '=', $filtro)
+          ->where('categories.slug', '=', $category)
           ->where('products.status', '=', 1)
           ->where('products.visible', '=', 1)
           ->paginate(9);
-        $categoria = Category::where('slug', $filtro)->first();
+        $categoria = Category::where('slug', $category)->first();
       }
 
       if ($rangefrom !== null && $rangeto !== null) {
 
-        if ($filtro == 0) {
+        if ($category == 0) {
           $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
           $categoria = Category::all();
         } else {
           $productos = Products::select('products.*')
             ->join('categories', 'products.categoria_id', '=', 'categories.id')
-            ->where('categories.slug', '=', $filtro)
+            ->where('categories.slug', '=', $category)
             ->where('products.status', '=', 1)
             ->where('products.visible', '=', 1)
             ->paginate(9);
-          $categoria = Category::where('slug', $filtro)->first();
+          $categoria = Category::where('slug', $category)->first();
         }
 
         $cleanedData = $productos->filter(function ($value) use ($rangefrom, $rangeto) {
@@ -142,7 +142,7 @@ class IndexController extends Controller
       $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
         ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-      return view('public.catalogo', compact('url_env', 'general', 'faqs', 'categorias', 'testimonie', 'filtro', 'productos', 'categoria', 'rangefrom', 'rangeto', 'destacados'));
+      return view('public.catalogo', compact('url_env', 'general', 'faqs', 'categorias', 'testimonie', 'category', 'productos', 'categoria', 'rangefrom', 'rangeto', 'destacados'));
     } catch (\Throwable $th) {
       // dump($th->getMessage());
     }

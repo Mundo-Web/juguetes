@@ -70,6 +70,8 @@
   <link href="//unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="//unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="/js/tippy.all.min.js"></script>
+  <script src="/js/cookies.extend.js"></script>
 
 </head>
 
