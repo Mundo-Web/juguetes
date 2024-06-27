@@ -153,7 +153,7 @@ class IndexController extends Controller
     $comentarios = Testimony::where('status', '=', 1)->where('visible', '=', 1)->paginate(15);
     $categorias = Category::all();
     $contarcomentarios = count($comentarios);
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     return view('public.comentario', compact('comentarios', 'contarcomentarios', 'url_env', 'categorias', 'destacados'));
@@ -193,7 +193,7 @@ class IndexController extends Controller
   {
     $general = General::all();
     $categorias = Category::all();
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
@@ -206,7 +206,7 @@ class IndexController extends Controller
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     $categorias = Category::all();
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     return view('public.checkout_carrito', compact('url_env', 'categorias', 'destacados'));
   }
 
@@ -231,7 +231,7 @@ class IndexController extends Controller
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
 
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
     return view('public.checkout_pago', compact('url_env', 'distritos', 'provincias', 'departamento', 'detalleUsuario', 'categorias', 'destacados'));
   }
 
@@ -453,7 +453,7 @@ class IndexController extends Controller
     $ProdComplementarios = Products::where('categoria_id', '=', $IdProductosComplementarios)->get();
     $atributos = Attributes::where("status", "=", true)->get();
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
-    $url_env = $_ENV['APP_URL'];
+    $url_env = env('APP_URL');
 
     $capitalizeFirstLetter = function ($string) {
       // Convert the entire string to lowercase

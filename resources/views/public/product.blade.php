@@ -1,4 +1,4 @@
-@extends('components.public.matrix', ['pagina'=>'catalogo'])
+@extends('components.public.matrix', ['pagina' => 'catalogo'])
 
 @section('css_importados')
 
@@ -6,489 +6,583 @@
 
 
 @section('content')
-    <?php
-    // Definición de la función capitalizeFirstLetter()
-    // function capitalizeFirstLetter($string)
-    // {
-    //     return ucfirst($string);
-    // }
-    ?>
+  <?php
+  // Definición de la función capitalizeFirstLetter()
+  // function capitalizeFirstLetter($string)
+  // {
+  //     return ucfirst($string);
+  // }
+  ?>
 
-    <main class="my-10 font-poppins" id="mainSection">
-        <section class="w-11/12 mx-auto flex flex-col md:flex-row gap-10">
-            @csrf
-            <div class="basis-1/2">
-                <!-- grilla de productos -->
-                <div class="hidden md:block">
-                    @php
-                        $cantidadGaleria = count($productosConGalerias);
-                    @endphp
+  <main class="font-poppins" id="mainSection">
 
-                    @if ($cantidadGaleria == 0)
-                        <div class="grid grid-cols-1 gap-10">
-                            <div class="flex flex-col items-start bg-[#F3F5F7]  rounded-2xl">
-                                <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-[1%] ml-[1%] absolute">
-                                    <p class="text-white font-semibold text-[12px]">-30%</p>
-                                </div>
+    <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
+      <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+          <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+            {{-- <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
+              alt="" />
+            <img class="w-full hidden dark:block"
+              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> --}}
+            @if ($productos[0]->imagen)
+              <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}" class="w-full object-contain" />
+            @else
+              <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa" class="w-full object-contain" />
+            @endif
+          </div>
 
-                                <div class="flex justify-center w-full">
-
-                                    @if ($productos[0]->imagen)
-                                        <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
-                                            class="w-full  object-contain " />
-                                    @else
-                                        <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                                            class="w-full  object-contain " />
-                                    @endif
-
-                                </div>
-                            </div>
-                            @foreach ($productosConGalerias as $galeria)
-                                <div class="flex justify-center items-center rounded-2xl object-cover bg-cover"
-                                    style="background-image: url('{{ asset($galeria->imagen) }}')">
-                                    <img src="{{ asset($galeria->imagen) }}" alt="piso_flotante_laminado_2"
-                                        class="w-full object-cover bg-cover rounded-2xl" />
-                                </div>
-                            @endforeach
-
-
-                        </div>
-                    @else
-                        <div class="grid grid-cols-2 gap-10">
-                            <div class="flex flex-col items-start bg-[#F3F5F7]  rounded-2xl">
-                                <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-[1%] ml-[1%] absolute">
-                                    <p class="text-white font-semibold text-[12px]">-30%</p>
-                                </div>
-
-                                <div class="flex justify-center w-full">
-
-                                    @if ($productos[0]->imagen)
-                                        <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
-                                            class="w-full  object-contain " />
-                                    @else
-                                        <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                                            class="w-full  object-contain " />
-                                    @endif
-
-                                </div>
-                            </div>
-                            @foreach ($productosConGalerias as $galeria)
-                                <div class="flex justify-center items-center rounded-2xl object-cover bg-cover"
-                                    style="background-image: url('{{ asset($galeria->imagen) }}')">
-                                    <img src="{{ asset($galeria->imagen) }}" alt="piso_flotante_laminado_2"
-                                        class="w-full object-cover bg-cover rounded-2xl" />
-                                </div>
-                            @endforeach
-
-
-                        </div>
-                    @endif
-                </div>
-
-                <!-- carrusel de productos -->
-                <div class="block md:hidden">
-                    <div class="swiper producto-slider">
-                        <div class="swiper-wrapper swiper-wrapper-height">
-
-                            <div class="swiper-slide swiper-slide-flex rounded-2xl">
-                                <div class="flex flex-col items-start bg-[#F3F5F7] gap-12 relative">
-                                    <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-10 ml-10 absolute">
-                                        <p class="text-white font-semibold text-[12px]">-30%</p>
-                                    </div>
-
-                                    <div class="flex justify-center w-full">
-                                        @if ($productos[0]->imagen)
-                                            <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
-                                                class="w-full  object-contain " />
-                                        @else
-                                            <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                                                class="w-full  object-contain " />
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            @foreach ($productosConGalerias as $galeria)
-                                <div class="swiper-slide">
-                                    <div class="flex justify-center items-center">
-                                        <img src="{{ asset($galeria->imagen) }}" alt="{{ asset($galeria->imagen) }}" />
-                                    </div>
-                                </div>
-                            @endforeach
-
-
-
-                        </div>
-                        <div class="swiper-pagination-productos mt-10"></div>
-                    </div>
-                </div>
+          <div class="mt-6 sm:mt-8 lg:mt-0">
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white mb-2">
+              {{ $productos[0]->producto }}
+            </h1>
+            <div>
+              <p class="mb-6 text-gray-500 dark:text-gray-400">{{ $productos[0]->extract }}</p>
             </div>
-            <div class="basis-1/2 font-poppins flex flex-col gap-5">
-                <div class="border-b-[1px] border-gray-300 flex flex-col gap-5">
-                    <h2 class="font-medium text-[40px] leading-none md:leading-tight">
-                        {{ $productos[0]->producto }}
-                    </h2>
-                    <p class="font-normal text-[16px]">
-                        {{ $productos[0]->extract }}
-                    </p>
-                    @if ($productos[0]->descuento > 0)
-                        <!-- validamos si tiene descuento  -->
-                        <p id='infodescuento' class="font-medium text-[28px] mb-5">
-                            s/ {{ $productos[0]->descuento }}
-                            <span id='infoPrecio'
-                                class="line-through font-medium text-[20px] text-[#6C7275]">{{ $productos[0]->precio }}</span>
-                        </p>
+            <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+              <p id='infodescuento' class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+                @if ($productos[0]->descuento > 0)
+                  S/. {{ $productos[0]->descuento }}
+                  <span id='infoPrecio'
+                    class="ms-2 line-through font-medium text-[20px] text-[#6C7275]">{{ $productos[0]->precio }}</span>
+                @else
+                  S/. {{ $productos[0]->precio }}
+                @endif
+              </p>
+            </div>
+
+            <table class="mt-4 w-full text-left">
+
+              <body>
+                @foreach ($especificaciones as $item)
+                  <tr class="bg-white border-b border-t dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="w-0 px-3 py-2 font-bold text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ $capitalizeFirstLetter($item->tittle) }}:
+                    </th>
+                    <td class="px-6 py-4">
+                      {{ $capitalizeFirstLetter($item->specifications) }}
+                    </td>
+                  </tr>
+                @endforeach
+              </body>
+            </table>
+
+
+            <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+              <div class="flex">
+                <div class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                  <button id=disminuir type="button"><span class="text-[30px]">-</span></button>
+                </div>
+                <div id=cantidadSpan class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5]">
+                  <span class="text-[20px]">1</span>
+                </div>
+                <div class="w-10 h-10 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                  <button id=aumentar type="button"><span class="text-[30px]">+</span></button>
+                </div>
+              </div>
+
+              <button id="btnAgregarCarrito"
+                class="text-white mt-4 sm:mt-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+                role="button">
+                <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                </svg>
+                Agregar al carrito
+              </button>
+
+              <a href="#" title=""
+                class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                role="button">
+                <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
+                </svg>
+                Comprar
+              </a>
+
+
+            </div>
+
+            <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+
+            <div class=" text-gray-500 dark:text-gray-400">
+              {!! $productos[0]->description !!}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {{-- <section class="w-11/12 mx-auto flex flex-col md:flex-row gap-10">
+      @csrf
+      <div class="basis-1/2">
+        <!-- grilla de productos -->
+        <div class="hidden md:block">
+          @php
+            $cantidadGaleria = count($productosConGalerias);
+          @endphp
+
+          @if ($cantidadGaleria == 0)
+            <div class="grid grid-cols-1 gap-10">
+              <div class="flex flex-col items-start bg-[#F3F5F7]  rounded-2xl">
+                <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-[1%] ml-[1%] absolute">
+                  <p class="text-white font-semibold text-[12px]">-30%</p>
+                </div>
+
+                <div class="flex justify-center w-full">
+
+                  @if ($productos[0]->imagen)
+                    <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                      class="w-full  object-contain " />
+                  @else
+                    <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                      class="w-full  object-contain " />
+                  @endif
+
+                </div>
+              </div>
+              @foreach ($productosConGalerias as $galeria)
+                <div class="flex justify-center items-center rounded-2xl object-cover bg-cover"
+                  style="background-image: url('{{ asset($galeria->imagen) }}')">
+                  <img src="{{ asset($galeria->imagen) }}" alt="piso_flotante_laminado_2"
+                    class="w-full object-cover bg-cover rounded-2xl" />
+                </div>
+              @endforeach
+
+
+            </div>
+          @else
+            <div class="grid grid-cols-2 gap-10">
+              <div class="flex flex-col items-start bg-[#F3F5F7]  rounded-2xl">
+                <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-[1%] ml-[1%] absolute">
+                  <p class="text-white font-semibold text-[12px]">-30%</p>
+                </div>
+
+                <div class="flex justify-center w-full">
+
+                  @if ($productos[0]->imagen)
+                    <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                      class="w-full  object-contain " />
+                  @else
+                    <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                      class="w-full  object-contain " />
+                  @endif
+
+                </div>
+              </div>
+              @foreach ($productosConGalerias as $galeria)
+                <div class="flex justify-center items-center rounded-2xl object-cover bg-cover"
+                  style="background-image: url('{{ asset($galeria->imagen) }}')">
+                  <img src="{{ asset($galeria->imagen) }}" alt="piso_flotante_laminado_2"
+                    class="w-full object-cover bg-cover rounded-2xl" />
+                </div>
+              @endforeach
+
+
+            </div>
+          @endif
+        </div>
+
+        <!-- carrusel de productos -->
+        <div class="block md:hidden">
+          <div class="swiper producto-slider">
+            <div class="swiper-wrapper swiper-wrapper-height">
+
+              <div class="swiper-slide swiper-slide-flex rounded-2xl">
+                <div class="flex flex-col items-start bg-[#F3F5F7] gap-12 relative">
+                  <div class="bg-[#38CB89] rounded-md px-5 py-1 mt-10 ml-10 absolute">
+                    <p class="text-white font-semibold text-[12px]">-30%</p>
+                  </div>
+
+                  <div class="flex justify-center w-full">
+                    @if ($productos[0]->imagen)
+                      <img src="{{ asset($productos[0]->imagen) }}" alt="{{ $productos[0]->name }}"
+                        class="w-full  object-contain " />
                     @else
-                        <p id='nodescuento' class="font-medium text-[28px] mb-5">
-                            s/ {{ $productos[0]->precio }}
-
-                        </p>
+                      <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                        class="w-full  object-contain " />
                     @endif
-
+                  </div>
                 </div>
-                <div class="border-b-[1px] border-gray-300 flex flex-col gap-5">
-                    <div class="flex flex-col gap-5">
-                        <table class="border-collapse w-full">
-                            <tbody>
-                                @foreach ($especificaciones as $item)
-                                    <tr>
-                                        <td
-                                            class="border w-1/5 border-gray-400 px-3 py-2 font-semibold text-[16px] text-gray-900">
-                                            {{ $capitalizeFirstLetter($item->tittle) }}:</td>
-                                        <td class="border w-4/5 border-gray-400 px-3 py-2 font-normal text-[15px]">
-                                            {{ $capitalizeFirstLetter($item->specifications) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+              </div>
+              @foreach ($productosConGalerias as $galeria)
+                <div class="swiper-slide">
+                  <div class="flex justify-center items-center">
+                    <img src="{{ asset($galeria->imagen) }}" alt="{{ asset($galeria->imagen) }}" />
+                  </div>
+                </div>
+              @endforeach
 
-                        
-                          <div class="flex flex-col gap-5 mt-3">
-                            <div class="md:col-span-5">
 
-                                <div class="flex gap-2 mt-2 relative mb-2 ">
-                                    @if ($product->attributes->isNotEmpty())
-                                        @foreach ($product->attributes->unique() as $atributo)
-                                            <div>
 
-                                                @if ($atributo->type === 'Circulos')
-                                                    <p class="font-mediumDisplay text-text16 md:text-text20 pb-4">
-                                                        Gama de colores:
-                                                    </p>
+            </div>
+            <div class="swiper-pagination-productos mt-10"></div>
+          </div>
+        </div>
+      </div>
+      <div class="basis-1/2 font-poppins flex flex-col gap-5">
+        <div class="border-b-[1px] border-gray-300 flex flex-col gap-5">
+          <h2 class="font-medium text-[40px] leading-none md:leading-tight">
+            {{ $productos[0]->producto }}
+          </h2>
+          <p class="font-normal text-[16px]">
+            {{ $productos[0]->extract }}
+          </p>
+          @if ($productos[0]->descuento > 0)
+            <!-- validamos si tiene descuento  -->
+            <p id='infodescuento' class="font-medium text-[28px] mb-5">
+              s/ {{ $productos[0]->descuento }}
+              <span id='infoPrecio'
+                class="line-through font-medium text-[20px] text-[#6C7275]">{{ $productos[0]->precio }}</span>
+            </p>
+          @else
+            <p id='nodescuento' class="font-medium text-[28px] mb-5">
+              s/ {{ $productos[0]->precio }}
 
-                                                    <div class="flex gap-5 justify-start items-center">
-                                                        @php
-                                                            $attributeValues = $atributo->attributeValues->whereIn(
-                                                                'id',
-                                                                $product->attributes->pluck('pivot.attribute_value_id'),
-                                                            );
-                                                        @endphp
+            </p>
+          @endif
 
-                                                        @foreach ($attributeValues as $valor)
-                                                            <div style="background-color: {{ $valor->color }}"
-                                                                class="colors w-12 h-12 rounded-[50%] transition">
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
+        </div>
+        <div class="border-b-[1px] border-gray-300 flex flex-col gap-5">
+          <div class="flex flex-col gap-5">
+            <table class="border-collapse w-full">
+              <tbody>
+                @foreach ($especificaciones as $item)
+                  <tr>
+                    <td class="border w-1/5 border-gray-400 px-3 py-2 font-semibold text-[16px] text-gray-900">
+                      {{ $capitalizeFirstLetter($item->tittle) }}:</td>
+                    <td class="border w-4/5 border-gray-400 px-3 py-2 font-normal text-[15px]">
+                      {{ $capitalizeFirstLetter($item->specifications) }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+
+
+            <div class="flex flex-col gap-5 mt-3">
+              <div class="md:col-span-5">
+
+                <div class="flex gap-2 mt-2 relative mb-2 ">
+                  @if ($product->attributes->isNotEmpty())
+                    @foreach ($product->attributes->unique() as $atributo)
+                      <div>
+
+                        @if ($atributo->type === 'Circulos')
+                          <p class="font-mediumDisplay text-text16 md:text-text20 pb-4">
+                            Gama de colores:
+                          </p>
+
+                          <div class="flex gap-5 justify-start items-center">
+                            @php
+                              $attributeValues = $atributo->attributeValues->whereIn(
+                                  'id',
+                                  $product->attributes->pluck('pivot.attribute_value_id'),
+                              );
+                            @endphp
+
+                            @foreach ($attributeValues as $valor)
+                              <div style="background-color: {{ $valor->color }}"
+                                class="colors w-12 h-12 rounded-[50%] transition">
+                              </div>
+                            @endforeach
+                          </div>
+                        @endif
+                      </div>
+                    @endforeach
+                  @endif
+                </div>
+              </div>
+            </div>
+
+
+            <div class="flex">
+              <div class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                <button id=disminuir type="button"><span class="text-[30px]">-</span></button>
+              </div>
+              <div id=cantidadSpan class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5]">
+                <span class="text-[20px]">1</span>
+              </div>
+              <div class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
+                <button id=aumentar type="button"><span class="text-[30px]">+</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="my-5 flex flex-col gap-5  border-b-[1px] border-gray-300 pb-5">
+          <div class="py-2 w-full">
+
+
+            <button type="button" id='btnAgregarCarrito'
+              class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center hover:bg-green-950">
+              Agregar al carrito
+            </button>
+
+          </div>
+
+          <div class="py-2 w-full">
+            <a href="#"
+              class="text-[#74A68D] bg-white w-full py-4 rounded-3xl cursor-pointer border-[1px] border-black font-semibold text-[16px] inline-block text-center hover:bg-slate-300">Comprar</a>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex">
+            <p class="font-normal text-[12px] text-[#6C7275] flex-initial w-44">
+              Sku
+            </p>
+            <p class="font-normal text-[12px] text-[#141718]"> </p>
+          </div>
+
+          <div class="flex">
+            <p class="font-normal text-[12px] text-[#6C7275] flex-initial w-44">
+              Categoría
+            </p>
+            <p class="font-normal text-[12px] text-[#141718]">
+              @if ($productos[0]->categoria->name)
+                {{ $productos[0]->categoria->name }}
+              @else
+                S/C
+              @endif
+            </p>
+          </div>
+        </div>
+      </div>
+    </section> --}}
+
+    {{-- <section class="font-poppins flex w-11/12 mx-auto my-10">
+      <div class="md:basis-1/2">
+        <h2 class="font-medium text-[28px] my-5 leading-none md:leading-tight">
+          Información adicional
+        </h2>
+        <div class="flex flex-col gap-5">
+          {!! $productos[0]->description !!}
+        </div>
+      </div>
+    </section> --}}
+
+    <section class="font-poppins">
+      <div class="grid grid-cols-1 gap-12 md:gap-0 md:grid-cols-4 grid-rows-1 pt-12 w-11/12 mx-auto">
+        <div class="col-span-1 md:col-span-3 order-1 md:order-1 flex flex-col gap-2">
+          <h2 class="font-medium text-[36px] md:text-[40px] mt-2 leading-none md:leading-tight">
+            Productos complementarios
+          </h2>
+
+          <p class="font-normal text-lg basis-3/6">
+            Revisa nuestros productos complementarios y sorpréndete con su calidad. ¡Encontrarás lo mejor en
+            Wall Panel en el mercado!
+          </p>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
+          <a href="catalogo.html"
+            class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
+            Ver todo
+          </a>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 order-2 md:order-3">
+          <!-- ---- CARRUSEL --- -->
+          <div>
+            <div class="swiper productos-destacados my-5">
+              <div class="swiper-pagination-productos-destacados mb-80 md:mb-32"></div>
+              <div class="swiper-wrapper mt-[80px]">
+
+                @foreach ($ProdComplementarios as $item)
+                  <div class="swiper-slide rounded-2xl">
+                    <div class="flex flex-col relative">
+                      <div
+                        class="bg-colorBackgroundProducts rounded-2xl pt-12 pb-5 md:pb-8 product_container basis-4/5 flex flex-col justify-center relative">
+                        <div class="px-4">
+                          <a
+                            class="font-semibold text-[8px] md:text-[12px] bg-[#EB5D2C] py-2 px-2 flex-initial w-24 text-center text-white rounded-[5px] absolute top-[18px] z-10">
+                            Nuevo
+                          </a>
                         </div>
-
-
-                        <div class="flex">
-                            <div
-                                class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                                <button id=disminuir type="button"><span class="text-[30px]">-</span></button>
-                            </div>
-                            <div id=cantidadSpan class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5]">
-                                <span class="text-[20px]">1</span>
-                            </div>
-                            <div
-                                class="w-14 h-14 flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
-                                <button id=aumentar type="button"><span class="text-[30px]">+</span></button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="my-5 flex flex-col gap-5  border-b-[1px] border-gray-300 pb-5">
-                    <div class="py-2 w-full">
-
-
-                        <button type="button" id='btnAgregarCarrito'
-                            class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center hover:bg-green-950">
-                            Agregar al carrito
-                        </button>
-
-                    </div>
-
-                    <div class="py-2 w-full">
-                        <a href="#"
-                            class="text-[#74A68D] bg-white w-full py-4 rounded-3xl cursor-pointer border-[1px] border-black font-semibold text-[16px] inline-block text-center hover:bg-slate-300">Comprar</a>
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex">
-                        <p class="font-normal text-[12px] text-[#6C7275] flex-initial w-44">
-                            Sku
-                        </p>
-                        <p class="font-normal text-[12px] text-[#141718]"> </p>
-                    </div>
-
-                    <div class="flex">
-                        <p class="font-normal text-[12px] text-[#6C7275] flex-initial w-44">
-                            Categoría
-                        </p>
-                        <p class="font-normal text-[12px] text-[#141718]">
-                            @if ($productos[0]->categoria->name)
-                              {{$productos[0]->categoria->name}}
+                        <div>
+                          <div class="relative flex justify-center items-center">
+                            @if ($item->imagen)
+                              <img src="{{ asset($item->imagen) }}" alt="{{ $item->name }}"
+                                class="w-full h-30 object-contain" />
                             @else
-                               S/C  
+                              <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                                class="w-full h-30 object-contain" />
                             @endif
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                          </div>
 
-        <section class="font-poppins flex w-11/12 mx-auto my-10">
-            <div class="md:basis-1/2">
-                <h2 class="font-medium text-[28px] my-5 leading-none md:leading-tight">
-                    Información adicional
-                </h2>
-                <div class="flex flex-col gap-5">
-                    {!! $productos[0]->description !!}
-                </div>
-            </div>
-        </section>
-
-        <section class="font-poppins">
-            <div class="grid grid-cols-1 gap-12 md:gap-0 md:grid-cols-4 grid-rows-1 pt-12 w-11/12 mx-auto">
-                <div class="col-span-1 md:col-span-3 order-1 md:order-1 flex flex-col gap-2">
-                    <h2 class="font-medium text-[36px] md:text-[40px] mt-2 leading-none md:leading-tight">
-                        Productos complementarios
-                    </h2>
-
-                    <p class="font-normal text-lg basis-3/6">
-                        Revisa nuestros productos complementarios y sorpréndete con su calidad. ¡Encontrarás lo mejor en
-                        Wall Panel en el mercado!
-                    </p>
-                </div>
-
-                <div class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
-                    <a href="catalogo.html"
-                        class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
-                        Ver todo
-                    </a>
-                </div>
-
-                <div class="col-span-1 md:col-span-4 order-2 md:order-3">
-                    <!-- ---- CARRUSEL --- -->
-                    <div>
-                        <div class="swiper productos-destacados my-5">
-                            <div class="swiper-pagination-productos-destacados mb-80 md:mb-32"></div>
-                            <div class="swiper-wrapper mt-[80px]">
-
-                                @foreach ($ProdComplementarios as $item)
-                                    <div class="swiper-slide rounded-2xl">
-                                        <div class="flex flex-col relative">
-                                            <div
-                                                class="bg-colorBackgroundProducts rounded-2xl pt-12 pb-5 md:pb-8 product_container basis-4/5 flex flex-col justify-center relative">
-                                                <div class="px-4">
-                                                    <a
-                                                        class="font-semibold text-[8px] md:text-[12px] bg-[#EB5D2C] py-2 px-2 flex-initial w-24 text-center text-white rounded-[5px] absolute top-[18px] z-10">
-                                                        Nuevo
-                                                    </a>
-                                                </div>
-                                                <div>
-                                                    <div class="relative flex justify-center items-center">
-                                                        @if ($item->imagen)
-                                                            <img src="{{ asset($item->imagen) }}"
-                                                                alt="{{ $item->name }}"
-                                                                class="w-full h-30 object-contain" />
-                                                        @else
-                                                            <img src="{{ asset('images/img/noimagen.jpg') }}"
-                                                                alt="imagen_alternativa"
-                                                                class="w-full h-30 object-contain" />
-                                                        @endif
-                                                    </div>
-
-                                                    <!-- ------ -->
-                                                    <div class="addProduct text-center flex justify-center">
-                                                        <a href="{{ route('producto', $item->id) }}"
-                                                            class="font-semibold text-[9px] md:text-[16px] bg-[#74A68D] py-3 px-5 flex-initial w-32 md:w-56 text-center text-white rounded-3xl">
-                                                            Ver producto
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
-                                                <!-- <div class="flex items-center gap-2">
-                                                                        <div class="flex gap-2 py-2">
-                                                                            <img src="./images/svg/start.svg" alt="estrella" />
-                                                                            <img src="./images/svg/start.svg" alt="estrella" />
-                                                                            <img src="./images/svg/start.svg" alt="estrella" />
-                                                                            <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                            <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                        </div>
-                                                                        <p class="font-semibold text-[14px] text-[#6C7275]">
-                                                                            (35)
-    </p>
-                                                                    </div> -->
-                                                <h2 class="font-semibold text-[16px] text-[#141718]">
-                                                    {{ $item->producto }}
-                                                </h2>
-                                                <p class="font-semibold text-[14px] text-[#121212] flex gap-5">
-                                                    @if ($item->descuento == 0)
-                                                        <span>{{ $item->precio }}</span>
-                                                    @else
-                                                        <span>{{ $item->descuento }}</span>
-                                                        <span
-                                                            class="font-normal text-[14px] text-[#6C7275] line-through">{{ $item->precio }}</span>
-                                                    @endif
-
-
-
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                            </div>
-                            <!-- <div class="swiper-pagination-productos-destacados"></div>  -->
+                          <!-- ------ -->
+                          <div class="addProduct text-center flex justify-center">
+                            <a href="{{ route('producto', $item->id) }}"
+                              class="font-semibold text-[9px] md:text-[16px] bg-[#74A68D] py-3 px-5 flex-initial w-32 md:w-56 text-center text-white rounded-3xl">
+                              Ver producto
+                            </a>
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
+                        <!-- <div class="flex items-center gap-2">
+                                                                                            <div class="flex gap-2 py-2">
+                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                <img src="./images/svg/start.svg" alt="estrella" />
+                                                                                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                                                                                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                                                                                            </div>
+                                                                                            <p class="font-semibold text-[14px] text-[#6C7275]">
+                                                                                                (35)
+  </p>
+                                                                                        </div> -->
+                        <h2 class="font-semibold text-[16px] text-[#141718]">
+                          {{ $item->producto }}
+                        </h2>
+                        <p class="font-semibold text-[14px] text-[#121212] flex gap-5">
+                          @if ($item->descuento == 0)
+                            <span>{{ $item->precio }}</span>
+                          @else
+                            <span>{{ $item->descuento }}</span>
+                            <span class="font-normal text-[14px] text-[#6C7275] line-through">{{ $item->precio }}</span>
+                          @endif
 
-                </div>
+
+
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+
+              </div>
+              <!-- <div class="swiper-pagination-productos-destacados"></div>  -->
             </div>
-        </section>
-    </main>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
 
 
 
 
 @section('scripts_importados')
 
-    <script>
-        // $(document).ready(function() {
+  <script>
+    // $(document).ready(function() {
 
 
-            function capitalizeFirstLetter(string) {
-                string = string.toLowerCase()
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-        // })
-        $('#disminuir').on('click', function() {
-            let cantidad = Number($('#cantidadSpan span').text())
-            if (cantidad > 0) {
-                cantidad--
-                $('#cantidadSpan span').text(cantidad)
-            }
+    function capitalizeFirstLetter(string) {
+      string = string.toLowerCase()
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    // })
+    $('#disminuir').on('click', function() {
+      let cantidad = Number($('#cantidadSpan span').text())
+      if (cantidad > 0) {
+        cantidad--
+        $('#cantidadSpan span').text(cantidad)
+      }
 
 
-        })
-        // cantidadSpan
-        $('#aumentar').on('click', function() {
-            let cantidad = Number($('#cantidadSpan span').text())
-            cantidad++
-            $('#cantidadSpan span').text(cantidad)
+    })
+    // cantidadSpan
+    $('#aumentar').on('click', function() {
+      let cantidad = Number($('#cantidadSpan span').text())
+      cantidad++
+      $('#cantidadSpan span').text(cantidad)
 
-        })
-    </script>
-    <script>
-        let articulosCarrito = [];
-
-
-        function deleteOnCarBtn(id, operacion) {
-            const prodRepetido = articulosCarrito.map(item => {
-                if (item.id === id && item.cantidad > 0) {
-                    item.cantidad -= Number(1);
-                    return item; // retorna el objeto actualizado 
-                } else {
-                    return item; // retorna los objetos que no son duplicados 
-                }
-
-            });
-            Local.set('carrito', articulosCarrito)
-            limpiarHTML()
-            PintarCarrito()
+    })
+  </script>
+  <script>
+    let articulosCarrito = [];
 
 
+    function deleteOnCarBtn(id, operacion) {
+      const prodRepetido = articulosCarrito.map(item => {
+        if (item.id === id && item.cantidad > 0) {
+          item.cantidad -= Number(1);
+          return item; // retorna el objeto actualizado 
+        } else {
+          return item; // retorna los objetos que no son duplicados 
         }
 
-        function calcularTotal() {
-            let articulos = Local.get('carrito')
-            let total = articulos.map(item => {
-                let monto
-                if (Number(item.descuento) !== 0) {
-                    monto = item.cantidad * Number(item.descuento)
-                } else {
-                    monto = item.cantidad * Number(item.precio)
+      });
+      Local.set('carrito', articulosCarrito)
+      limpiarHTML()
+      PintarCarrito()
 
-                }
-                return monto
 
-            })
-            const suma = total.reduce((total, elemento) => total + elemento, 0);
+    }
 
-            $('#itemsTotal').text(`S/. ${suma} `)
-
-        }
-
-        function addOnCarBtn(id, operacion) {
-
-            const prodRepetido = articulosCarrito.map(item => {
-                if (item.id === id) {
-                    item.cantidad += Number(1);
-                    return item; // retorna el objeto actualizado 
-                } else {
-                    return item; // retorna los objetos que no son duplicados 
-                }
-
-            });
-            Local.set('carrito', articulosCarrito)
-            // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
-            limpiarHTML()
-            PintarCarrito()
-
+    function calcularTotal() {
+      let articulos = Local.get('carrito')
+      let total = articulos.map(item => {
+        let monto
+        if (Number(item.descuento) !== 0) {
+          monto = item.cantidad * Number(item.descuento)
+        } else {
+          monto = item.cantidad * Number(item.precio)
 
         }
+        return monto
 
-        function deleteItem(id) {
-            articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
+      })
+      const suma = total.reduce((total, elemento) => total + elemento, 0);
 
-            Local.set('carrito', articulosCarrito)
-            limpiarHTML()
-            PintarCarrito()
+      $('#itemsTotal').text(`S/. ${suma} `)
+
+    }
+
+    function addOnCarBtn(id, operacion) {
+
+      const prodRepetido = articulosCarrito.map(item => {
+        if (item.id === id) {
+          item.cantidad += Number(1);
+          return item; // retorna el objeto actualizado 
+        } else {
+          return item; // retorna los objetos que no son duplicados 
         }
 
-        var appUrl = <?php echo json_encode($url_env); ?>;
-        $(document).ready(function() {
-            articulosCarrito = Local.get('carrito') || [];
-
-            PintarCarrito();
-        });
-
-        function limpiarHTML() {
-            //forma lenta 
-            /* contenedorCarrito.innerHTML=''; */
-            $('#itemsCarrito').html('')
+      });
+      Local.set('carrito', articulosCarrito)
+      // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+      limpiarHTML()
+      PintarCarrito()
 
 
-        }
+    }
+
+    function deleteItem(id) {
+      articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
+
+      Local.set('carrito', articulosCarrito)
+      limpiarHTML()
+      PintarCarrito()
+    }
+
+    var appUrl = <?php echo json_encode($url_env); ?>;
+    $(document).ready(function() {
+      articulosCarrito = Local.get('carrito') || [];
+
+      PintarCarrito();
+    });
+
+    function limpiarHTML() {
+      //forma lenta 
+      /* contenedorCarrito.innerHTML=''; */
+      $('#itemsCarrito').html('')
+
+
+    }
 
 
 
-        function PintarCarrito() {
+    function PintarCarrito() {
 
-            let itemsCarrito = $('#itemsCarrito')
+      let itemsCarrito = $('#itemsCarrito')
 
-            articulosCarrito.forEach(element => {
-                let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
+      articulosCarrito.forEach(element => {
+        let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
             <div class="flex justify-center items-center gap-5">
               <div class="bg-[#F3F5F7] rounded-md p-4">
                 <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
@@ -528,119 +622,119 @@
             </div>
           </div>`
 
-                itemsCarrito.append(plantilla)
+        itemsCarrito.append(plantilla)
+
+      });
+
+      calcularTotal()
+      mostrarTotalItems()
+    }
+
+
+
+
+
+
+    $('#btnAgregarCarrito').on('click', function() {
+      let url = window.location.href;
+      let partesURl = url.split('/')
+      let item = partesURl[partesURl.length - 1]
+      let cantidad = Number($('#cantidadSpan span').text())
+      item = item.replace('#', '')
+
+
+
+      // id='nodescuento'
+
+
+      $.ajax({
+
+        url: `{{ route('carrito.buscarProducto') }}`,
+        method: 'POST',
+        data: {
+          _token: $('input[name="_token"]').val(),
+          id: item,
+          cantidad
+
+        },
+        success: function(success) {
+          let {
+            producto,
+            id,
+            descuento,
+            precio,
+            imagen,
+            color
+          } = success.data
+          let cantidad = Number(success.cantidad)
+          let detalleProducto = {
+            id,
+            producto,
+            descuento,
+            precio,
+            imagen,
+            cantidad,
+            color
+
+          }
+          let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
+          if (existeArticulo) {
+            //sumar al articulo actual 
+            const prodRepetido = articulosCarrito.map(item => {
+              if (item.id === detalleProducto.id) {
+                item.cantidad += Number(detalleProducto.cantidad);
+                return item; // retorna el objeto actualizado 
+              } else {
+                return item; // retorna los objetos que no son duplicados 
+              }
 
             });
+          } else {
+            articulosCarrito = [...articulosCarrito, detalleProducto]
 
-            calcularTotal()
-            mostrarTotalItems()
+          }
+
+          Local.set('carrito', articulosCarrito)
+          let itemsCarrito = $('#itemsCarrito')
+          let ItemssubTotal = $('#ItemssubTotal')
+          let itemsTotal = $('#itemsTotal')
+          limpiarHTML()
+          PintarCarrito()
+          mostrarTotalItems()
+
+          Swal.fire({
+
+            icon: "success",
+            title: `Producto agregado correctamente`,
+            showConfirmButton: true
+
+
+          });
+        },
+        error: function(error) {
+          console.log(error)
         }
 
+      })
 
 
 
+      // articulosCarrito = {...articulosCarrito , detalleProducto }
+    })
+    $('#openCarrito').on('click', function() {
+      $('.main').addClass('blur')
+    })
+    $('#closeCarrito').on('click', function() {
+
+      $('.cartContainer').addClass('hidden')
+      $('#check').prop('checked', false);
+      $('.main').removeClass('blur')
 
 
-        $('#btnAgregarCarrito').on('click', function() {
-            let url = window.location.href;
-            let partesURl = url.split('/')
-            let item = partesURl[partesURl.length - 1]
-            let cantidad = Number($('#cantidadSpan span').text())
-            item = item.replace('#', '')
+    })
+  </script>
 
-
-
-            // id='nodescuento'
-
-
-            $.ajax({
-
-                url: `{{ route('carrito.buscarProducto') }}`,
-                method: 'POST',
-                data: {
-                    _token: $('input[name="_token"]').val(),
-                    id: item,
-                    cantidad
-
-                },
-                success: function(success) {
-                    let {
-                        producto,
-                        id,
-                        descuento,
-                        precio,
-                        imagen,
-                        color
-                    } = success.data
-                    let cantidad = Number(success.cantidad)
-                    let detalleProducto = {
-                        id,
-                        producto,
-                        descuento,
-                        precio,
-                        imagen,
-                        cantidad,
-                        color
-
-                    }
-                    let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
-                    if (existeArticulo) {
-                        //sumar al articulo actual 
-                        const prodRepetido = articulosCarrito.map(item => {
-                            if (item.id === detalleProducto.id) {
-                                item.cantidad += Number(detalleProducto.cantidad);
-                                return item; // retorna el objeto actualizado 
-                            } else {
-                                return item; // retorna los objetos que no son duplicados 
-                            }
-
-                        });
-                    } else {
-                        articulosCarrito = [...articulosCarrito, detalleProducto]
-
-                    }
-
-                    Local.set('carrito', articulosCarrito)
-                    let itemsCarrito = $('#itemsCarrito')
-                    let ItemssubTotal = $('#ItemssubTotal')
-                    let itemsTotal = $('#itemsTotal')
-                    limpiarHTML()
-                    PintarCarrito()
-                    mostrarTotalItems()
-
-                    Swal.fire({
-
-                        icon: "success",
-                        title: `Producto agregado correctamente`,
-                        showConfirmButton: true
-
-
-                    });
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-
-            })
-
-
-
-            // articulosCarrito = {...articulosCarrito , detalleProducto }
-        })
-        $('#openCarrito').on('click', function() {
-            $('.main').addClass('blur')
-        })
-        $('#closeCarrito').on('click', function() {
-
-            $('.cartContainer').addClass('hidden')
-            $('#check').prop('checked', false);
-            $('.main').removeClass('blur')
-
-
-        })
-    </script>
-
-    <script src="{{ asset('js/storage.extend.js') }}"></script>
+  <script src="{{ asset('js/storage.extend.js') }}"></script>
 @stop
 
 @stop
