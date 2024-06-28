@@ -65,10 +65,13 @@
                     </div>
                   </div>
 
-                  <div class="md:col-span-5 flex items-center justify-center ">
-                    <div x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false"
-                      class="relative flex justify-center items-center h-[300px] w-[240px] border rounded-lg">
-                      @if ($product->imagen)
+                  <div id="imagenes" class="mx-auto md:col-span-5 flex-col items-center justify-center gap-1">
+                    <label for="imagen_ambiente" {{-- x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false" --}} {{-- class="relative flex justify-center items-center h-[235px] w-[235px] border rounded-lg" --}}
+                      class="flex items-center justify-center w-[235px] h-[235px] rounded-md border hover:opacity-50 cursor-pointer"
+                      title="Cambiar imagen de ambiente" tippy>
+                      <input data-id="input_img" class="hidden" type="file" name="imagen_ambiente" id="imagen_ambiente" accept="image/*">
+                      <img id="imagen_ambiente_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_ambiente ? asset($product->imagen_ambiente): asset('images/img/image-plus.jpg') }}" alt="">
+                      {{-- @if ($product->imagen)
                         <img id="imagen_previewer" x-show="!showAmbiente"
                           x-transition:enter="transition ease-out duration-300 transform"
                           x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
@@ -101,11 +104,38 @@
                           x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                           src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
                           class="w-full h-full object-cover absolute inset-0 rounded-lg" />
-                      @endif
+                      @endif --}}
+                    </label>
+                    <div class="flex gap-[5px] mt-1">
+                      <label for="imagen" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
+                        title="Cambiar imagen 1" tippy>
+                        <input data-id="input_img" class="hidden" type="file" name="imagen" id="imagen" accept="image/*">
+                        <img id="imagen_previewer" class="w-full h-full rounded-md object-cover"
+                          src="{{ $product->imagen ? asset($product->imagen) : asset('images/img/image-plus.jpg') }}"
+                          alt="">
+                      </label>
+                      <label for="imagen_2" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
+                        title="Cambiar imagen 2" tippy>
+                        <input data-id="input_img" class="hidden" type="file" name="imagen_2" id="imagen_2" accept="image/*">
+                        <img id="imagen_2_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_2 ? asset($product->imagen_2) : asset('images/img/image-plus.jpg') }}"
+                          alt="">
+                      </label>
+                      <label for="imagen_3" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
+                        title="Cambiar imagen 3" tippy>
+                        <input data-id="input_img" class="hidden" type="file" name="imagen_3" id="imagen_3" accept="image/*">
+                        <img id="imagen_3_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_3 ? asset($product->imagen_3) : asset('images/img/image-plus.jpg') }}"
+                          alt="">
+                      </label>
+                      <label for="imagen_4" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
+                        title="Cambiar imagen 4" tippy>
+                        <input data-id="input_img" class="hidden" type="file" name="imagen_4" id="imagen_4" accept="image/*">
+                        <img id="imagen_4_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_4 ? asset($product->imagen_4) : asset('images/img/image-plus.jpg') }}"
+                          alt="">
+                      </label>
                     </div>
                   </div>
 
-                  <div class="md:col-span-5">
+                  {{-- <div class="md:col-span-5">
                     <label class="block mb-1" for="imagen">Imagen del producto</label>
                     <input id="imagen" name="imagen"
                       class="mb-2 p-2.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -114,7 +144,7 @@
                     <input id="imagen_ambiente" name="imagen_ambiente"
                       class="mb-2 p-2.5 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                       aria-describedby="user_avatar_help" id="user_avatar" type="file">
-                  </div>
+                  </div> --}}
                 </div>
               </div>
             </div>
@@ -265,19 +295,19 @@
                         </h5>
                         <p class="font-normal text-gray-700 dark:text-gray-400 mb-2">
                           {{ $item->descripcion }}</p>
-                          <div class="flex flex-wrap gap-2">
-                            @foreach ($valorAtributo as $value)
-                              @if ($value->attribute_id == $item->id)
-                                <div class="flex items-center mb-2 ">
-                                  <input type="checkbox" id=" {{ $item->titulo }}:{{ $value->valor }} "
-                                    name="{{ $item->titulo }}:{{ $value->valor }}"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                  <label for=" {{ $item->titulo }}:{{ $value->valor }} "
-                                    class="ml-2">{{ $value->valor }}</label>
-                                </div>
-                              @endif
-                            @endforeach
-                          </div>
+                        <div class="flex flex-wrap gap-2">
+                          @foreach ($valorAtributo as $value)
+                            @if ($value->attribute_id == $item->id)
+                              <div class="flex items-center mb-2 ">
+                                <input type="checkbox" id=" {{ $item->titulo }}:{{ $value->valor }} "
+                                  name="{{ $item->titulo }}:{{ $value->valor }}"
+                                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for=" {{ $item->titulo }}:{{ $value->valor }} "
+                                  class="ml-2">{{ $value->valor }}</label>
+                              </div>
+                            @endif
+                          @endforeach
+                        </div>
                         @if ($item->imagen)
                           <img src="{{ asset($item->imagen) }}" class="rounded-lg mb-2 w-1/2" alt="Imagen actual">
                         @endif
@@ -554,16 +584,17 @@
       menuItems.classList.toggle('hidden', !isExpanded);
       document.getElementById('menu-button').setAttribute('aria-expanded', !isExpanded);
     }
-    $('#imagen').on('change', () => {
-      const file = document.getElementById('imagen').files[0] ?? null
+    $('[data-id="input_img"]').on('change', function () {
+      const input = $(this)
+      console.log(this)
+      const image_container = input.next()
+      const file = input.get(0).files[0] ?? null
       const url = URL.createObjectURL(file)
-      console.log(url)
-      $('#imagen_previewer').attr('src', url)
+      image_container.attr('src', url)
     })
-    $('#imagen_ambiente').on('change', () => {
-      const file = document.getElementById('imagen_ambiente').files[0] ?? null
-      const url = URL.createObjectURL(file)
-      $('#imagen_ambiente_previewer').attr('src', url)
+
+    tippy('#imagenes [tippy]', {
+      arrow: true
     })
   </script>
 </x-app-layout>

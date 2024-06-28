@@ -19,14 +19,8 @@
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
       <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
         <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <div class="relative w-full shrink-0 max-w-md lg:max-w-lg mx-auto border rounded-lg bg-colorBackgroundProducts h-[600px]"
-            x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false"
-            data-aos="zoom-in-left">
-            {{-- <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-              alt="" />
-            <img class="w-full hidden dark:block"
-              src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" /> --}}
-            <div class="relative flex justify-center items-center">
+          <div class="relative w-full shrink-0 max-w-md lg:max-w-lg mx-auto">
+            {{-- <div class="relative flex justify-center items-center">
               @if ($product->imagen)
                 <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
                   x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
@@ -57,8 +51,44 @@
                   src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
                   class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
               @endif
-            </div>
+            </div> --}}
+            @php
+              $images = ['_ambiente', '', '_2', '_3', '_4'];
+              $x = $product->toArray();
+            @endphp
+            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+              class="swiper product-prev mb-6 h-[540px]">
+              <div class="swiper-wrapper">
+                @foreach ($images as $key)
+                  @if ($x['imagen' . $key] == null)
+                    @continue
+                  @else
+                    <div class="swiper-slide h-[540px]">
+                      <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
+                        class="mx-auto w-full h-full object-cover object-center">
+                    </div>
+                  @endif
+                @endforeach
+              </div>
 
+            </div>
+            <div thumbsSlider="" class="swiper product-thumb max-w-[604px] mx-auto">
+              <div class="swiper-wrapper">
+                @php
+                  // array_shift($images);
+                @endphp
+                @foreach ($images as $key)
+                  @if ($x['imagen' . $key] == null)
+                    @continue
+                  @else
+                    <div class="swiper-slide rounded-lg">
+                      <img src="{{ asset($x['imagen' . $key]) }}" alt="Travel Bag image"
+                        class="w-[103px] h-[103px] cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600 object-cover">
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+            </div>
           </div>
 
           <div class="mt-6 sm:mt-8 lg:mt-0">
@@ -68,10 +98,11 @@
               @endphp
               <a href="/catalogo/{{ $productCategory->slug }}">{{ $productCategory->name }}</a>
               @if ($product->subcategory_id)
-              @php
-                $productSubcategory = $product->subcategory();
-              @endphp
-                / <a href="/catalogo/{{ $productCategory->slug }}/{{$productSubcategory->slug}}">{{ $productSubcategory->name }}</a>
+                @php
+                  $productSubcategory = $product->subcategory();
+                @endphp
+                / <a
+                  href="/catalogo/{{ $productCategory->slug }}/{{ $productSubcategory->slug }}">{{ $productSubcategory->name }}</a>
               @endif
             </p>
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white mb-2">
@@ -123,7 +154,7 @@
 
                       @foreach ($attributeValues as $valor)
                         <button data-ui="checked active"
-                          class="p-2.5 border border-gray-200 rounded-full transition-all duration-300 hover:border-[{{$valor->color}}33]">
+                          class="p-2.5 border border-gray-200 rounded-full transition-all duration-300 hover:border-[{{ $valor->color }}33]">
                           <svg width="20" height="20" viewBox="0 0 40 40" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <circle cx="20" cy="20" r="20" fill="{{ $valor->color }}" />
@@ -141,7 +172,8 @@
                 <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
                   <button class="py-2.5 px-5 text-lg font-semibold" id=disminuir type="button">-</button>
                 </div>
-                <div id=cantidadSpan class="py-2.5 px-5 flex justify-center items-center bg-[#F5F5F5] text-lg font-semibold">
+                <div id=cantidadSpan
+                  class="py-2.5 px-5 flex justify-center items-center bg-[#F5F5F5] text-lg font-semibold">
                   <span>1</span>
                 </div>
                 <div class="flex justify-center items-center bg-[#F5F5F5] cursor-pointer hover:bg-slate-300">
@@ -659,44 +691,44 @@
 
     //   articulosCarrito.forEach(element => {
     //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-    //         <div class="flex justify-center items-center gap-5">
-    //           <div class="bg-[#F3F5F7] rounded-md p-4">
-    //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-    //           </div>
-    //           <div class="flex flex-col gap-3 py-2">
-    //             <h3 class="font-semibold text-[14px] text-[#151515]">
-    //               ${element.producto}
-    //             </h3>
-    //             <p class="font-normal text-[12px] text-[#6C7275]">
-                  
-    //             </p>
-    //             <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-    //               <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-    //                 <span  class="text-[20px]">-</span>
-    //               </button>
-    //               <div class="w-8 h-8 flex justify-center items-center">
-    //                 <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-    //               </div>
-    //               <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-    //                 <span class="text-[20px]">+</span>
-    //               </button>
-    //             </div>
-    //           </div>
-    //         </div>
-    //         <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-    //           <p class="font-semibold text-[14px] text-[#151515]">
-    //             S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-    //           </p>
-    //           <div class="flex items-center">
-    //             <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-    //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    //               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-    //             </svg>
-    //             </button>
+  //         <div class="flex justify-center items-center gap-5">
+  //           <div class="bg-[#F3F5F7] rounded-md p-4">
+  //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
+  //           </div>
+  //           <div class="flex flex-col gap-3 py-2">
+  //             <h3 class="font-semibold text-[14px] text-[#151515]">
+  //               ${element.producto}
+  //             </h3>
+  //             <p class="font-normal text-[12px] text-[#6C7275]">
 
-    //           </div>
-    //         </div>
-    //       </div>`
+  //             </p>
+  //             <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
+  //               <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
+  //                 <span  class="text-[20px]">-</span>
+  //               </button>
+  //               <div class="w-8 h-8 flex justify-center items-center">
+  //                 <span  class="font-semibold text-[12px]">${element.cantidad }</span>
+  //               </div>
+  //               <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
+  //                 <span class="text-[20px]">+</span>
+  //               </button>
+  //             </div>
+  //           </div>
+  //         </div>
+  //         <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
+  //           <p class="font-semibold text-[14px] text-[#151515]">
+  //             S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
+  //           </p>
+  //           <div class="flex items-center">
+  //             <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
+  //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  //               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+  //             </svg>
+  //             </button>
+
+  //           </div>
+  //         </div>
+  //       </div>`
 
     //     itemsCarrito.append(plantilla)
 
@@ -811,6 +843,24 @@
   </script>
 
   <script src="{{ asset('js/storage.extend.js') }}"></script>
+
+  <script>
+    var swiper = new Swiper(".product-thumb", {
+      loop: true,
+      spaceBetween: 12,
+      slidesPerView: 5,
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".product-prev", {
+      loop: true,
+      spaceBetween: 32,
+      effect: "fade",
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+  </script>
 @stop
 
 @stop

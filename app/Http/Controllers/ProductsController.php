@@ -59,17 +59,24 @@ class ProductsController extends Controller
     return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'tags', 'categoria', 'especificacion', 'subcategories'));
   }
 
-  public function saveImg($file, $route, $nombreImagen)
+  private function saveImg(Request $request, string $field)
   {
-    $manager = new ImageManager(new Driver());
-    $img =  $manager->read($file);
-    // $img->coverDown(340, 340, 'center');
+    if ($request->hasFile($field)) {
+      $file = $request->file($field);
+      $route = 'storage/images/imagen/';
+      $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
+      $manager = new ImageManager(new Driver());
+      $img =  $manager->read($file);
+      // $img->coverDown(340, 340, 'center');
 
-    if (!file_exists($route)) {
-      mkdir($route, 0777, true); // Se crea la ruta con permisos de lectura, escritura y ejecución
+      if (!file_exists($route)) {
+        mkdir($route, 0777, true);
+      }
+
+      $img->save($route . $nombreImagen);
+      return $route . $nombreImagen;
     }
-
-    $img->save($route . $nombreImagen);
+    return null;
   }
 
   /**
@@ -77,108 +84,97 @@ class ProductsController extends Controller
    */
   public function store(Request $request)
   {
-    $especificaciones = [];
-    $data = $request->all();
-    $atributos = null;
-    $tagsSeleccionados = $request->input('tags_id');
-    // $valorprecio = $request->input('precio') - 0.1;
+    dump($request->all());
+    try {
+      $especificaciones = [];
+      $data = $request->all();
+      $atributos = null;
+      $tagsSeleccionados = $request->input('tags_id');
+      // $valorprecio = $request->input('precio') - 0.1;
 
-    $request->validate([
-      'producto' => 'required',
-      'precio' => 'min:0|required|numeric',
-      'descuento' => 'lt:' . $request->input('precio'),
-    ]);
+      $request->validate([
+        'producto' => 'required',
+        'precio' => 'min:0|required|numeric',
+        'descuento' => 'lt:' . $request->input('precio'),
+      ]);
 
-    if ($request->hasFile("imagen")) {
-      $file = $request->file('imagen');
-      $routeImg = 'storage/images/imagen/';
-      $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
+      // Imagenes
+      $data['imagen_ambiente'] = $this->saveImg($request, 'imagen_ambiente');
+      $data['imagen'] = $this->saveImg($request, 'imagen');
+      $data['imagen_2'] = $this->saveImg($request, 'imagen_2');
+      $data['imagen_3'] = $this->saveImg($request, 'imagen_3');
+      $data['imagen_4'] = $this->saveImg($request, 'imagen_4');
 
-      $this->saveImg($file, $routeImg, $nombreImagen);
+      foreach ($data as $key => $value) {
 
-      $data['imagen'] = $routeImg . $nombreImagen;
-      // $AboutUs->name_image = $nombreImagen;
-    }
+        if (strstr($key, ':')) {
+          // Separa el nombre del atributo y su valor
+          $atributos = $this->stringToObject($key, $atributos);
+          unset($request[$key]);
+        } elseif (strstr($key, '-')) {
 
-    if ($request->hasFile("imagen_ambiente")) {
-      $file = $request->file('imagen_ambiente');
-      $routeImg = 'storage/images/imagen_ambiente/';
-      $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
-
-      $this->saveImg($file, $routeImg, $nombreImagen);
-
-      $data['imagen_ambiente'] = $routeImg . $nombreImagen;
-      // $AboutUs->name_image = $nombreImagen;
-    }
-
-
-
-    foreach ($data as $key => $value) {
-
-      if (strstr($key, ':')) {
-        // Separa el nombre del atributo y su valor
-        $atributos = $this->stringToObject($key, $atributos);
-        unset($request[$key]);
-      } elseif (strstr($key, '-')) {
-
-        //strpos primera ocurrencia que enuentre
-        if (strpos($key, 'tittle-') === 0 || strpos($key, 'title-') === 0) {
-          $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
-          $especificaciones[$num]['tittle'] = $value; // Agregar el título al array asociativo
-        } elseif (strpos($key, 'specifications-') === 0) {
-          $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
-          $especificaciones[$num]['specifications'] = $value; // Agregar las especificaciones al array asociativo
-        }
-      }
-    }
-
-    $jsonAtributos = json_encode($atributos);
-
-    if (array_key_exists('destacar', $data)) {
-      if (strtolower($data['destacar']) == 'on') $data['destacar'] = 1;
-    }
-    if (array_key_exists('recomendar', $data)) {
-      if (strtolower($data['recomendar']) == 'on') $data['recomendar'] = 1;
-    }
-
-
-    $data['atributes'] = $jsonAtributos;
-
-    $cleanedData = Arr::where($data, function ($value, $key) {
-      return !is_null($value);
-    });
-
-    $producto = Products::find($request->id);
-    if ($producto) {
-      $producto->update($cleanedData);
-    } else {
-      $producto = Products::create($cleanedData);
-    }
-
-    if (isset($atributos)) {
-      foreach ($atributos as $atributo => $valores) {
-        $idAtributo = Attributes::where('titulo', $atributo)->first();
-
-        foreach ($valores as $valor) {
-          $idValorAtributo = AttributesValues::where('valor', $valor)->first();
-
-          if ($idAtributo && $idValorAtributo) {
-            DB::table('attribute_product_values')->insert([
-              'product_id' => $producto->id,
-              'attribute_id' => $idAtributo->id,
-              'attribute_value_id' => $idValorAtributo->id,
-            ]);
+          //strpos primera ocurrencia que enuentre
+          if (strpos($key, 'tittle-') === 0 || strpos($key, 'title-') === 0) {
+            $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
+            $especificaciones[$num]['tittle'] = $value; // Agregar el título al array asociativo
+          } elseif (strpos($key, 'specifications-') === 0) {
+            $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
+            $especificaciones[$num]['specifications'] = $value; // Agregar las especificaciones al array asociativo
           }
         }
       }
-    }
 
-    $this->GuardarEspecificaciones($producto->id, $especificaciones);
-    if (!is_null($tagsSeleccionados)) {
-      $this->TagsXProducts($producto->id, $tagsSeleccionados);
-    }
+      $jsonAtributos = json_encode($atributos);
 
-    return redirect()->route('products.index')->with('success', 'Publicación creado exitosamente.');
+      if (array_key_exists('destacar', $data)) {
+        if (strtolower($data['destacar']) == 'on') $data['destacar'] = 1;
+      }
+      if (array_key_exists('recomendar', $data)) {
+        if (strtolower($data['recomendar']) == 'on') $data['recomendar'] = 1;
+      }
+
+
+      $data['atributes'] = $jsonAtributos;
+
+      $cleanedData = Arr::where($data, function ($value, $key) {
+        return !is_null($value);
+      });
+
+      // Busca el producto, si existe lo actualiza, si no lo crea
+      $producto = Products::find($request->id);
+      if ($producto) {
+        $producto->update($cleanedData);
+      } else {
+        $producto = Products::create($cleanedData);
+      }
+
+      if (isset($atributos)) {
+        foreach ($atributos as $atributo => $valores) {
+          $idAtributo = Attributes::where('titulo', $atributo)->first();
+
+          foreach ($valores as $valor) {
+            $idValorAtributo = AttributesValues::where('valor', $valor)->first();
+
+            if ($idAtributo && $idValorAtributo) {
+              DB::table('attribute_product_values')->insert([
+                'product_id' => $producto->id,
+                'attribute_id' => $idAtributo->id,
+                'attribute_value_id' => $idValorAtributo->id,
+              ]);
+            }
+          }
+        }
+      }
+
+      $this->GuardarEspecificaciones($producto->id, $especificaciones);
+      if (!is_null($tagsSeleccionados)) {
+        $this->TagsXProducts($producto->id, $tagsSeleccionados);
+      }
+
+      return redirect()->route('products.index')->with('success', 'Publicación creado exitosamente.');
+    } catch (\Throwable $th) {
+      dump($th->getMessage());
+    }
   }
 
   private function TagsXProducts($id, $nTags)
@@ -244,13 +240,13 @@ class ProductsController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
-  {
-    $especificaciones = [];
-    $product = Products::find($id);
-    $tagsSeleccionados = $request->input('tags_id');
-    $data = $request->all();
-    $atributos = null;
+  // public function update(Request $request, string $id)
+  // {
+  //   $especificaciones = [];
+  //   $product = Products::find($id);
+  //   $tagsSeleccionados = $request->input('tags_id');
+  //   $data = $request->all();
+  //   $atributos = null;
 
 
 
@@ -258,102 +254,102 @@ class ProductsController extends Controller
 
 
 
-    $request->validate([
-      'producto' => 'required',
-    ]);
+  //   $request->validate([
+  //     'producto' => 'required',
+  //   ]);
 
-    if ($request->hasFile("imagen")) {
-      $file = $request->file('imagen');
-      $routeImg = 'storage/images/imagen/';
-      $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
+  //   if ($request->hasFile("imagen")) {
+  //     $file = $request->file('imagen');
+  //     $routeImg = 'storage/images/imagen/';
+  //     $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
 
-      $this->saveImg($file, $routeImg, $nombreImagen);
+  //     $this->saveImg($file, $routeImg, $nombreImagen);
 
-      $data['imagen'] = $routeImg . $nombreImagen;
-      // $AboutUs->name_image = $nombreImagen;
-    }
+  //     $data['imagen'] = $routeImg . $nombreImagen;
+  //     // $AboutUs->name_image = $nombreImagen;
+  //   }
 
-    if ($request->hasFile("imagen_ambiente")) {
-      $file = $request->file('imagen_ambiente');
-      $routeImg = 'storage/images/imagen_ambiente/';
-      $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
+  //   if ($request->hasFile("imagen_ambiente")) {
+  //     $file = $request->file('imagen_ambiente');
+  //     $routeImg = 'storage/images/imagen_ambiente/';
+  //     $nombreImagen = Str::random(10) . '_' . $file->getClientOriginalName();
 
-      $this->saveImg($file, $routeImg, $nombreImagen);
+  //     $this->saveImg($file, $routeImg, $nombreImagen);
 
-      $data['imagen_ambiente'] = $routeImg . $nombreImagen;
-      // $AboutUs->name_image = $nombreImagen;
-    }
+  //     $data['imagen_ambiente'] = $routeImg . $nombreImagen;
+  //     // $AboutUs->name_image = $nombreImagen;
+  //   }
 
-    foreach ($request->all() as $key => $value) {
+  //   foreach ($request->all() as $key => $value) {
 
-      if (strstr($key, ':')) {
-        // Separa el nombre del atributo y su valor
-        $atributos = $this->stringToObject($key, $atributos);
-        unset($request[$key]);
-      } elseif (strstr($key, '-')) {
-        //strpos primera ocurrencia que enuentre
-        if (strpos($key, 'tittle-') === 0 || strpos($key, 'title-') === 0) {
-          $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
-          $especificaciones[$num]['tittle'] = $value; // Agregar el título al array asociativo
-        } elseif (strpos($key, 'specifications-') === 0) {
+  //     if (strstr($key, ':')) {
+  //       // Separa el nombre del atributo y su valor
+  //       $atributos = $this->stringToObject($key, $atributos);
+  //       unset($request[$key]);
+  //     } elseif (strstr($key, '-')) {
+  //       //strpos primera ocurrencia que enuentre
+  //       if (strpos($key, 'tittle-') === 0 || strpos($key, 'title-') === 0) {
+  //         $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
+  //         $especificaciones[$num]['tittle'] = $value; // Agregar el título al array asociativo
+  //       } elseif (strpos($key, 'specifications-') === 0) {
 
-          $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
-          $especificaciones[$num]['specifications'] = $value; // Agregar las especificaciones al array asociativo
-        }
-      }
-    }
-
-
+  //         $num = substr($key, strrpos($key, '-') + 1); // Obtener el número de la especificación
+  //         $especificaciones[$num]['specifications'] = $value; // Agregar las especificaciones al array asociativo
+  //       }
+  //     }
+  //   }
 
 
 
 
 
 
-    $jsonAtributos = json_encode($atributos);
-
-    if (array_key_exists('destacar', $data)) {
-      if (strtolower($data['destacar']) == 'on') $data['destacar'] = 1;
-    }
-    if (array_key_exists('recomendar', $data)) {
-      if (strtolower($data['recomendar']) == 'on') $data['recomendar'] = 1;
-    }
 
 
+  //   $jsonAtributos = json_encode($atributos);
 
-    $data['atributes'] = $jsonAtributos;
-    $cleanedData = Arr::where($data, function ($value, $key) {
-      return !is_null($value);
-    });
-    $product->update($cleanedData);
+  //   if (array_key_exists('destacar', $data)) {
+  //     if (strtolower($data['destacar']) == 'on') $data['destacar'] = 1;
+  //   }
+  //   if (array_key_exists('recomendar', $data)) {
+  //     if (strtolower($data['recomendar']) == 'on') $data['recomendar'] = 1;
+  //   }
 
-    DB::delete('delete from attribute_product_values where product_id = ?', [$product->id]);
 
-    if (isset($atributos)) {
-      foreach ($atributos as $atributo => $valores) {
-        $idAtributo = Attributes::where('titulo', $atributo)->first();
 
-        foreach ($valores as $valor) {
-          $idValorAtributo = AttributesValues::where('valor', $valor)->first();
+  //   $data['atributes'] = $jsonAtributos;
+  //   $cleanedData = Arr::where($data, function ($value, $key) {
+  //     return !is_null($value);
+  //   });
+  //   $product->update($cleanedData);
 
-          if ($idAtributo && $idValorAtributo) {
-            DB::table('attribute_product_values')->insert([
-              'product_id' => $product->id,
-              'attribute_id' => $idAtributo->id,
-              'attribute_value_id' => $idValorAtributo->id,
-            ]);
-          }
-        }
-      }
-    }
+  //   DB::delete('delete from attribute_product_values where product_id = ?', [$product->id]);
 
-    DB::delete('delete from tags_xproducts where producto_id = ?', [$id]);
-    if (!is_null($tagsSeleccionados)) {
-      $this->TagsXProducts($id, $tagsSeleccionados);
-    }
-    $this->actualizarEspecificacion($especificaciones);
-    return redirect()->route('products.index')->with('success', 'Producto editado exitosamente.');
-  }
+  //   if (isset($atributos)) {
+  //     foreach ($atributos as $atributo => $valores) {
+  //       $idAtributo = Attributes::where('titulo', $atributo)->first();
+
+  //       foreach ($valores as $valor) {
+  //         $idValorAtributo = AttributesValues::where('valor', $valor)->first();
+
+  //         if ($idAtributo && $idValorAtributo) {
+  //           DB::table('attribute_product_values')->insert([
+  //             'product_id' => $product->id,
+  //             'attribute_id' => $idAtributo->id,
+  //             'attribute_value_id' => $idValorAtributo->id,
+  //           ]);
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   DB::delete('delete from tags_xproducts where producto_id = ?', [$id]);
+  //   if (!is_null($tagsSeleccionados)) {
+  //     $this->TagsXProducts($id, $tagsSeleccionados);
+  //   }
+  //   $this->actualizarEspecificacion($especificaciones);
+  //   return redirect()->route('products.index')->with('success', 'Producto editado exitosamente.');
+  // }
 
   /**
    * Remove the specified resource from storage.
