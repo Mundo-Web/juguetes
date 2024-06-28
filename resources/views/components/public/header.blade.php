@@ -2,36 +2,171 @@
   $isIndex = Route::currentRouteName() == 'index';
 @endphp
 
-<div class="navigation" style="z-index: 9999">
-  <button aria-label="hamburguer" type="button" class="hamburger" id="position" onclick="show()">
-    <!-- <div id="bar1" class="bar"></div>
-      <div id="bar2" class="bar"></div>
-      <div id="bar3" class="bar"></div> -->
+<style>
+  nav a .underline-this {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    text-decoration: none;
+    padding-bottom: 4px;
+  }
 
+  nav a .underline-this::before,
+  nav a .underline-this::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #FF5E14;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  nav a .underline-this::after {
+    transform-origin: right;
+  }
+
+  nav a:hover .underline-this::before,
+  nav a:hover .underline-this::after {
+    transform: scaleX(1);
+  }
+
+  nav a:hover .underline-this::before {
+    transform-origin: left;
+  }
+
+  nav li {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+</style>
+
+<div class="navigation shadow-xl" style="z-index: 9999; background-color: #fff !important">
+  <button aria-label="hamburguer" type="button" class="hamburger" id="position" onclick="show()">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 2L2 18M18 18L2 2" stroke="white" stroke-width="2.66667" stroke-linecap="round" />
+      <path d="M18 2L2 18M18 18L2 2" stroke="#272727" stroke-width="2.66667" stroke-linecap="round" />
     </svg>
   </button>
-  <nav class="menu-list">
-    <ul>
+  <nav class="w-full h-full overflow-y-auto p-8" x-data="{ openCatalogo: true, openSubMenu: null }">
+    <ul class="space-y-1">
       <li>
         <a href="/"
-          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Homero</a>
+          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
+          <span class="underline-this">
+            <svg
+              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+            </svg>
+            Home
+          </span>
+        </a>
       </li>
       <li>
-        <a href="{{ route('catalogo.all') }}"
-          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">Catálogo</a>
+        <a @click="openCatalogo = !openCatalogo" href="javascript:void(0)"
+          class="flex justify-between items-center font-medium font-poppins text-sm py-2 px-3 hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">
+          <span class="underline-this">
+            <svg
+              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+              <path
+                d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z" />
+              <path
+                d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z" />
+            </svg>
+            Catalogo
+          </span>
+          <span :class="{ 'rotate-180': openCatalogo }"
+            class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
+        </a>
+        <ul x-show="openCatalogo" x-transition class="ml-3 mt-1 space-y-1 border-l border-gray-300">
+          <li>
+            <a href="{{ route('catalogo.all') }}"
+              class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+              <span class="underline-this">
+                Todas las categorías
+              </span>
+            </a>
+          </li>
+          @foreach ($categorias as $category)
+            @if (count($category->subcategories()))
+              <li>
+                <a @click="openSubMenu === {{ $category->id }} ? openSubMenu = null : openSubMenu = {{ $category->id }}"
+                  href="javascript:void(0)"
+                  class="text-[#272727] flex justify-between items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                  <span class="underline-this">
+                    {{ $category->name }}
+                  </span>
+                  <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
+                    class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
+                </a>
+                <ul x-show="openSubMenu === {{ $category->id }}" x-transition
+                  class="ml-3 mt-1 space-y-1 border-l border-gray-300">
+                  <li>
+                    <a href="/catalogo/{{ $category->slug }}"
+                      class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                      <span class="underline-this">
+                        Ver todo {{ $category->name }}
+                      </span>
+                    </a>
+                  </li>
+                  @foreach ($category->subcategories() as $subcategory)
+                    <li>
+                      <a href="/catalogo/{{ $category->slug }}/{{ $subcategory->slug }}"
+                        class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                        <span class="underline-this">{{ $subcategory->name }}</span>
+                      </a>
+                    </li>
+                  @endforeach
+                </ul>
+              </li>
+            @else
+              <li>
+                <a href="{{ route('catalogo', $category->slug) }}"
+                  class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                  <span class="underline-this">
+                    {{ $category->name }}
+                  </span>
+                </a>
+              </li>
+            @endif
+          @endforeach
+        </ul>
       </li>
       <li>
         <a href="{{ route('contacto') }}"
-          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">Contacto</a>
+          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
+          <span class="underline-this">
+            <svg
+              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
+              <path
+                d="M12 0H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM7.5 17.5h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2ZM12 13H2V4h10v9Z" />
+            </svg>
+            Contacto
+          </span>
+        </a>
       </li>
       <li>
         <a href="{{ route('comentario') }}"
-          class="font-medium font-poppins text-[14px] py-1 px-3  hover:opacity-75  {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">Comentar</a>
+          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
+          <span class="underline-this">
+            <svg
+              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M19 4h-1a1 1 0 1 0 0 2v11a1 1 0 0 1-2 0V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1ZM3 4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4Zm9 13H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Z" />
+              <path d="M6 5H5v1h1V5Z" />
+            </svg>
+            Comentar
+          </span></a>
       </li>
     </ul>
   </nav>
+
 </div>
 
 
@@ -59,14 +194,16 @@
         <div class="hidden md:block">
           <div>
             <nav id="menu-items" class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5"
-              x-data="{ openCatalogo: false }">
+              x-data="{ openCatalogo: true, openSubMenu: null }">
               <a href="{{ route('index') }}"
-                class="py-5 mt-[3px] font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">Home</a>
+                class="py-5  font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
+                <span class="underline-this">Home</span>
+              </a>
               <div @mouseenter="openCatalogo = true" @mouseleave="openCatalogo = false" class="px-3 py-5">
                 <a href="{{ route('catalogo.all') }}"
                   class="font-medium font-poppins text-[14px] hover:opacity-75 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}"
                   aria-haspopup="true">
-                  Catálogo
+                  <span class="underline-this">Catalogo</span>
                 </a>
                 <div x-show="openCatalogo"
                   class="origin-top-right absolute top-full left-0 w-[100vw] mt-0 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 shadow-lg overflow-hidden grid gap-8 grid-cols-12"
@@ -77,34 +214,44 @@
                     <ul class="col-span-3">
                       @foreach ($categorias as $category)
                         @if (count($category->subcategories()))
-                          <li class="relative group">
-                            <a class="flex justify-between text-lg font-bold text-black items-center py-1 px-3 hover:bg-gray-100"
-                              href="{{ route('catalogo', $category->slug) }}" @click="openCatalogo = false">
-                              <span>{{ $category->name }}</span>
-                              <span>+</span>
+                          <li>
+                            <a @click="openSubMenu === {{ $category->id }} ? openSubMenu = null : openSubMenu = {{ $category->id }}"
+                              href="javascript:void(0)"
+                              class="text-[#272727] flex justify-between items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                              <span class="underline-this">
+                                {{ $category->name }}
+                              </span>
+                              <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
+                                class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
                             </a>
-                            <ul class="ms-4 my-2 hidden group-hover:block"
-                              style="border-left: 4px solid rgba(0,0,0,.25)">
+                            <ul x-show="openSubMenu === {{ $category->id }}" x-transition
+                              class="ml-3 mt-1 space-y-1 border-l border-gray-300">
+                              <li>
+                                <a href="/catalogo/{{ $category->slug }}"
+                                  class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                  <span class="underline-this">
+                                    Ver todo {{ $category->name }}
+                                  </span>
+                                </a>
+                              </li>
                               @foreach ($category->subcategories() as $subcategory)
                                 <li>
-                                  @if ($subcategory->slug)
-                                    <a href="/catalogo/{{$category->slug}}/{{$subcategory->slug}}"
-                                      class="text-black flex items-center py-1 px-3 hover:bg-gray-100"
-                                      @click="openCatalogo = false">{{ $subcategory->name }}</a>
-                                  @else
-                                    <a href="{{ route('catalogo', $category->slug) }}"
-                                      class="text-black flex items-center py-1 px-3 hover:bg-gray-100"
-                                      @click="openCatalogo = false">{{ $subcategory->name }}</a>
-                                  @endif
+                                  <a href="/catalogo/{{ $category->slug }}/{{ $subcategory->slug }}"
+                                    class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                    <span class="underline-this">{{ $subcategory->name }}</span>
+                                  </a>
                                 </li>
                               @endforeach
                             </ul>
                           </li>
                         @else
                           <li>
-                            <a class="text-lg font-bold text-black flex items-center py-1 px-3 hover:bg-gray-100"
-                              href="{{ route('catalogo', $category->slug) }}"
-                              @click="openCatalogo = false">{{ $category->name }}</a>
+                            <a href="{{ route('catalogo', $category->slug) }}"
+                              class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                              <span class="underline-this">
+                                {{ $category->name }}
+                              </span>
+                            </a>
                           </li>
                         @endif
                       @endforeach
@@ -139,19 +286,24 @@
               </div>
 
               <a href="{{ route('contacto') }}"
-                class="py-5 mt-[3px] font-medium font-poppins px-3 text-[14px] hover:opacity-75 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">Contacto</a>
+                class="py-5  font-medium font-poppins px-3 text-[14px] hover:opacity-75 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
+                <span class="underline-this">Contacto</span>
+              </a>
               <a href="{{ route('comentario') }}"
-                class="py-5 mt-[3px] font-medium font-poppins px-3 text-[14px] hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">Comentar</a>
+                class="py-5  font-medium font-poppins px-3 text-[14px] hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
+                <span class="underline-this">Comentar</span>
+              </a>
             </nav>
           </div>
         </div>
 
         <div class="flex justify-end w-full md:w-auto md:justify-center items-center gap-5">
           @if (Auth::user() == null)
-            <a href="{{ route('login') }}"><img src="{{ asset('images/svg/header_user.svg') }}" alt="user" /></a>
+            <a href="{{ route('login') }}"><img src="{{ asset('images/svg/header_user.svg') }}"
+                alt="user" /></a>
           @else
             <div class="relative inline-flex" x-data="{ open: false }">
-              <button class="inline-flex justify-center items-center group" aria-haspopup="true"
+              <button class="px-3 py-5 inline-flex justify-center items-center group" aria-haspopup="true"
                 @click.prevent="open = !open" :aria-expanded="open">
                 <div class="flex items-center truncate">
                   <span id="username"
@@ -240,7 +392,7 @@
       </div>
     </div>
 
-    <div id="menu-burguer" class="absolute md:hidden top-1 left-[10px] z-10" style="z-index: 999">
+    <div id="menu-burguer" class="absolute md:hidden top-2 left-[10px] z-10" style="z-index: 999">
 
       {{-- <button aria-label="hamburguer" class="hamburger" onclick="show()"> --}}
       <img class="h-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}" alt="menu hamburguesa"
@@ -260,7 +412,7 @@
     $('#itemsCount').text(contarArticulos)
   }
   $(document).ready(function() {
-    if ({{ $isIndex ? 1 : 0}}) {
+    if ({{ $isIndex ? 1 : 0 }}) {
       $(window).scroll(function() {
         var scroll = $(window).scrollTop();
         var categoriasOffset = $('#categorias').offset().top;
