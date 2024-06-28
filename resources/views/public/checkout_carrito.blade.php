@@ -49,9 +49,14 @@
         <div class="basis-7/12 flex flex-col gap-10">
           <div>
             <div class="flex flex-col 2lg:flex-row pb-5 border-b-[2px] border-[#E8ECEF] gap-5">
-              <div class="w-full basis-5/12" id="itemsCarritoCheck">
+              <table>
+                <tbody id="itemsCarritoCheck">
 
-              </div>
+                </tbody>
+              </table>
+              {{-- <div class="w-full basis-5/12" id="itemsCarritoCheck">
+
+              </div> --}}
             </div>
           </div>
         </div>
