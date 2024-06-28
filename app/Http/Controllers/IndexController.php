@@ -333,7 +333,10 @@ class IndexController extends Controller
   public function agradecimiento()
   {
     //
-    return view('public.checkout_agradecimiento');
+    $categorias = Category::all();
+    return view('public.checkout_agradecimiento', compact(
+      'categorias'
+    ));
   }
 
   public function cambiofoto(Request $request)
