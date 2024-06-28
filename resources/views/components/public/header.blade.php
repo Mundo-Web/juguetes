@@ -67,7 +67,7 @@
       </li>
       <li>
         <a @click="openCatalogo = !openCatalogo" href="javascript:void(0)"
-          class="flex justify-between items-center font-medium font-poppins text-sm py-2 px-3 hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">
+          class="text-[#272727] flex justify-between items-center font-medium font-poppins text-sm py-2 px-3 hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">
           <span class="underline-this">
             <svg
               class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -80,7 +80,7 @@
             Catalogo
           </span>
           <span :class="{ 'rotate-180': openCatalogo }"
-            class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
+            class="ms-1 inline-block transform transition-transform duration-300">↓</span>
         </a>
         <ul x-show="openCatalogo" x-transition class="ml-3 mt-1 space-y-1 border-l border-gray-300">
           <li>
@@ -101,7 +101,7 @@
                     {{ $category->name }}
                   </span>
                   <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
-                    class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
+                    class="ms-1 inline-block transform transition-transform duration-300">↓</span>
                 </a>
                 <ul x-show="openSubMenu === {{ $category->id }}" x-transition
                   class="ml-3 mt-1 space-y-1 border-l border-gray-300">
@@ -194,7 +194,7 @@
         <div class="hidden md:block">
           <div>
             <nav id="menu-items" class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5"
-              x-data="{ openCatalogo: true, openSubMenu: null }">
+              x-data="{ openCatalogo: false, openSubMenu: null }">
               <a href="{{ route('index') }}"
                 class="py-5  font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
                 <span class="underline-this">Home</span>
@@ -222,7 +222,7 @@
                                 {{ $category->name }}
                               </span>
                               <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
-                                class="ms-1 inline-block transform transition-transform duration-300">&darr;</span>
+                                class="ms-1 inline-block transform transition-transform duration-300">↓</span>
                             </a>
                             <ul x-show="openSubMenu === {{ $category->id }}" x-transition
                               class="ml-3 mt-1 space-y-1 border-l border-gray-300">
