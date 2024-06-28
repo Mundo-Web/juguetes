@@ -84,7 +84,7 @@ class ProductsController extends Controller
    */
   public function store(Request $request)
   {
-    dump($request->all());
+    // dump($request->all());
     try {
       $especificaciones = [];
       $data = $request->all();
@@ -173,7 +173,7 @@ class ProductsController extends Controller
 
       return redirect()->route('products.index')->with('success', 'Publicación creado exitosamente.');
     } catch (\Throwable $th) {
-      dump($th->getMessage());
+      // dump($th->getMessage());
     }
   }
 
