@@ -59,9 +59,10 @@
                   <div class="md:col-span-5">
                     <label for="description">Descripcion</label>
                     <div class="relative mb-2 mt-2">
-                      <textarea type="text" rows="2" id="description" name="description" value=""
+                      {{-- <textarea type="text" rows="2" id="description" name="description" value=""
                         class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Descripción">{{ $product->description }}</textarea>
+                        placeholder="Descripción">{{ $product->description }}</textarea> --}}
+                        <x-form.quill id="description" :value="$product->description"/>
                     </div>
                   </div>
 
@@ -467,20 +468,20 @@
     $('document').ready(function() {
       let valorInput = $('[id="specifications"]').length / 2
 
-      tinymce.init({
-        selector: 'textarea#description',
-        height: 300,
-        plugins: [
-          'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
-          'searchreplace', 'visualblocks', 'code', 'fullscreen',
-          'insertdatetime', 'table'
-        ],
-        toolbar: 'undo redo | blocks | ' +
-          'bold italic backcolor | alignleft aligncenter ' +
-          'alignright alignjustify | bullist numlist outdent indent | ' +
-          'removeformat | help',
-        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px;}'
-      });
+      // tinymce.init({
+      //   selector: 'textarea#description',
+      //   height: 300,
+      //   plugins: [
+      //     'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
+      //     'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      //     'insertdatetime', 'table'
+      //   ],
+      //   toolbar: 'undo redo | blocks | ' +
+      //     'bold italic backcolor | alignleft aligncenter ' +
+      //     'alignright alignjustify | bullist numlist outdent indent | ' +
+      //     'removeformat | help',
+      //   content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px;}'
+      // });
 
       $("#AddEspecifiacion").on('click', function(e) {
         e.preventDefault()
