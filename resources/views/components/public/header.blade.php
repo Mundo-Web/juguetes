@@ -299,7 +299,7 @@
 
         <div class="flex justify-end w-full md:w-auto md:justify-center items-center gap-5">
           @if (Auth::user() == null)
-            <a  href="{{ route('login') }}"><img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_user.svg') }}"
+            <a class="px-3 py-5" href="{{ route('login') }}"><img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_user.svg') }}"
                 alt="user" /></a>
           @else
             <div class="relative inline-flex" x-data="{ open: false }">
