@@ -51,7 +51,7 @@
       <!-- ------ -->
       <div class="addProduct text-center flex justify-center h-0">
         <a href="{{ route('producto', $item->id) }}"
-          class="font-semibold text-[9px]  bg-[#74A68D] py-2 px-4 flex-initial text-center items-center text-white rounded-3xl h-10">
+          class="font-semibold text-[9px]  bg-[#74A68D] py-2 px-4 flex-initial text-center items-center justify-center text-white rounded-3xl h-10">
           Ver producto
         </a>
       </div>
