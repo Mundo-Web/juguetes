@@ -65,7 +65,7 @@
                   @else
                     <div class="swiper-slide h-[540px]">
                       <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
-                        class="mx-auto w-full h-full object-cover object-center">
+                        class="mx-auto w-full h-full object-cover object-center bg-colorBackgroundProducts">
                     </div>
                   @endif
                 @endforeach
@@ -83,7 +83,7 @@
                   @else
                     <div class="swiper-slide rounded-lg">
                       <img src="{{ asset($x['imagen' . $key]) }}" alt="Travel Bag image"
-                        class="w-[103px] h-[103px] cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600 object-cover">
+                        class="w-[103px] h-[103px] cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600 object-cover bg-colorBackgroundProducts">
                     </div>
                   @endif
                 @endforeach
