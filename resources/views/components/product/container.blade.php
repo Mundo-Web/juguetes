@@ -61,7 +61,7 @@
     </div>
   </div>
   <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
-    <p class="font-semibold text-[20px] text-[#121212] flex gap-5">
+    <p class="font-bolder text-[20px] text-[#121212] flex gap-5">
       @if ($item->descuento == 0)
         <span>S/. {{ $item->precio }}</span>
       @else
