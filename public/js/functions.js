@@ -149,14 +149,17 @@ var carrosuelDestacados = new Swiper('.productos-home', {
     512: {
       slidesPerView: 2
     },
-    768: {
+    640: {
       slidesPerView: 3
     },
-    1024: {
+    768: {
       slidesPerView: 4
     },
-    1280: {
+    1024: {
       slidesPerView: 5
+    },
+    1280: {
+      slidesPerView: 6
     },
   },
 });
