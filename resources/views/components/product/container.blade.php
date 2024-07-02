@@ -61,10 +61,10 @@
     </div>
   </div>
   <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
-    <h2 class="font-semibold text-[16px] text-[#141718]">
+    <h2 class="font-semibold text-[18px] text-[#141718]">
       {{ $item->producto }}
     </h2>
-    <p class="font-semibold text-[14px] text-[#121212] flex gap-5">
+    <p class="font-semibold text-[20px] text-[#121212] flex gap-5">
       @if ($item->descuento == 0)
         <span>{{ $item->precio }}</span>
       @else
