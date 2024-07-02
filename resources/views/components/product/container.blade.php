@@ -17,20 +17,23 @@
     </div>
     <div>
       <div class="relative flex justify-center items-center h-[300px]">
+        @php
+          $category = $item->categoria();
+        @endphp
         @if ($item->imagen)
           <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-300 transform"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
             src="{{ asset($item->imagen) }}" alt="{{ $item->name }}"
-            class="w-full h-[300px] object-contain absolute inset-0" />
+            class="w-full h-[300px] object-{{$category->fit}} absolute inset-0" />
         @else
           <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-300 transform"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
             src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-            class="w-full h-[300px] object-contain absolute inset-0" />
+            class="w-full h-[300px] object-{{$category->fit}} absolute inset-0" />
         @endif
         @if ($item->imagen_ambiente)
           <img x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"

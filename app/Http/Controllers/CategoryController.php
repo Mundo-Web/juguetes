@@ -22,10 +22,8 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Category::where("status", "=", true)->get();
-       
-        return view('pages.categories.index', compact('category'));
 
-        
+        return view('pages.categories.index', compact('category'));
     }
 
     /**
@@ -33,7 +31,18 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('pages.categories.create');
+        $category = new Category();
+        return view('pages.categories.save', compact('category'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Category $category, $id)
+    {
+        $category = Category::findOrfail($id);
+
+        return view('pages.categories.save', compact('category'));
     }
 
     /**
@@ -41,7 +50,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Category(); 
+        $body = $request->all();
 
         if ($request->hasFile("imagen")) {
 
@@ -51,7 +60,6 @@ class CategoryController extends Controller
 
             $img =  $manager->read($request->file('imagen'));
 
-        
             // Obtener las dimensiones de la imagen que se esta subiendo
             $img->coverDown(640, 640, 'center');
 
@@ -60,11 +68,11 @@ class CategoryController extends Controller
             if (!file_exists($ruta)) {
                 mkdir($ruta, 0777, true); // Se crea la ruta con permisos de lectura, escritura y ejecución
             }
-            
-            $img->save($ruta.$nombreImagen);
 
-            $category ->url_image = $ruta;
-            $category ->name_image = $nombreImagen;
+            $img->save($ruta . $nombreImagen);
+
+            $body['url_image'] = $ruta;
+            $body['name_image'] = $nombreImagen;
         }
 
         $slug = strtolower(str_replace(' ', '-', $request->name));
@@ -74,15 +82,14 @@ class CategoryController extends Controller
             $slug .= '-' . rand(1, 1000); // Puedes ajustar el rango según tu necesidad
         }
 
-        
-        $category->name = $request->name;
-        $category->description = $request->description;
-        $category->slug = $slug;
-        $category->status = 1;
-        $category->visible = 1;
+        $jpa = Category::find($request->id);
+        if (!$jpa) {
+            $body['status'] = true;
+            Category::create($body);
+        } else {
+            $jpa->update($body);
+        }
 
-        $category->save();
-       
         return redirect()->route('categorias.index')->with('success', 'Categoria creada');
     }
 
@@ -95,21 +102,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category, $id)
-    {
-        $category = Category::findOrfail($id);
-
-        return view('pages.categories.edit', compact('category'));
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findOrfail($id); 
+        $category = Category::findOrfail($id);
 
         if ($request->hasFile("imagen")) {
 
@@ -117,7 +114,7 @@ class CategoryController extends Controller
 
 
             $ruta = storage_path() . '/app/public/images/categories/' . $category->name_image;
-            
+
             // dd($ruta);
             if (File::exists($ruta)) {
                 File::delete($ruta);
@@ -129,11 +126,11 @@ class CategoryController extends Controller
             $img =  $manager->read($request->file('imagen'));
 
             // $img->coverDown(640, 640, 'center');
-            
+
             if (!file_exists($rutanueva)) {
                 mkdir($rutanueva, 0777, true); // Se crea la ruta con permisos de lectura, escritura y ejecución
             }
-            
+
             $img->save($rutanueva . $nombreImagen);
 
 
@@ -152,7 +149,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->description = $request->description;
         $category->slug = $slug;
-        
+
         $category->save();
 
         return redirect()->route('categorias.index')->with('success', 'Categoria modificada');
@@ -170,26 +167,26 @@ class CategoryController extends Controller
     public function deleteCategory(Request $request)
     {
         $id = $request->id;
-       
-        $category = Category::findOrfail($id); 
-       
+
+        $category = Category::findOrfail($id);
+
         $category->status = false;
-       
+
         $category->save();
 
         return response()->json(['message' => 'Categoría eliminada']);
     }
 
 
-    
+
     public function updateVisible(Request $request)
     {
         // Lógica para manejar la solicitud AJAX
         $cantidad = $this->contarCategoriasDestacadas();
 
 
-        if($cantidad >= 4 && $request->status == 1){
-            return response()->json(['message' => 'Solo puedes destacar 4 categorias'], 409 );
+        if ($cantidad >= 4 && $request->status == 1) {
+            return response()->json(['message' => 'Solo puedes destacar 4 categorias'], 409);
         }
 
 
@@ -205,21 +202,19 @@ class CategoryController extends Controller
         $category->$field = $status;
 
         $category->save();
-    
+
         $cantidad = $this->contarCategoriasDestacadas();
 
-        
+
         return response()->json(['message' => 'Categoría modificada',  'cantidad' => $cantidad]);
-    
     }
 
 
-    public function contarCategoriasDestacadas(){
+    public function contarCategoriasDestacadas()
+    {
 
         $cantidad = Category::where('destacar', '=', 1)->count();
-   
+
         return  $cantidad;
     }
-
-
 }

@@ -8,7 +8,7 @@
     overflow: hidden;
     display: inline-block;
     text-decoration: none;
-    padding-bottom: 4px;
+    /* padding-bottom: 4px; */
   }
 
   nav a .underline-this::before,
@@ -183,17 +183,21 @@
   <div class="relative">
     <div class="relative">
       <div id="header-menu"
-        class="z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-10  z-20">
-        <div class="hidden md:block">
+        class="z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-8 z-20">
+        <div id="menu-burguer" class="md:hidden z-10 w-max">
+          <img class="h-10 w-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}" alt="menu hamburguesa"
+            onclick="show()" />
+        </div>
+        <div class="absolute left-[50%] -translate-x-[50%] md:left-[unset] md:translate-x-[unset] md:relative md:block md:items-center md:w-max">
           <a href="{{ route('index') }}">
             <img id="logo-decotab" class="py-2"
               src="{{ asset($isIndex ? 'images/svg/logo_decotab_header_light.svg' : 'images/svg/logo_decotab_header.svg') }}"
               alt="decotab" />
           </a>
         </div>
-        <div class="hidden md:block">
+        <div class="hidden md:flex items-center w-max">
           <div>
-            <nav id="menu-items" class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5"
+            <nav id="menu-items" class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5 items-center justify-center"
               x-data="{ openCatalogo: false, openSubMenu: null }">
               <a href="{{ route('index') }}"
                 class="py-5  font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
@@ -296,11 +300,10 @@
             </nav>
           </div>
         </div>
-
-        <div class="flex justify-end w-full md:w-auto md:justify-center items-center gap-5">
+        <div class="flex justify-end w-max md:w-auto md:justify-center items-center gap-2">
           @if (Auth::user() == null)
-            <a class="px-3 py-5" href="{{ route('login') }}"><img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_user.svg') }}"
-                alt="user" /></a>
+            <a href="{{ route('login') }}"><img class="bg-white rounded-lg p-1"
+                src="{{ asset('images/svg/header_user.svg') }}" alt="user" /></a>
           @else
             <div class="relative inline-flex" x-data="{ open: false }">
               <button class="px-3 py-5 inline-flex justify-center items-center group" aria-haspopup="true"
@@ -345,11 +348,13 @@
               </div>
             </div>
           @endif
-          <div class="bg-[#EB5D2C] flex justify-center items-center rounded-full w-7 h-7">
+          {{-- <div class="bg-[#EB5D2C] flex justify-center items-center rounded-full w-7 h-7">
             <span id="itemsCount" class="text-white"></span>
-          </div>
-          <div class="flex justify-center items-center pl-2">
-            <label for="check" class="inline-block cursor-pointer">
+          </div> --}}
+          <div class="flex justify-center items-center pl-1">
+            <label for="check" class="relative inline-block cursor-pointer">
+              <span id="itemsCount"
+                class="bg-[#EB5D2C] text-xs font-medium text-white text-center p-1 leading-none rounded-full px-2 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0">12</span>
               <img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_bag.svg') }}" alt="bag"
                 class="max-w-full h-auto cursor-pointer" id="openCarrito" />
             </label>
@@ -363,12 +368,13 @@
                     <div id="closeCarrito" class="cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        <path stroke="#272727" stroke-linecap="round" stroke-linejoin="round"
+                          d="M6 18 18 6M6 6l12 12" />
                       </svg>
                     </div>
                   </div>
                   <div class="overflow-y-scroll h-[calc(100vh-200px)] scroll__carrito">
-                    <table>
+                    <table class="w-full">
                       <tbody id="itemsCarrito">
                         {{-- <div class="flex flex-col gap-10 align-top" id="itemsCarrito"></div> --}}
                       </tbody>
@@ -390,15 +396,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div id="menu-burguer" class="absolute md:hidden top-2 left-[10px] z-10" style="z-index: 999">
-
-      {{-- <button aria-label="hamburguer" class="hamburger" onclick="show()"> --}}
-      <img class="h-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}" alt="menu hamburguesa"
-        onclick="show()" />
-      {{-- </button> --}}
-
     </div>
   </div>
 </header>
@@ -432,9 +429,9 @@
           username
             .removeClass('text-white')
             .addClass('text-[#272727]')
-          burguer
-            .removeClass('absolute')
-            .addClass('fixed')
+          // burguer
+          //   .removeClass('absolute')
+          //   .addClass('fixed')
           logo.attr('src', 'images/svg/logo_decotab_header.svg')
           $('#header-menu svg').attr('stroke', '#272727');
         } else {
@@ -447,9 +444,9 @@
           username
             .removeClass('text-[#272727]')
             .addClass('text-white')
-          burguer
-            .removeClass('fixed')
-            .addClass('absolute')
+          // burguer
+          //   .removeClass('fixed')
+          //   .addClass('absolute')
           logo.attr('src', 'images/svg/logo_decotab_header_light.svg')
           $('#header-menu svg').attr('stroke', 'white');
         }
