@@ -1,6 +1,6 @@
 <div x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false"
   class="flex flex-col relative" data-aos="zoom-in-left">
-  <div class="bg-colorBackgroundProducts rounded-2xl product_container basis-4/5 flex flex-col justify-center relative">
+  <div class="bg-[#f2f2f2] product_container basis-4/5 flex flex-col justify-center relative">
     {{-- @php
       echo json_encode($item->tags);
     @endphp --}}
