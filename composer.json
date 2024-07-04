@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
         "phpmailer/phpmailer": "^6.9",
-        "spatie/laravel-permission": "^6.7"
+        "spatie/laravel-permission": "^6.7",
+        "sode/extend": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.9",

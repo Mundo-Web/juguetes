@@ -28,9 +28,11 @@ class Products extends Model
     'costo_x_art',
     'peso',
     'categoria_id',
-    'subcategory_id'
+    'subcategory_id',
+    'color',
+    'image_texture',
+    'slug'
   ];
-
 
   public function categoria()
   {

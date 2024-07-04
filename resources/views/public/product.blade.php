@@ -18,8 +18,32 @@
     @csrf
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
       <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <div class="relative w-full shrink-0 max-w-md lg:max-w-lg mx-auto">
+        <div class="relative lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+          @php
+            $images = ['_ambiente', '', '_2', '_3', '_4'];
+            $x = $product->toArray();
+          @endphp
+          <div class="hidden md:block w-full shrink-0 max-w-md lg:max-w-lg mx-auto ">
+            <div class="grid grid-cols-2 gap-2">
+              @foreach ($images as $key)
+                @if ($x['imagen' . $key] == null)
+                  @continue
+                @else
+                  <div class="col-span-1 h-min">
+                    <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
+                      class="border rounded-md mx-auto w-full h-min object-cover object-center bg-colorBackgroundProducts">
+                  </div>
+                @endif
+              @endforeach
+              @foreach ($galery as $x)
+                  <div class="col-span-1 h-min">
+                    <img src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}"
+                      class="border rounded-md mx-auto w-full h-min object-cover object-center bg-colorBackgroundProducts">
+                  </div>
+              @endforeach
+            </div>
+          </div>
+          <div class="relative md:hidden w-full shrink-0 max-w-md lg:max-w-lg mx-auto">
             {{-- <div class="relative flex justify-center items-center">
               @if ($product->imagen)
                 <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
@@ -52,10 +76,6 @@
                   class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
               @endif
             </div> --}}
-            @php
-              $images = ['_ambiente', '', '_2', '_3', '_4'];
-              $x = $product->toArray();
-            @endphp
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper product-prev mb-6 h-[540px]">
               <div class="swiper-wrapper">
@@ -91,7 +111,7 @@
             </div>
           </div>
 
-          <div class="mt-6 sm:mt-8 lg:mt-0">
+          <div class="mt-6 sm:mt-8 lg:mt-0 sticky top-4 h-max">
             <p class="text-lg font-medium leading-8 text-indigo-600 mb-4">
               @php
                 $productCategory = $product->categoria();
@@ -165,6 +185,19 @@
                   </div>
                 </div>
               @endforeach
+            @endif
+
+            @if ($otherProducts->isNotEmpty())
+              <p class="mb-2"><b>Color</b>: {{ $product->color }}</p>
+              <div class="flex flex-wrap gap-1">
+                @foreach ($otherProducts as $x)
+                  <a class="block" href="/producto/{{ $x->id }}" title="{{ $x->color }}" tippy>
+                    <img class="w-16 h-6 shadow-sm border object-cover object-center rounded-sm"
+                      src="{{ $x->image_texture ? asset($x->image_texture) : asset('images/img/cromo.jpeg') }}"
+                      alt="{{ $x->producto }}">
+                  </a>
+                @endforeach
+              </div>
             @endif
 
             <div class="mt-6 sm:gap-4 items-center sm:flex sm:mt-8">

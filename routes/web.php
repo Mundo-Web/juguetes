@@ -198,6 +198,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 
         //Galeria
         Route::resource('/galerie', GalerieController::class);
+        Route::post('/galery', [GalerieController::class, 'saveImage']);
         Route::post('/galerie', [GalerieController::class, 'store'])->name('galerie.store');
         Route::post('/galerie/updateVisible', [GalerieController::class, 'updateVisible'])->name('galerie.updateVisible');
         Route::post('/galerie/borrar', [GalerieController::class, 'borrar'])->name('galerie.borrar');

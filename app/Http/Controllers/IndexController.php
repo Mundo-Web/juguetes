@@ -16,6 +16,7 @@ use App\Models\Slider;
 use App\Models\Strength;
 use App\Models\Testimony;
 use App\Models\Category;
+use App\Models\Galerie;
 use App\Models\PolyticsCondition;
 use App\Models\Specifications;
 use App\Models\TermsAndCondition;
@@ -454,11 +455,11 @@ class IndexController extends Controller
     // $IdProductosComplementarios = $IdProductosComplementarios[0]['categoria_id'];
 
     $ProdComplementarios = Products::select()
-    ->where('id', '<>', $id)
-    ->where('categoria_id', '=', $product->categoria_id)
-    ->where('status', '=', true)
-    ->where('visible', '=', true)
-    ->get();
+      ->where('id', '<>', $id)
+      ->where('categoria_id', '=', $product->categoria_id)
+      ->where('status', '=', true)
+      ->where('visible', '=', true)
+      ->get();
     $atributos = Attributes::where("status", "=", true)->get();
     $valorAtributo = AttributesValues::where("status", "=", true)->get();
     $url_env = env('APP_URL');
@@ -475,7 +476,15 @@ class IndexController extends Controller
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-    return view('public.product', compact('atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados'));
+    $otherProducts = Products::select()
+      ->where('id', '<>', $id)
+      ->where('producto', $product->producto)
+      ->whereNotNull('color')
+      ->get();
+
+    $galery = Galerie::where('product_id', $product->id)->get();
+
+    return view('public.product', compact('atributos', 'valorAtributo', 'ProdComplementarios', 'productosConGalerias', 'especificaciones', 'url_env', 'product', 'capitalizeFirstLetter', 'categorias', 'destacados', 'otherProducts', 'galery'));
   }
 
   //  --------------------------------------------

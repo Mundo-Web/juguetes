@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attributes;
 use App\Models\AttributesValues;
 use App\Models\Category;
+use App\Models\Galerie;
 use App\Models\Products;
 use App\Models\Specifications;
 use App\Models\SubCategory;
@@ -40,8 +41,9 @@ class ProductsController extends Controller
     $tags = Tag::where("status", "=", true)->get();
     $categoria = Category::all();
     $subcategories = SubCategory::all();
+    $galery = [];
     $especificacion = [json_decode('{"tittle":"", "specifications":""}', false)];
-    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'categoria', 'tags', 'especificacion', 'subcategories'));
+    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'categoria', 'tags', 'especificacion', 'subcategories', 'galery'));
   }
 
   public function edit(string $id)
@@ -55,8 +57,9 @@ class ProductsController extends Controller
     $tags = Tag::all();
     $categoria = Category::all();
     $subcategories = SubCategory::all();
+    $galery = Galerie::where("product_id", "=", $id)->get();
 
-    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'tags', 'categoria', 'especificacion', 'subcategories'));
+    return view('pages.products.save', compact('product', 'atributos', 'valorAtributo', 'tags', 'categoria', 'especificacion', 'subcategories', 'galery'));
   }
 
   private function saveImg(Request $request, string $field)
@@ -99,6 +102,7 @@ class ProductsController extends Controller
       ]);
 
       // Imagenes
+      $data['image_texture'] = $this->saveImg($request, 'image_texture');
       $data['imagen_ambiente'] = $this->saveImg($request, 'imagen_ambiente');
       $data['imagen'] = $this->saveImg($request, 'imagen');
       $data['imagen_2'] = $this->saveImg($request, 'imagen_2');
@@ -140,6 +144,12 @@ class ProductsController extends Controller
         return !is_null($value);
       });
 
+      $slug = strtolower(str_replace(' ', '-', $request->producto . '-' . $request->color));
+
+      if (Category::where('slug', $slug)->exists()) {
+        $slug .= '-' . rand(1, 1000);
+      }
+
       // Busca el producto, si existe lo actualiza, si no lo crea
       $producto = Products::find($request->id);
       if ($producto) {
@@ -169,6 +179,20 @@ class ProductsController extends Controller
       $this->GuardarEspecificaciones($producto->id, $especificaciones);
       if (!is_null($tagsSeleccionados)) {
         $this->TagsXProducts($producto->id, $tagsSeleccionados);
+      }
+
+      Galerie::where('product_id', $producto->id)->delete();
+      if ($request->galery) {
+        foreach ($request->galery as $value) {
+          [$id, $name] = explode('|', $value);
+          Galerie::updateOrCreate([
+            'product_id' => $id,
+            'id' => $id
+          ], [
+            'imagen' => $name,
+            'product_id' => $producto->id
+          ]);
+        }
       }
 
       return redirect()->route('products.index')->with('success', 'Publicación creado exitosamente.');

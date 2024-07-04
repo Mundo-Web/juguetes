@@ -1,8 +1,12 @@
+@php
+  use SoDe\Extend\Crypto;
+@endphp
+
 <x-app-layout>
 
 
   <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="product-form" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <input type="hidden" name="id" value="{{ $product->id }}">
       <div
@@ -18,17 +22,17 @@
           </h2>
         </header>
         <div class="flex flex-col gap-2 p-3 ">
-          <div class="flex gap-2 p-3 ">
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-2 p-3 ">
 
-            <div class="basis-0 md:basis-3/5">
+            <div class="col-span-5 md:col-span-3">
               <div class="rounded shadow-lg p-4 px-4 border">
 
 
                 <div id='general' class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 ">
 
-                  <div class="md:col-span-5">
+                  <div class="col-span-5 md:col-span-3">
 
-                    <label for="producto">Producto</label>
+                    <label for="producto">Producto <span class="text-red-500 font-bold">*</span></label>
 
                     <div class="relative mb-2  mt-2">
                       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -36,12 +40,27 @@
                       </div>
                       <input type="text" id="producto" name="producto" value="{{ $product->producto }}"
                         class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Producto">
+                        placeholder="Producto" required>
 
 
                     </div>
                   </div>
-                  <div class="md:col-span-5 mt-2">
+                  <div class="col-span-5 md:col-span-2">
+
+                    <label for="color">Color <span class="text-red-500 font-bold">*</span></label>
+
+                    <div class="relative mb-2  mt-2">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="text-lg text-gray-500 dark:text-gray-400 fas fa-pen"></i>
+                      </div>
+                      <input type="text" id="color" name="color" value="{{ $product->color }}"
+                        class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Color" required>
+
+
+                    </div>
+                  </div>
+                  <div class="col-span-5 md:col-span-5 mt-2">
 
                     <label for="extract">Extracto</label>
 
@@ -56,82 +75,128 @@
 
                     </div>
                   </div>
-                  <div class="md:col-span-5">
+                  <div class="col-span-5 md:col-span-5">
                     <label for="description">Descripcion</label>
                     <div class="relative mb-2 mt-2">
                       {{-- <textarea type="text" rows="2" id="description" name="description" value=""
                         class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Descripción">{{ $product->description }}</textarea> --}}
-                        <x-form.quill id="description" :value="$product->description"/>
+                      <x-form.quill id="description" :value="$product->description" />
                     </div>
                   </div>
 
-                  <div id="imagenes" class="mx-auto md:col-span-5 flex-col items-center justify-center gap-1">
-                    <label for="imagen_ambiente" {{-- x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true" @mouseleave="showAmbiente = false" --}} {{-- class="relative flex justify-center items-center h-[235px] w-[235px] border rounded-lg" --}}
-                      class="flex items-center justify-center w-[235px] h-[235px] rounded-md border hover:opacity-50 cursor-pointer"
-                      title="Cambiar imagen de ambiente" tippy>
-                      <input data-id="input_img" class="hidden" type="file" name="imagen_ambiente" id="imagen_ambiente" accept="image/*">
-                      <img id="imagen_ambiente_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_ambiente ? asset($product->imagen_ambiente): asset('images/img/image-plus.jpg') }}" alt="">
-                      {{-- @if ($product->imagen)
-                        <img id="imagen_previewer" x-show="!showAmbiente"
-                          x-transition:enter="transition ease-out duration-300 transform"
-                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                          x-transition:leave="transition ease-in duration-300 transform"
-                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                          src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
-                          class="w-full h-full object-contain absolute inset-0 rounded-lg" />
-                      @else
-                        <img id="imagen_previewer" x-show="!showAmbiente"
-                          x-transition:enter="transition ease-out duration-300 transform"
-                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                          x-transition:leave="transition ease-in duration-300 transform"
-                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                          src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                          class="w-full h-full object-contain absolute inset-0 rounded-lg" />
-                      @endif
-                      @if ($product->imagen_ambiente)
-                        <img id="imagen_ambiente_previewer" x-show="showAmbiente"
-                          x-transition:enter="transition ease-out duration-300 transform"
-                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                          x-transition:leave="transition ease-in duration-300 transform"
-                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                          src="{{ asset($product->imagen_ambiente) }}" alt="{{ $product->name }}"
-                          class="w-full h-full object-cover absolute inset-0 rounded-lg" />
-                      @else
-                        <img id="imagen_ambiente_previewer" x-show="showAmbiente"
-                          x-transition:enter="transition ease-out duration-300 transform"
-                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                          x-transition:leave="transition ease-in duration-300 transform"
-                          x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                          src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                          class="w-full h-full object-cover absolute inset-0 rounded-lg" />
-                      @endif --}}
-                    </label>
-                    <div class="flex gap-[5px] mt-1">
-                      <label for="imagen" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
-                        title="Cambiar imagen 1" tippy>
-                        <input data-id="input_img" class="hidden" type="file" name="imagen" id="imagen" accept="image/*">
-                        <img id="imagen_previewer" class="w-full h-full rounded-md object-cover"
-                          src="{{ $product->imagen ? asset($product->imagen) : asset('images/img/image-plus.jpg') }}"
-                          alt="">
-                      </label>
-                      <label for="imagen_2" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
-                        title="Cambiar imagen 2" tippy>
-                        <input data-id="input_img" class="hidden" type="file" name="imagen_2" id="imagen_2" accept="image/*">
-                        <img id="imagen_2_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_2 ? asset($product->imagen_2) : asset('images/img/image-plus.jpg') }}"
-                          alt="">
-                      </label>
-                      <label for="imagen_3" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
-                        title="Cambiar imagen 3" tippy>
-                        <input data-id="input_img" class="hidden" type="file" name="imagen_3" id="imagen_3" accept="image/*">
-                        <img id="imagen_3_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_3 ? asset($product->imagen_3) : asset('images/img/image-plus.jpg') }}"
-                          alt="">
-                      </label>
-                      <label for="imagen_4" class="w-[55px] h-[55px] rounded-md border hover:opacity-50 cursor-pointer"
-                        title="Cambiar imagen 4" tippy>
-                        <input data-id="input_img" class="hidden" type="file" name="imagen_4" id="imagen_4" accept="image/*">
-                        <img id="imagen_4_previewer" class="w-full h-full rounded-md object-cover" src="{{ $product->imagen_4 ? asset($product->imagen_4) : asset('images/img/image-plus.jpg') }}"
-                          alt="">
+                  <hr class="col-span-5">
+
+                  <div class="col-span-5 md:col-span-5 mb-2">
+                    <label for=""
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Previsualizacion del
+                      producto</label>
+                    <div class="flex flex-wrap items-center gap-4">
+                      <div for="imagen_ambiente" x-data="{ showAmbiente: false }" @mouseenter="showAmbiente = true"
+                        @mouseleave="showAmbiente = false"
+                        class="relative flex justify-center items-center h-[256px] w-[192px] border rounded-lg">
+                        @if ($product->imagen)
+                          <img id="imagen_previewer" x-show="!showAmbiente"
+                            x-transition:enter="transition ease-out duration-300 transform"
+                            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                            src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
+                            class="bg-[#f2f2f2] w-full h-full object-contain absolute inset-0 rounded-lg" />
+                        @else
+                          <img id="imagen_previewer" x-show="!showAmbiente"
+                            x-transition:enter="transition ease-out duration-300 transform"
+                            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                            src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
+                            class="bg-[#f2f2f2] w-full h-full object-contain absolute inset-0 rounded-lg" />
+                        @endif
+                        @if ($product->imagen_ambiente)
+                          <img id="imagen_ambiente_previewer" x-show="showAmbiente"
+                            x-transition:enter="transition ease-out duration-300 transform"
+                            x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                            src="{{ asset($product->imagen_ambiente) }}" alt="{{ $product->name }}"
+                            class="w-full h-full object-cover absolute inset-0 rounded-lg" />
+                        @else
+                          <img id="imagen_ambiente_previewer" x-show="showAmbiente"
+                            x-transition:enter="transition ease-out duration-300 transform"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-300 transform"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95" src="{{ asset('images/img/noimagen.jpg') }}"
+                            alt="imagen_alternativa" class="w-full h-full object-cover absolute inset-0 rounded-lg" />
+                        @endif
+                      </div>
+                      <div>
+                        <div class="mb-4">
+                          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="image_texture">Imagen de textura <span
+                              class="text-red-500 font-bold">*</span></label>
+                          <label class="block w-max" for="image_texture" title="Cambiar imagen de textura" tippy>
+                            <img id="image_texture_previewer"
+                              class="w-40 h-10 border rounded-md object-cover object-center cursor-pointer"
+                              src="{{ $product->image_texture ? asset($product->image_texture) : asset('images/img/noimagen.jpg') }}"
+                              alt="">
+                          </label>
+                          <input data-id="input_img" class="hidden" id="image_texture" name="image_texture"
+                            type="file" accept="image/*">
+                        </div>
+                        <div class="mb-4">
+                          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="imagen">Imagen del producto</label>
+                          <input data-id="input_img"
+                            class="py-1 px-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            id="imagen"  name="imagen" type="file" accept="image/*" title="Cargar imagen de producto" tippy>
+                        </div>
+                        <div>
+                          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            for="imagen_ambiente">Imagen de ambiente</label>
+                          <input data-id="input_img"
+                            class="py-1 px-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            id="imagen_ambiente" name="imagen_ambiente" type="file" accept="image/*" title="Cargar imagen de ambiente"
+                            tippy>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="col-span-5">
+
+                  <div class="col-span-5">
+                    <label for="imagenes mb-2">Otras imagenes del producto</label>
+                    <div id="imagenes" class="w-full flex flex-wrap gap-1">
+
+                      <div id="imagenes_sortable" class="flex flex-wrap gap-1 max-w-full">
+                        @foreach ($galery as $key => $image)
+                          @php
+                            $uuid = Crypto::randomUUID();
+                          @endphp
+                          <div id="galery_container_{{ $uuid }}" class="relative group block w-[120px] h-[160px] rounded-md border">
+                            <div class="absolute top-0 left-0 bottom-0 right-0 rounded-md hover:bg-[#00000075] transition-all flex flex-col items-center justify-center gap-1">
+                              <label for="galery_{{ $uuid }}" title="Cambiar Imagen" tippy
+                                class="text-xl text-white hidden group-hover:block cursor-pointer fa-solid fa-camera-rotate z-10"></label>
+                              <i id="btn_delete_galery" data-id="{{ $uuid }}" title="Eliminar Imagen" tippy
+                                class="text-xl text-white hidden group-hover:block cursor-pointer fa-regular fa-trash-can z-10"></i>
+                            </div>
+
+                            <input class="hidden" name="galery[]"
+                              value="{{ $image->id }}|{{ $image->imagen }}|{{ $key }}">
+                            <input class="hidden" type="file" id="galery_{{ $uuid }}" accept="image/*">
+                            <img class="w-full h-full rounded-md object-cover"
+                              src="{{ $image->imagen ? asset($image->imagen) : asset('images/img/noimagen.jpg') }}">
+                          </div>
+                        @endforeach
+                      </div>
+                      <label for="galery"
+                        class="block w-[120px] h-[160px] rounded-md border hover:opacity-50 cursor-pointer"
+                        title="Agregar imagen" tippy>
+                        <input class="hidden" type="file" id="galery" accept="image/*" multiple>
+                        <img class="w-full h-full rounded-md object-cover"
+                          src="{{ asset('images/img/image-plus.jpg') }}" alt="">
                       </label>
                     </div>
                   </div>
@@ -149,7 +214,7 @@
                 </div>
               </div>
             </div>
-            <div class="basis-0 md:basis-2/5">
+            <div class="col-span-5 md:col-span-2">
               <div
                 class=" grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5 rounded shadow-lg p-4 px-4 border mb-2">
                 <div class="md:col-span-5 flex flex-wrap flex-4 justify-between">
@@ -232,16 +297,17 @@
                 </div>
 
                 <div class="md:col-span-5">
-                  <label for="subcategoria_id">Subcategoria</label>
+                  <label for="subcategory_id">Subcategoria</label>
                   <div class="relative mb-2  mt-2">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <i class="text-lg text-gray-500 dark:text-gray-400 fas fa-folder"></i>
                     </div>
-                    <select id="subcategoria_id" name="subcategoria_id"
+                    <select id="subcategory_id" name="subcategory_id"
                       class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option value="">Seleccionar Categoria </option>
+                      <option value="">Seleccionar Subcategoria </option>
                       @foreach ($subcategories as $item)
-                        <option value="{{ $item->id }}" @if ($item->id == $product->categoria_id) selected @endif>
+                        <option value="{{ $item->id }}" @if ($item->id == $product->subcategory_id) selected @endif
+                          data-category="{{ $item->category_id }}" @if ($item->id != $product->categoria_id) hidden @endif>
                           {{ $item->name }}</option>
                       @endforeach
                     </select>
@@ -367,8 +433,23 @@
                 <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-xl tracking-tight">
                   Tags</h4>
                 <div class="md:col-span-5 flex justify-between gap-4">
+                  <ul class="flex flex-wrap w-full gap-2">
+                    @foreach ($tags as $tag)
+                      <li>
+                        <input type="checkbox" id="tag-{{ $tag->id }}" name="tags_id[]"
+                          value="{{ $tag->id }}" class="hidden peer"
+                          @if (in_array($tag->id, $product->tags->pluck('id')->toArray())) checked @endif>
+                        <label for="tag-{{ $tag->id }}"
+                          class="inline-flex items-center justify-between w-full px-2 py-1 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 peer-checked:bg-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-white hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                          <div class="block">
+                            {{ $tag->name }}
+                          </div>
+                        </label>
+                      </li>
+                    @endforeach
 
-                  <div class="w-full">
+                  </ul>
+                  {{-- <div>
                     <div class="relative mb-2  mt-2">
                       <select id="tags_id" name="tags_id[]" multiple class="mt-1 w-full">
                         <option value="">Seleccionar Tag </option>
@@ -380,7 +461,7 @@
                     </div>
 
 
-                  </div>
+                  </div> --}}
                 </div>
               </div>
 
@@ -410,6 +491,14 @@
 
 
   </div>
+
+  {{-- <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable/build/umd/index.min.js"></script>
+  <script>
+    const sortable = new Draggable.Sortable(document.getElementById('imagenes_sortable'), {
+      draggable: '[id^="galery_container"]',
+    });
+  </script> --}}
+
   <script>
     $('#tags_id').select2({
       placeholder: 'Seleccionar Tag...',
@@ -585,17 +674,95 @@
       menuItems.classList.toggle('hidden', !isExpanded);
       document.getElementById('menu-button').setAttribute('aria-expanded', !isExpanded);
     }
+
+    const saveImage = async file => {
+      const params = new FormData()
+      params.append('image', file)
+      params.append('_token', $('[name="_token"]').val())
+
+      const data = await fetch('/admin/galery', {
+          method: 'POST',
+          headers: {
+            'XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
+          },
+          body: params
+        })
+        .then(res => res.json())
+
+      return data
+    }
+
     $('[data-id="input_img"]').on('change', function () {
+      const file = this.files[0]
+      const url = URL.createObjectURL(file)
+
+      $(`#${this.id}_previewer`).attr('src', url)
+    })
+
+    $(document).on('change', '[id^="galery_"]', function() {
       const input = $(this)
-      console.log(this)
-      const image_container = input.next()
+      const label = input.parent()
+      const input2send = label.find('[name="galery[]"]')
+      const image_container = label.find('img')
       const file = input.get(0).files[0] ?? null
       const url = URL.createObjectURL(file)
+
+      const params = new FormData()
+      params.append('image', file)
+      params
+
+      saveImage(file).then((x) => {
+        const data = x.data
+        input2send.val(`0|${data.name}`)
+      })
+
       image_container.attr('src', url)
     })
 
-    tippy('#imagenes [tippy]', {
+    $('#galery').on('change', (e) => {
+      const files = e.target.files;
+      Array.from(files).forEach(async file => {
+        const {
+          data,
+          message,
+          status
+        } = await saveImage(file)
+        const uuid = crypto.randomUUID()
+        const pos = $('#imagenes_sortable').length
+        $('#imagenes_sortable').append(`<div id="galery_container_${uuid}" class="relative group block w-[120px] h-[160px] rounded-md border">
+          <div class="absolute top-0 left-0 bottom-0 right-0 rounded-md hover:bg-[#00000075] transition-all flex flex-col items-center justify-center gap-1">
+            <label for="galery_${uuid}" title="Cambiar Imagen" tippy
+              class="text-xl text-white hidden group-hover:block cursor-pointer fa-solid fa-camera-rotate z-10"></label>
+            <i id="btn_delete_galery" data-id="${uuid}" title="Eliminar Imagen" tippy
+              class="text-xl text-white hidden group-hover:block cursor-pointer fa-regular fa-trash-can z-10"></i>
+          </div>
+
+          <input class="hidden" name="galery[]"
+            value="${0}|${data.name}|${pos}">
+          <input class="hidden" type="file" id="galery_${uuid}" accept="image/*">
+          <img class="w-full h-full rounded-md object-cover"
+            src="/${data.name}">
+        </div>`)
+
+        tippy('#product-form [tippy]', {
+          arrow: true
+        })
+      })
+      e.target.value = null
+    })
+
+    tippy('#product-form [tippy]', {
       arrow: true
+    })
+
+    $(document).on('click', '#btn_delete_galery', function () {
+      $(this).parents('[id^="galery_container_"]').remove()
+    })
+
+    $('#categoria_id').on('change', function() {
+      const value = this.value
+      $('#subcategoria_id option[data-category]').prop('hidden', true)
+      $(`#subcategoria_id option[data-category="${value}"]`).prop('hidden', false)
     })
   </script>
 </x-app-layout>
