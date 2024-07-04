@@ -15,14 +15,15 @@
   // }
   ?>
 
-<style>
-  .swiper-pagination-bullet-active {
-    background-color: #272727;
-  }
-  .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
-    background-color: #979693 !important;
-  }
-</style>
+  <style>
+    .swiper-pagination-bullet-active {
+      background-color: #272727;
+    }
+
+    .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
+      background-color: #979693 !important;
+    }
+  </style>
   <main class="font-poppins" id="mainSection">
     @csrf
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
@@ -106,7 +107,9 @@
                   </div>
                 @endforeach
               </div>
-              <div class="swiper-pagination bg-[rgba(255,255,255,.7)] backdrop-blur-md rounded-full !w-max px-2 !left-[50%] !-translate-x-[50%]"></div>
+              <div
+                class="swiper-pagination bg-[rgba(255,255,255,.7)] backdrop-blur-md rounded-full !w-max px-2 !left-[50%] !-translate-x-[50%]">
+              </div>
 
             </div>
             {{-- <div thumbsSlider="" class="swiper product-thumb max-w-[604px] mx-auto">
@@ -144,6 +147,9 @@
             </p>
             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white mb-2">
               {{ $product->producto }}
+              @if ($item->color)
+                - {{ $item->color }}
+              @endif
             </h1>
             <div>
               <p class="mb-6 text-gray-500 dark:text-gray-400">{{ $product->extract }}</p>
