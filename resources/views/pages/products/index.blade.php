@@ -1,4 +1,13 @@
 <x-app-layout>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .dark\:even\:bg-gray-900\/50:nth-child(even) {
+        background-color: transparent !important;
+        border-top: 1px solid rgb(55 65 81 / 0.25);
+        border-bottom: 1px solid rgb(55 65 81 / 0.25);
+      }
+    }
+  </style>
   <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
     <section class="py-4 border-b border-slate-100 dark:border-slate-700">
@@ -43,7 +52,10 @@
 
               @foreach ($products as $item)
                 <tr>
-                  <td>{{ $item->producto }} @if ($item->color) - {{$item->color}}@endif</td>
+                  <td>{{ $item->producto }} @if ($item->color)
+                      - {{ $item->color }}
+                    @endif
+                  </td>
                   {{-- <td>{{ $item->extract }}</td>
                   <td>{{ $item->description }}</td> --}}
                   <td>{{ $item->precio }}</td>
@@ -51,7 +63,8 @@
                   {{-- <td>{{ $item->costo_x_art }}</td> --}}
                   <td>{{ $item->stock }}</td>
                   {{-- <td>{{ $item->peso }}</td> --}}
-                  <td class="px-3 py-2"><img class="w-20 h-20 object-cover object-center" src="{{ asset($item->imagen) }}" alt=""></td>
+                  <td class="px-3 py-2"><img class="w-20 h-20 object-cover object-center"
+                      src="{{ asset($item->imagen) }}" alt=""></td>
                   <td>
                     <form method="POST" action="">
                       @csrf
@@ -109,19 +122,19 @@
 
                   </td>
 
-                  <td class="flex justify-center items-center gap-5 text-center sm:text-right">
+                  <td>
+                    <div class="flex justify-center items-center gap-2 text-center sm:text-right h-full w-full">
+                      <a href="{{ route('products.edit', $item->id) }}"
+                        class="bg-yellow-400 px-3 py-2 rounded text-white  "><i
+                          class="fa-regular fa-pen-to-square"></i></a>
 
-                    <a href="{{ route('products.edit', $item->id) }}"
-                      class="bg-yellow-400 px-3 py-2 rounded text-white  "><i
-                        class="fa-regular fa-pen-to-square"></i></a>
-
-                    <form action="" method="POST">
-                      @csrf
-                      <a data-idService='{{ $item->id }}'
-                        class="btn_delete bg-red-600 px-3 py-2 rounded text-white cursor-pointer"><i
-                          class="fa-regular fa-trash-can"></i></a>
-                    </form>
-
+                      <form action="" method="POST">
+                        @csrf
+                        <a data-idService='{{ $item->id }}'
+                          class="btn_delete bg-red-600 px-3 py-2 rounded text-white cursor-pointer"><i
+                            class="fa-regular fa-trash-can"></i></a>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               @endforeach
@@ -159,53 +172,53 @@
   $('document').ready(function() {
 
     new DataTable('#tabladatos', {
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-            layout: {
-                topStart: 'buttons'
-            },
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sSearch": "Buscar:",
-                
-                 "sProcessing":"Procesando...",
-            },
-            buttons:[ 
-           
-            {
-                extend:    'excelHtml5',
-                text:      '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                className: 'btn btn-success',
-            },
-            {
-                extend:    'pdfHtml5',
-                text:      '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-            },
-            {
-                extend:    'csvHtml5',
-                text:      '<i class="fas fa-file-csv"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
-            {
-                extend:    'print',
-                text:      '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
-            {
-                extend:    'copy',
-                text:      '<i class="fas fa-copy"></i> ',
-                titleAttr: 'Copiar',
-                className: 'btn btn-success',
-            },
-        ]
-        });
+      buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+      layout: {
+        topStart: 'buttons'
+      },
+      language: {
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "zeroRecords": "No se encontraron resultados",
+        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "sSearch": "Buscar:",
+
+        "sProcessing": "Procesando...",
+      },
+      buttons: [
+
+        {
+          extend: 'excelHtml5',
+          text: '<i class="fas fa-file-excel"></i> ',
+          titleAttr: 'Exportar a Excel',
+          className: 'btn btn-success',
+        },
+        {
+          extend: 'pdfHtml5',
+          text: '<i class="fas fa-file-pdf"></i> ',
+          titleAttr: 'Exportar a PDF',
+        },
+        {
+          extend: 'csvHtml5',
+          text: '<i class="fas fa-file-csv"></i> ',
+          titleAttr: 'Imprimir',
+          className: 'btn btn-info',
+        },
+        {
+          extend: 'print',
+          text: '<i class="fa fa-print"></i> ',
+          titleAttr: 'Imprimir',
+          className: 'btn btn-info',
+        },
+        {
+          extend: 'copy',
+          text: '<i class="fas fa-copy"></i> ',
+          titleAttr: 'Copiar',
+          className: 'btn btn-success',
+        },
+      ]
+    });
 
     $(document).on("change", ".btn_swithc", function() {
 

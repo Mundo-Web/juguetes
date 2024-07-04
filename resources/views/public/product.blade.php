@@ -5,6 +5,7 @@
 @stop
 
 
+
 @section('content')
   <?php
   // Definición de la función capitalizeFirstLetter()
@@ -14,34 +15,43 @@
   // }
   ?>
 
+<style>
+  .swiper-pagination-bullet-active {
+    background-color: #272727;
+  }
+  .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
+    background-color: #979693 !important;
+  }
+</style>
   <main class="font-poppins" id="mainSection">
     @csrf
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
       <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
         <div class="relative lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           @php
-            $images = ['_ambiente', '', '_2', '_3', '_4'];
+            $images = ['_ambiente', ''];
             $x = $product->toArray();
           @endphp
           <div class="hidden md:block w-full shrink-0 max-w-md lg:max-w-lg mx-auto ">
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 gap-4">
               @foreach ($images as $key)
                 @if ($x['imagen' . $key] == null)
                   @continue
                 @else
-                  <div class="col-span-1 h-min">
-                    <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
-                      class="border rounded-md mx-auto w-full h-min object-cover object-center bg-colorBackgroundProducts">
+                  <div>
+                    <img class="h-[360px] w-full rounded-lg object-cover object-center bg-colorBackgroundProducts"
+                      src="{{ asset($x['imagen' . $key]) }}" alt="">
                   </div>
                 @endif
               @endforeach
               @foreach ($galery as $x)
-                  <div class="col-span-1 h-min">
-                    <img src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}"
-                      class="border rounded-md mx-auto w-full h-min object-cover object-center bg-colorBackgroundProducts">
-                  </div>
+                <div>
+                  <img class="h-[360px] w-full rounded-lg object-cover object-center bg-colorBackgroundProducts"
+                    src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}" alt="">
+                </div>
               @endforeach
             </div>
+
           </div>
           <div class="relative md:hidden w-full shrink-0 max-w-md lg:max-w-lg mx-auto">
             {{-- <div class="relative flex justify-center items-center">
@@ -77,22 +87,29 @@
               @endif
             </div> --}}
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
-              class="swiper product-prev mb-6 h-[540px]">
+              class="swiper product-prev mb-6 h-[520px]">
               <div class="swiper-wrapper">
                 @foreach ($images as $key)
                   @if ($x['imagen' . $key] == null)
                     @continue
                   @else
-                    <div class="swiper-slide h-[540px]">
+                    <div class="swiper-slide h-[520px]">
                       <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
                         class="mx-auto w-full h-full object-cover object-center bg-colorBackgroundProducts">
                     </div>
                   @endif
                 @endforeach
+                @foreach ($galery as $x)
+                  <div class="swiper-slide h-[520px]">
+                    <img src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}"
+                      class="mx-auto w-full h-full object-cover object-center bg-colorBackgroundProducts">
+                  </div>
+                @endforeach
               </div>
+              <div class="swiper-pagination bg-[rgba(255,255,255,.7)] backdrop-blur-md rounded-full !w-max px-2 !left-[50%] !-translate-x-[50%]"></div>
 
             </div>
-            <div thumbsSlider="" class="swiper product-thumb max-w-[604px] mx-auto">
+            {{-- <div thumbsSlider="" class="swiper product-thumb max-w-[604px] mx-auto">
               <div class="swiper-wrapper">
                 @php
                   // array_shift($images);
@@ -108,7 +125,7 @@
                   @endif
                 @endforeach
               </div>
-            </div>
+            </div> --}}
           </div>
 
           <div class="mt-6 sm:mt-8 lg:mt-0 sticky top-4 h-max">
@@ -878,20 +895,24 @@
   <script src="{{ asset('js/storage.extend.js') }}"></script>
 
   <script>
-    var swiper = new Swiper(".product-thumb", {
-      loop: true,
-      spaceBetween: 12,
-      slidesPerView: 5,
-      freeMode: true,
-      watchSlidesProgress: true,
-    });
+    // var swiper = new Swiper(".product-thumb", {
+    //   loop: true,
+    //   spaceBetween: 12,
+    //   slidesPerView: 5,
+    //   freeMode: true,
+    //   watchSlidesProgress: true,
+    // });
     var swiper2 = new Swiper(".product-prev", {
       loop: true,
       spaceBetween: 32,
       effect: "fade",
-      thumbs: {
-        swiper: swiper,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
       },
+      // thumbs: {
+      //   swiper: swiper,
+      // },
     });
   </script>
 @stop
