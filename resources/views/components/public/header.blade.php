@@ -183,7 +183,7 @@
   <div class="relative">
     <div class="relative">
       <div id="header-menu"
-        class="py-5 md:py-0 z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-8 z-20">
+        class="py-5 md:py-0 z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-8">
         <div id="menu-burguer" class="md:hidden z-10 w-max">
           <img class="h-10 w-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}"
             alt="menu hamburguesa" onclick="show()" />
@@ -362,7 +362,7 @@
             </div>
             {{-- <input type="checkbox" class="bag__modal" id="check" /> --}}
             <div id="cart-modal"
-              class="bag !fixed top-0 right-0 !z-[9999] md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0"
+              class="bag !fixed top-0 right-0 md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0"
               style="display: none">
               <div class="p-4 flex flex-col h-screen justify-between gap-2">
                 <div class="flex flex-col">
