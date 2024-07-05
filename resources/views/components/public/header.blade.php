@@ -362,7 +362,7 @@
             </div>
             {{-- <input type="checkbox" class="bag__modal" id="check" /> --}}
             <div id="cart-modal"
-              class="bag !fixed top-0 right-0 z-[9999] md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0"
+              class="bag !fixed top-0 right-0 !z-[9999] md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0"
               style="display: none">
               <div class="p-4 flex flex-col h-screen justify-between gap-2">
                 <div class="flex flex-col">
