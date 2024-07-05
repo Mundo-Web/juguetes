@@ -363,15 +363,15 @@
 
       // articulosCarrito = {...articulosCarrito , detalleProducto }
     })
-    $('#openCarrito').on('click', function() {
-      $('.main').addClass('blur')
-    })
-    $('#closeCarrito').on('click', function() {
-      $('.main').removeClass('blur')
-      $('.cartContainer').addClass('hidden')
-      $('#check').prop('checked', false);
+    // $('#openCarrito').on('click', function() {
+    //   $('.main').addClass('blur')
+    // })
+    // $('#closeCarrito').on('click', function() {
+    //   $('.main').removeClass('blur')
+    //   $('.cartContainer').addClass('hidden')
+    //   $('#check').prop('checked', false);
 
-    })
+    // })
     $('input[type="radio"][name="bordered-radio"]').on('click', function() {
       // Obtener el valor del radio button seleccionado
       const valorSeleccionado = $(this).val();

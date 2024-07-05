@@ -23,71 +23,51 @@
     .swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
       background-color: #979693 !important;
     }
+
+    .blocker {
+      z-index: 20;
+    }
   </style>
+  @php
+    $images = ['', '_ambiente'];
+    $x = $product->toArray();
+    $i = 1;
+  @endphp
   <main class="font-poppins" id="mainSection">
     @csrf
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
       <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
         <div class="relative lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          @php
-            $images = ['_ambiente', ''];
-            $x = $product->toArray();
-          @endphp
+
           <div class="hidden md:block w-full shrink-0 max-w-md lg:max-w-lg mx-auto ">
             <div class="grid grid-cols-2 gap-4">
               @foreach ($images as $key)
                 @if ($x['imagen' . $key] == null)
                   @continue
                 @else
-                  <div>
-                    <img class="h-[360px] w-full rounded-lg object-cover object-center bg-colorBackgroundProducts"
+                  <div id="product-detail-image" data-slider="{{ $i }}">
+                    <img class="h-[360px] w-full rounded-lg object-cover object-center bg-[#f2f2f2] border cursor-pointer"
                       src="{{ asset($x['imagen' . $key]) }}" alt="">
                   </div>
+                  @php
+                    $i++;
+                  @endphp
                 @endif
               @endforeach
               @foreach ($galery as $x)
-                <div>
-                  <img class="h-[360px] w-full rounded-lg object-cover object-center bg-colorBackgroundProducts"
+                <div id="product-detail-image" data-slider="{{ $i }}">
+                  <img class="h-[360px] w-full rounded-lg object-cover object-center bg-[#f2f2f2] border cursor-pointer"
                     src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}" alt="">
                 </div>
+                @php
+                  $i++;
+                @endphp
               @endforeach
             </div>
 
           </div>
           <div class="relative md:hidden w-full shrink-0 max-w-md lg:max-w-lg mx-auto">
-            {{-- <div class="relative flex justify-center items-center">
-              @if ($product->imagen)
-                <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
-                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                  x-transition:leave="transition ease-in duration-300 transform"
-                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                  src="{{ asset($product->imagen) }}" alt="{{ $product->name }}"
-                  class="w-full h-[600px] object-contain absolute inset-0 rounded-lg" />
-              @else
-                <img x-show="!showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
-                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                  x-transition:leave="transition ease-in duration-300 transform"
-                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                  src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                  class="w-full h-[600px] object-contain absolute inset-0 rounded-lg" />
-              @endif
-              @if ($product->imagen_ambiente)
-                <img x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
-                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                  x-transition:leave="transition ease-in duration-300 transform"
-                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                  src="{{ asset($product->imagen_ambiente) }}" alt="{{ $product->name }}"
-                  class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
-              @else
-                <img x-show="showAmbiente" x-transition:enter="transition ease-out duration-300 transform"
-                  x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                  x-transition:leave="transition ease-in duration-300 transform"
-                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                  src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                  class="w-full h-[600px] object-cover absolute inset-0 rounded-lg" />
-              @endif
-            </div> --}}
-            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+            <div id="product-swiper" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper product-prev mb-6 h-[520px]">
               <div class="swiper-wrapper">
                 @foreach ($images as $key)
@@ -96,14 +76,14 @@
                   @else
                     <div class="swiper-slide h-[520px]">
                       <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
-                        class="mx-auto w-full h-full object-cover object-center bg-colorBackgroundProducts">
+                        class="mx-auto w-full h-full object-cover object-center bg-[#f2f2f2]">
                     </div>
                   @endif
                 @endforeach
                 @foreach ($galery as $x)
                   <div class="swiper-slide h-[520px]">
                     <img src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}"
-                      class="mx-auto w-full h-full object-cover object-center bg-colorBackgroundProducts">
+                      class="mx-auto w-full h-full object-cover object-center bg-[#f2f2f2]">
                   </div>
                 @endforeach
               </div>
@@ -112,23 +92,6 @@
               </div>
 
             </div>
-            {{-- <div thumbsSlider="" class="swiper product-thumb max-w-[604px] mx-auto">
-              <div class="swiper-wrapper">
-                @php
-                  // array_shift($images);
-                @endphp
-                @foreach ($images as $key)
-                  @if ($x['imagen' . $key] == null)
-                    @continue
-                  @else
-                    <div class="swiper-slide rounded-lg">
-                      <img src="{{ asset($x['imagen' . $key]) }}" alt="Travel Bag image"
-                        class="w-[103px] h-[103px] cursor-pointer border-2 border-gray-50 transition-all duration-500 hover:border-indigo-600 slide:border-indigo-600 object-cover bg-colorBackgroundProducts">
-                    </div>
-                  @endif
-                @endforeach
-              </div>
-            </div> --}}
           </div>
 
           <div class="mt-6 sm:mt-8 lg:mt-0 sticky top-4 h-max">
@@ -537,7 +500,7 @@
                   <div class="swiper-slide rounded-2xl">
                     <div class="flex flex-col relative">
                       <div
-                        class="bg-colorBackgroundProducts rounded-2xl pt-12 pb-5 md:pb-8 product_container basis-4/5 flex flex-col justify-center relative">
+                        class="bg-[#f2f2f2] rounded-2xl pt-12 pb-5 md:pb-8 product_container basis-4/5 flex flex-col justify-center relative">
                         <div class="px-4">
                           <a
                             class="font-semibold text-[8px] md:text-[12px] bg-[#EB5D2C] py-2 px-2 flex-initial w-24 text-center text-white rounded-[5px] absolute top-[18px] z-10">
@@ -565,18 +528,18 @@
                         </div>
                       </div>
                       <div class="my-2 flex flex-col items-start gap-2 basis-1/5 px-2">
-                        <!-- <div class="flex items-center gap-2">
-                                                                                                <div class="flex gap-2 py-2">
-                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                    <img src="./images/svg/start.svg" alt="estrella" />
-                                                                                                    <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                                                    <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                                                                                </div>
-                                                                                                <p class="font-semibold text-[14px] text-[#6C7275]">
-                                                                                                    (35)
-  </p>
-                                                                                            </div> -->
+                        <div class="flex items-center gap-2">
+                          <div class="flex gap-2 py-2">
+                            <img src="./images/svg/start.svg" alt="estrella" />
+                            <img src="./images/svg/start.svg" alt="estrella" />
+                            <img src="./images/svg/start.svg" alt="estrella" />
+                            <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                            <img src="./images/svg/start_sin_color.svg" alt="estrella" />
+                          </div>
+                          <p class="font-semibold text-[14px] text-[#6C7275]">
+                            (35)
+                          </p>
+                        </div>
                         <h2 class="font-semibold text-[16px] text-[#141718]">
                           {{ $item->producto }}
                         </h2>
@@ -626,8 +589,40 @@
     </section>
   </main>
 
+  @php
+    $images = ['', '_ambiente'];
+    $x = $product->toArray();
+  @endphp
+
+  <div id="product-swiper-modal" style="--swiper-navigation-color: #000; --swiper-pagination-color: #fff; display:none"
+    class="modal hidden swiper product-prev mb-6 !max-w-full h-full">
+    <div class="swiper-wrapper">
+      @foreach ($images as $key)
+        @if ($x['imagen' . $key] == null)
+          @continue
+        @else
+          <div class="swiper-slide !w-full h-full">
+            <img src="{{ asset($x['imagen' . $key]) }}" alt="{{ $product->producto }}"
+              class="mx-auto w-full h-full object-contain object-center bg-black">
+          </div>
+        @endif
+      @endforeach
+      @foreach ($galery as $x)
+        <div class="swiper-slide !w-full h-full">
+          <img src="{{ asset($x->imagen) }}" alt="{{ $product->producto }}"
+            class="mx-auto w-full h-full object-contain object-center bg-black">
+        </div>
+      @endforeach
+    </div>
+    <div
+      class="swiper-pagination bg-[rgba(255,255,255,.7)] backdrop-blur-md rounded-full !w-max px-2 !left-[50%] !-translate-x-[50%]">
+    </div>
+
+  </div>
 
 
+
+  <script src="{{ asset('js/storage.extend.js') }}"></script>
 
 @section('scripts_importados')
 
@@ -739,66 +734,6 @@
 
     }
 
-
-
-    // function PintarCarrito() {
-
-    //   let itemsCarrito = $('#itemsCarrito')
-
-    //   articulosCarrito.forEach(element => {
-    //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-  //         <div class="flex justify-center items-center gap-5">
-  //           <div class="bg-[#F3F5F7] rounded-md p-4">
-  //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-  //           </div>
-  //           <div class="flex flex-col gap-3 py-2">
-  //             <h3 class="font-semibold text-[14px] text-[#151515]">
-  //               ${element.producto}
-  //             </h3>
-  //             <p class="font-normal text-[12px] text-[#6C7275]">
-
-  //             </p>
-  //             <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-  //               <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-  //                 <span  class="text-[20px]">-</span>
-  //               </button>
-  //               <div class="w-8 h-8 flex justify-center items-center">
-  //                 <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-  //               </div>
-  //               <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-  //                 <span class="text-[20px]">+</span>
-  //               </button>
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-  //           <p class="font-semibold text-[14px] text-[#151515]">
-  //             S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-  //           </p>
-  //           <div class="flex items-center">
-  //             <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-  //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  //               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-  //             </svg>
-  //             </button>
-
-  //           </div>
-  //         </div>
-  //       </div>`
-
-    //     itemsCarrito.append(plantilla)
-
-    //   });
-
-    //   calcularTotal()
-    //   mostrarTotalItems()
-    // }
-
-
-
-
-
-
     $('#btnAgregarCarrito').on('click', function() {
       let url = window.location.href;
       let partesURl = url.split('/')
@@ -885,29 +820,20 @@
 
       // articulosCarrito = {...articulosCarrito , detalleProducto }
     })
-    $('#openCarrito').on('click', function() {
-      $('.main').addClass('blur')
-    })
-    $('#closeCarrito').on('click', function() {
+    // $('#openCarrito').on('click', function() {
+    //   $('.main').addClass('blur')
+    // })
+    // $('#closeCarrito').on('click', function() {
 
-      $('.cartContainer').addClass('hidden')
-      $('#check').prop('checked', false);
-      $('.main').removeClass('blur')
+    //   $('.cartContainer').addClass('hidden')
+    //   $('#check').prop('checked', false);
+    //   $('.main').removeClass('blur')
 
 
-    })
+    // })
   </script>
 
-  <script src="{{ asset('js/storage.extend.js') }}"></script>
-
   <script>
-    // var swiper = new Swiper(".product-thumb", {
-    //   loop: true,
-    //   spaceBetween: 12,
-    //   slidesPerView: 5,
-    //   freeMode: true,
-    //   watchSlidesProgress: true,
-    // });
     var swiper2 = new Swiper(".product-prev", {
       loop: true,
       spaceBetween: 32,
@@ -916,10 +842,21 @@
         el: '.swiper-pagination',
         clickable: true,
       },
-      // thumbs: {
-      //   swiper: swiper,
-      // },
     });
+  </script>
+
+  <script type="text/javascript">
+    // $('#product-swiper').on('click', (e) => {
+    //   console.log(e.currentTarget)
+    //   $('#product-swiper-modal').modal()
+    // })
+
+    $(document).on('click', '#product-detail-image', (e) => {
+      const target = e.currentTarget
+      const slider = target.getAttribute('data-slider');
+      $(`[aria-label="Go to slide ${slider}"]`).trigger('click')
+      $('#product-swiper-modal').modal()
+    })
   </script>
 @stop
 

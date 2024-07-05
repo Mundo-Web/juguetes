@@ -183,12 +183,13 @@
   <div class="relative">
     <div class="relative">
       <div id="header-menu"
-        class="z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-8 z-20">
+        class="py-5 md:py-0 z-1 {{ $isIndex ? 'absolute' : 'relative' }} top-0 flex justify-between items-center w-[100%] px-8 z-20">
         <div id="menu-burguer" class="md:hidden z-10 w-max">
-          <img class="h-10 w-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}" alt="menu hamburguesa"
-            onclick="show()" />
+          <img class="h-10 w-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}"
+            alt="menu hamburguesa" onclick="show()" />
         </div>
-        <div class="absolute left-[50%] -translate-x-[50%] md:left-[unset] md:translate-x-[unset] md:relative md:block md:items-center md:w-max">
+        <div
+          class="absolute left-[50%] -translate-x-[50%] md:left-[unset] md:translate-x-[unset] md:relative md:block md:items-center md:w-max">
           <a href="{{ route('index') }}">
             <img id="logo-decotab" class="py-2"
               src="{{ asset($isIndex ? 'images/svg/logo_decotab_header_light.svg' : 'images/svg/logo_decotab_header.svg') }}"
@@ -197,7 +198,8 @@
         </div>
         <div class="hidden md:flex items-center w-max">
           <div>
-            <nav id="menu-items" class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5 items-center justify-center"
+            <nav id="menu-items"
+              class="{{ $isIndex ? 'text-white' : 'text-[#272727]' }} flex gap-5 items-center justify-center"
               x-data="{ openCatalogo: false, openSubMenu: null }">
               <a href="{{ route('index') }}"
                 class="py-5  font-medium font-poppins text-[14px] px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
@@ -352,20 +354,21 @@
             <span id="itemsCount" class="text-white"></span>
           </div> --}}
           <div class="flex justify-center items-center pl-1">
-            <label for="check" class="relative inline-block cursor-pointer">
+            <div id="open-cart" class="relative inline-block cursor-pointer">
               <span id="itemsCount"
                 class="bg-[#EB5D2C] text-xs font-medium text-white text-center p-1 leading-none rounded-full px-2 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0">12</span>
-              <img class="bg-white rounded-lg p-1" src="{{ asset('images/svg/header_bag.svg') }}" alt="bag"
-                class="max-w-full h-auto cursor-pointer" id="openCarrito" />
-            </label>
-            <input type="checkbox" class="bag__modal" id="check" />
-            <div
-              class="bag hidden fixed top-0 right-0 z-[200] md:w-[450px] cartContainer border shadow-2xl rounded-l-2xl">
+              <img src="{{ asset('images/svg/header_bag.svg') }}"
+                class="bg-white rounded-lg p-1 max-w-full h-auto cursor-pointer" />
+            </div>
+            {{-- <input type="checkbox" class="bag__modal" id="check" /> --}}
+            <div id="cart-modal"
+              class="bag !fixed top-0 right-0 z-[200] md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0"
+              style="display: none">
               <div class="p-4 flex flex-col h-screen justify-between gap-2">
                 <div class="flex flex-col">
                   <div class="flex justify-between ">
                     <h2 class="font-medium text-[28px] text-[#151515] pb-5">Carrito</h2>
-                    <div id="closeCarrito" class="cursor-pointer">
+                    <div id="close-cart" class="cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke="#272727" stroke-linecap="round" stroke-linejoin="round"
@@ -399,6 +402,17 @@
     </div>
   </div>
 </header>
+<script>
+  $('#open-cart').on('click', () => {
+    $('#cart-modal').modal({
+      showClose: false,
+      fadeDuration: 100
+    })
+  })
+  $('#close-cart').on('click', () => {
+    $('.jquery-modal.blocker.current').trigger('click')
+  })
+</script>
 <script>
   function mostrarTotalItems() {
     let articulos = Local.get('carrito')

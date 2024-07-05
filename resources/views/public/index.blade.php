@@ -893,19 +893,19 @@
 
       // articulosCarrito = {...articulosCarrito , detalleProducto }
     })
-    $('#openCarrito').on('click', function() {
-      console.log('abriendo carrito ');
-      $('.main').addClass('blur')
-    })
-    $('#closeCarrito').on('click', function() {
-      console.log('cerrando  carrito ');
+    // $('#openCarrito').on('click', function() {
+    //   console.log('abriendo carrito ');
+    //   $('.main').addClass('blur')
+    // })
+    // $('#closeCarrito').on('click', function() {
+    //   console.log('cerrando  carrito ');
 
-      $('.cartContainer').addClass('hidden')
-      $('#check').prop('checked', false);
-      $('.main').removeClass('blur')
+    //   $('.cartContainer').addClass('hidden')
+    //   $('#check').prop('checked', false);
+    //   $('.main').removeClass('blur')
 
 
-    })
+    // })
   </script>
 
   <script src="{{ asset('js/storage.extend.js') }}"></script>

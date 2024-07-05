@@ -175,7 +175,7 @@
                           @php
                             $uuid = Crypto::randomUUID();
                           @endphp
-                          <div id="galery_container_{{ $uuid }}" class="relative group block w-[120px] h-[160px] rounded-md border">
+                          <div id="galery_container_{{ $uuid }}" class="relative group block w-[120px] h-[160px] rounded-md border" draggable="true">
                             <div class="absolute top-0 left-0 bottom-0 right-0 rounded-md hover:bg-[#00000075] transition-all flex flex-col items-center justify-center gap-1">
                               <label for="galery_{{ $uuid }}" title="Cambiar Imagen" tippy
                                 class="text-xl text-white hidden group-hover:block cursor-pointer fa-solid fa-camera-rotate z-10"></label>

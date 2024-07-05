@@ -408,13 +408,14 @@
     background-color: white;
   }
   
-  .bag__modal:checked + .bag {
+  /* .bag__modal:checked + .bag {
     display: block;
   }
   
   .bag__modal {
     display: none;
-  }
+    right: -100%;
+  } */
   
   /* .body {
     transition: background-color 0.3s ease-in-out; 
