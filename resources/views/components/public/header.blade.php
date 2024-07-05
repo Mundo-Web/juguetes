@@ -41,6 +41,10 @@
     padding: 0 !important;
     margin: 0 !important;
   }
+
+  .jquery-modal.blocker.current {
+    z-index: 30;
+  }
 </style>
 
 <div class="navigation shadow-xl" style="z-index: 9999; background-color: #fff !important">
