@@ -17,6 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-storage/app/public/
-/stats/
+/storage/app/public
+/stats
 /public/webmail
