@@ -16,8 +16,10 @@ use App\Models\Slider;
 use App\Models\Strength;
 use App\Models\Testimony;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Galerie;
 use App\Models\PolyticsCondition;
+use App\Models\Price;
 use App\Models\Specifications;
 use App\Models\TermsAndCondition;
 use App\Models\User;
@@ -221,10 +223,41 @@ class IndexController extends Controller
       $detalleUsuario = UserDetails::where('email', $user->email)->get();
     }
 
+    // $departamento = DB::select('select * from departments where active = ? order by 2', [1]);
+    $departments = Price::select([
+      'departments.id AS id',
+      'departments.description AS description',
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->join('provinces', 'provinces.id', 'districts.province_id')
+      ->join('departments', 'departments.id', 'provinces.department_id')
+      ->where('departments.active', 1)
+      ->groupBy('id', 'description')
+      ->get();
 
-    $distritos  = DB::select('select * from districts where active = ? order by 3', [1]);
-    $provincias = DB::select('select * from provinces where active = ? order by 3', [1]);
-    $departamento = DB::select('select * from departments where active = ? order by 2', [1]);
+    $provinces = Price::select([
+      'provinces.id AS id',
+      'provinces.description AS description',
+      'provinces.department_id AS department_id'
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->join('provinces', 'provinces.id', 'districts.province_id')
+      ->where('provinces.active', 1)
+      ->groupBy('id', 'description', 'department_id')
+      ->get();
+
+    $districts = Price::select([
+      'districts.id AS id',
+      'districts.description AS description',
+      'districts.province_id AS province_id'
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->where('districts.active', 1)
+      ->groupBy('id', 'description', 'province_id')
+      ->get();
+
+    // $distritos  = DB::select('select * from districts where active = ? order by 3', [1]);
+    // $provincias = DB::select('select * from provinces where active = ? order by 3', [1]);
 
     $categorias = Category::all();
 
@@ -233,7 +266,7 @@ class IndexController extends Controller
 
 
     $url_env = env('APP_URL');
-    return view('public.checkout_pago', compact('url_env', 'distritos', 'provincias', 'departamento', 'detalleUsuario', 'categorias', 'destacados'));
+    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados'));
   }
 
   public function procesarPago(Request $request)

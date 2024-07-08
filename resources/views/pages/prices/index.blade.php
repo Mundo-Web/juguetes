@@ -76,7 +76,7 @@
                                     </td>
                                     <td class="flex flex-row justify-end items-center gap-5">
                                   
-                                        <a href="{{ route('tags.edit', $item->id) }}" class="bg-yellow-400 px-3 py-2 rounded text-white  "><i class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{{ route('prices.update', $item->id) }}" class="bg-yellow-400 px-3 py-2 rounded text-white  "><i class="fa-regular fa-pen-to-square"></i></a>
                                         {{-- {{  route('servicios.destroy', $item->id) }} --}}
                                         <form action=" " method="POST">
                                             @csrf

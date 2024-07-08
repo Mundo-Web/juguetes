@@ -17,4 +17,9 @@ class Price extends Model
         'visble',
         'local',
     ];
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'distrito_id');
+    }
 }

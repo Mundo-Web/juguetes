@@ -1,4 +1,4 @@
-@extends('components.public.matrix', ['pagina'=>''])
+@extends('components.public.matrix', ['pagina' => ''])
 
 @section('css_importados')
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -8,6 +8,78 @@
 
 
 @section('content')
+
+  <style>
+    .select2-container .select2-selection--single {
+      margin-top: 0.25rem;
+      /* mt-1 */
+      background-color: #F9FAFB;
+      /* bg-gray-50 */
+      border: 1px solid #D1D5DB;
+      /* border-gray-300 */
+      color: #111827;
+      /* text-gray-900 */
+      border-radius: 0.5rem;
+      /* rounded-lg */
+      padding-left: 2.5rem;
+      /* pl-10 */
+      padding: 7px 14px;
+      /* p-2.5 */
+      height: unset;
+      font-size: 0.875rem;
+      /* text-sm */
+    }
+
+    .select2-container--open .select2-dropdown--below {
+      border-color: #D1D5DB;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      color: #111827;
+      /* text-gray-900 */
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 100%;
+      right: 1rem;
+      /* align with pl-10 */
+    }
+
+    .select2-container--default .select2-selection--single:focus {
+      border-color: #3B82F6;
+      /* focus:border-blue-500 */
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+      /* focus:ring-blue-500 */
+    }
+
+    /* Dark mode styles */
+    .dark .select2-container .select2-selection--single {
+      background-color: #374151;
+      /* dark:bg-gray-700 */
+      border-color: #4B5563;
+      /* dark:border-gray-600 */
+      color: #F9FAFB;
+      /* dark:text-white */
+    }
+
+    .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+      color: #F9FAFB;
+      /* dark:text-white */
+    }
+
+    .dark .select2-container--default .select2-selection--single:focus {
+      border-color: #3B82F6;
+      /* dark:focus:border-blue-500 */
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+      /* dark:focus:ring-blue-500 */
+    }
+
+    /* Adjust the width to match Tailwind CSS block w-full */
+    .select2-container {
+      width: 100% !important;
+      /* block w-full */
+    }
+  </style>
 
   <main>
     <section class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
@@ -51,20 +123,6 @@
                     </h2>
 
                     <div class="flex flex-col gap-5">
-                      <div class="flex flex-col gap-2">
-                        <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
-
-                        @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                          <input id="email" type="email" placeholder="Correo electrónico" required name="email"
-                            value="{{ $detalleUsuario[0]->email }}"
-                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                        @else
-                          <input id="email" type="email" placeholder="Correo electrónico" required name="email"
-                            value=""
-                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                        @endif
-
-                      </div>
                       {{-- llenar los datos si la persona existe --}}
                       <div class="flex flex-col md:flex-row gap-5">
 
@@ -98,17 +156,33 @@
 
 
 
-                      <div class="flex flex-col gap-2">
-                        <label for="celular" class="font-medium text-[12px] text-[#6C7275]">Celular</label>
+                      <div class="flex flex-col md:flex-row gap-5">
+                        <div class="basis-2/3 flex flex-col gap-2">
+                          <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
 
-                        @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                          <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
-                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl"
-                            value="{{ $detalleUsuario[0]->phone }}" />
-                        @else
-                          <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
-                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
-                        @endif
+                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
+                            <input id="email" type="email" placeholder="Correo electrónico" required name="email"
+                              value="{{ $detalleUsuario[0]->email }}"
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                          @else
+                            <input id="email" type="email" placeholder="Correo electrónico" required name="email"
+                              value=""
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                          @endif
+
+                        </div>
+                        <div class="basis-1/3 flex flex-col gap-2">
+                          <label for="celular" class="font-medium text-[12px] text-[#6C7275]">Celular</label>
+
+                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
+                            <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl"
+                              value="{{ $detalleUsuario[0]->phone }}" />
+                          @else
+                            <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
+                          @endif
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -117,64 +191,97 @@
                     <h2 class="font-semibold text-[20px] text-[#151515]">
                       Dirección de envío
                     </h2>
+                    <ul class="grid w-full gap-6 md:grid-cols-3">
+                      <li>
+                        <input type="radio" name="envio" id="react-option" value="" class="hidden peer" required="">
+                        <label for="react-option"
+                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                          <div class="block">
+                            <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                              viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z" />
+                            </svg>
+
+                            <div class="w-full text-lg font-semibold">Recojo en tienda</div>
+                            <div class="w-full text-sm">Gratis</div>
+                          </div>
+                        </label>
+                      </li>
+                      <li>
+                        <input type="radio" name="envio" id="flowbite-option" value="" class="hidden peer">
+                        <label for="flowbite-option"
+                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                          <div class="block">
+                            <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                              viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 21v-9m3-4H7.5a2.5 2.5 0 1 1 0-5c1.5 0 2.875 1.25 3.875 2.5M14 21v-9m-9 0h14v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8ZM4 8h16a1 1 0 0 1 1 1v3H3V9a1 1 0 0 1 1-1Zm12.155-5c-3 0-5.5 5-5.5 5h5.5a2.5 2.5 0 0 0 0-5Z" />
+                            </svg>
+
+                            <div class="w-full text-lg font-semibold">Envio express</div>
+                            <div class="w-full text-sm">Sujeto a evaluacion</div>
+                          </div>
+                        </label>
+                      </li>
+                    </ul>
                     <div class="flex flex-col gap-5">
                       <div class="flex flex-col gap-5">
-                        <div class="flex flex-col gap-2 z-[45]">
-                          <label class="font-medium text-[12px] text-[#6C7275]">Departamento</label>
+                        <div class="flex flex-col gap-5 md:flex-row">
+                          <div class="basis-1/3 flex flex-col gap-2 z-[45]">
+                            <label class="font-medium text-[12px] text-[#6C7275]">Departamento</label>
 
-                          <div>
-                            <!-- combo -->
-                            <div class="dropdown w-full">
-                              <select name="departamento_id" name="departamento" id="selectDepartamento"
-                                class=" mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Seleccionar un Departamento </option>
-                                @foreach ($departamento as $item)
-                                  <option value="{{ $item->id }}">{{ $item->description }}</option>
-                                @endforeach
-
-                              </select>
+                            <div>
+                              <!-- combo -->
+                              <div class="dropdown w-full">
+                                <select name="departamento_id" name="departamento" id="departamento_id"
+                                  class=" mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                  <option value="">Seleccione un departamento </option>
+                                  @foreach ($departments as $item)
+                                    <option value="{{ $item->id }}">{{ $item->description }}</option>
+                                  @endforeach
+                                </select>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="flex flex-col gap-2 z-[40]">
-                          <label class="font-medium text-[12px] text-[#6C7275]">
-                            Provincia
-                          </label>
+                          <div class="basis-1/3 flex flex-col gap-2 z-[40]">
+                            <label class="font-medium text-[12px] text-[#6C7275]">
+                              Provincia
+                            </label>
 
-                          <div>
-                            <!-- combo -->
-                            <div class="dropdown-provincia w-full">
-                              <select name="provincia_id"
-                                class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Seleccionar provincias </option>
-                                @foreach ($provincias as $item)
-                                  <option value="{{ $item->id }}">{{ $item->description }}</option>
-                                @endforeach
+                            <div>
+                              <!-- combo -->
+                              <div class="dropdown-provincia w-full">
+                                <select name="provincia_id" id="provincia_id"
+                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                  <option value="">Seleccione una provincia </option>
 
-                              </select>
+                                </select>
 
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="flex flex-col gap-2 z-[30]">
-                          <label class="font-medium text-[12px] text-[#6C7275]">
-                            Distrito
-                          </label>
+                          <div class="basis-1/3 flex flex-col gap-2 z-[30]">
+                            <label class="font-medium text-[12px] text-[#6C7275]">
+                              Distrito
+                            </label>
 
-                          <div>
-                            <!-- combo -->
-                            <div class="dropdown-distrito w-full">
-                              <select name="distrito_id"
-                                class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Seleccionar distritos </option>
-                                @foreach ($distritos as $item)
-                                  <option value="{{ $item->id }}">{{ $item->description }}</option>
-                                @endforeach
+                            <div>
+                              <!-- combo -->
+                              <div class="dropdown-distrito w-full">
+                                <select name="distrito_id" id="distrito_id"
+                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                  <option value="">Seleccione un distrito </option>
 
-                              </select>
+                                </select>
 
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -232,7 +339,7 @@
                     </div>
                   </div>
 
-                  <div class="flex flex-col gap-5 pb-10">
+                  {{-- <div class="flex flex-col gap-5 pb-10">
                     <h2 class="font-semibold text-[20px] text-[#151515]">
                       Dirección de envío
                     </h2>
@@ -311,20 +418,21 @@
                       <a href="/agradecimiento" id="pagarProductos"
                         class="text-white bg-[#74A68D] w-full py-3 rounded-3xl cursor-pointer border-2 font-semibold text-[16px] inline-block text-center border-none">Pagar</a>
                       <!-- <input
-                                                                                                                                                                                                    type="submit"
-                                                                                                                                                                                                    value="Checkout"
-                                                                                                                                                                                                    class="text-white bg-[#74A68D] w-full py-3 rounded-3xl cursor-pointer border-2 font-semibold text-[16px] inline-block text-center border-none"
-                                                                                                                                                                                                  /> -->
+                                                                                                                                                                                                              type="submit"
+                                                                                                                                                                                                              value="Checkout"
+                                                                                                                                                                                                              class="text-white bg-[#74A68D] w-full py-3 rounded-3xl cursor-pointer border-2 font-semibold text-[16px] inline-block text-center border-none"
+                                                                                                                                                                                                            /> -->
                     </div>
 
-                  </div>
+                  </div> --}}
               </form>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="basis-4/12 flex flex-col justify-start gap-10 pt-10 md:pt-0 order-1 2md:order-2">
+      <div
+        class="basis-4/12 flex flex-col justify-start gap-10 py-4 order-1 2md:order-2 md:sticky top-4 h-max border rounded-md">
         <h2 class="font-semibold text-[20px] text-[#151515] px-4">
           Resumen del pedido
         </h2>
@@ -356,6 +464,9 @@
               <p>Total</p>
               <p id="itemTotal">s/ 234.00</p>
             </div>
+
+            <a id="btnPagar" href="/agradecimiento"
+                class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center">Pagar</a>
           </div>
         </div>
       </div>
@@ -564,44 +675,44 @@
 
     //   articulosCarrito.forEach(element => {
     //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-    //     <div class="flex justify-center items-center gap-5">
-    //       <div class="bg-[#F3F5F7] rounded-md p-4">
-    //         <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-    //       </div>
-    //       <div class="flex flex-col gap-3 py-2">
-    //         <h3 class="font-semibold text-[14px] text-[#151515]">
-    //           ${element.producto}
-    //         </h3>
-    //         <p class="font-normal text-[12px] text-[#6C7275]">
-              
-    //         </p>
-    //         <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-    //           <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-    //             <span  class="text-[20px]">-</span>
-    //           </button>
-    //           <div class="w-8 h-8 flex justify-center items-center">
-    //             <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-    //           </div>
-    //           <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-    //             <span class="text-[20px]">+</span>
-    //           </button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-    //       <p class="font-semibold text-[14px] text-[#151515]">
-    //         S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-    //       </p>
-    //       <div class="flex items-center">
-    //         <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-    //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    //           <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-    //         </svg>
-    //         </button>
+  //     <div class="flex justify-center items-center gap-5">
+  //       <div class="bg-[#F3F5F7] rounded-md p-4">
+  //         <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
+  //       </div>
+  //       <div class="flex flex-col gap-3 py-2">
+  //         <h3 class="font-semibold text-[14px] text-[#151515]">
+  //           ${element.producto}
+  //         </h3>
+  //         <p class="font-normal text-[12px] text-[#6C7275]">
 
-    //       </div>
-    //     </div>
-    //   </div>`
+  //         </p>
+  //         <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
+  //           <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
+  //             <span  class="text-[20px]">-</span>
+  //           </button>
+  //           <div class="w-8 h-8 flex justify-center items-center">
+  //             <span  class="font-semibold text-[12px]">${element.cantidad }</span>
+  //           </div>
+  //           <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
+  //             <span class="text-[20px]">+</span>
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //     <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
+  //       <p class="font-semibold text-[14px] text-[#151515]">
+  //         S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
+  //       </p>
+  //       <div class="flex items-center">
+  //         <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
+  //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  //           <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+  //         </svg>
+  //         </button>
+
+  //       </div>
+  //     </div>
+  //   </div>`
 
     //     itemsCarrito.append(plantilla)
     //     itemsCarritoPago.append(plantilla)
@@ -685,10 +796,7 @@
         error: function(error) {
           console.log(error)
         }
-
       })
-
-
 
       // articulosCarrito = {...articulosCarrito , detalleProducto }
     })
@@ -744,6 +852,36 @@
         });
 
       }
+    })
+
+    const provinces = @json($provinces);
+    const districts = @json($districts);
+
+    $('#departamento_id').select2()
+    $('#provincia_id').select2()
+    $('#distrito_id').select2()
+
+    $('#departamento_id').on('change', function() {
+      $('#provincia_id').html('<option value>Seleccione una provincia</option>')
+      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
+      provinces.filter(x => x.department_id == this.value).forEach(({
+        id,
+        description
+      }) => {
+        $('#provincia_id').append(`<option value="${id}">${description}</option>`)
+      })
+      $('#provincia_id').select2()
+    })
+
+    $('#provincia_id').on('change', function() {
+      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
+      districts.filter(x => x.province_id == this.value).forEach(({
+        id,
+        description
+      }) => {
+        $('#distrito_id').append(`<option value="${id}">${description}</option>`)
+      })
+      $('#distrito_id').select2()
     })
   </script>
 
