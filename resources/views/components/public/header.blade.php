@@ -1,5 +1,6 @@
 @php
-  $isIndex = Route::currentRouteName() == 'index';
+  $pageName = Route::currentRouteName();
+  $isIndex = $pageName == 'index';
 @endphp
 
 <style>
@@ -358,7 +359,8 @@
             <span id="itemsCount" class="text-white"></span>
           </div> --}}
           <div class="flex justify-center items-center pl-1">
-            <div id="open-cart" class="relative inline-block cursor-pointer">
+            <div id="open-cart"
+              class="relative cursor-pointer {{ $pageName == 'carrito' || $pageName == 'pago' ? 'hidden' : 'inline-block' }}">
               <span id="itemsCount"
                 class="bg-[#EB5D2C] text-xs font-medium text-white text-center p-1 leading-none rounded-full px-2 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0">0</span>
               <img src="{{ asset('images/svg/header_bag.svg') }}"
@@ -419,7 +421,7 @@
 </script>
 <script>
   function mostrarTotalItems() {
-    let articulos = Local.get('carrito')
+    let articulos = Local.get('carrito') ?? []
     let contarArticulos = articulos.reduce((total, articulo) => {
       return total + articulo.cantidad;
     }, 0);

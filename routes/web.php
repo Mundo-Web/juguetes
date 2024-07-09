@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AttributesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\LogosClientController;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LibroReclamacionesController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PolyticsConditionController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProductsController;
@@ -86,7 +88,7 @@ Route::get('/obtenerDistritos/{provinceId}', [IndexController::class, 'obtenerDi
 Route::get('/politicas-de-devolucion', [IndexController::class, 'politicasDevolucion'])->name('politicas_dev');
 Route::get('/terminos-y-condiciones', [IndexController::class, 'TerminosyCondiciones'])->name('terms_condition');
 
-
+// Route::post('/payment/culqi', [PaymentController::class, 'culqi'])->name('payment.culqi');
 
 
 Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () {
@@ -213,7 +215,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 });
 
 
-Route::middleware(['auth:sanctum', 'verified', 'can:Customer'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/micuenta', [IndexController::class, 'micuenta'])->name('micuenta');
     Route::get('/micuenta/pedidos', [IndexController::class, 'pedidos'])->name('pedidos');
@@ -225,4 +227,6 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Customer'])->group(function 
 
 
     Route::post('/micuenta/actualizarPerfil', [IndexController::class, 'actualizarPerfil'])->name('actualizarPerfil');
+
+    Route::post('/micuenta/direccion', [AddressController::class, 'save'])->name('address.save');
 });

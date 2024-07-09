@@ -1,4 +1,4 @@
-@extends('components.public.matrix', ['pagina'=>''])
+@extends('components.public.matrix', ['pagina' => ''])
 
 @section('css_importados')
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -18,7 +18,7 @@
         <span>/</span>
         <a href="carrito.html" class="font-semibold text-[14px] text-[#141718]">Carrito</a>
       </div>
-      
+
       {{-- <div class="flex flex-col">
         <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
 
@@ -102,12 +102,6 @@
 
               <a id="btnSiguiente" href="/pago"
                 class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center">Siguiente</a>
-
-              <!-- <input
-                                                                                                            type="submit"
-                                                                                                            value="Siguiente"
-                                                                                                            class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center"
-                                                                                                          /> -->
             </div>
           </div>
         </div>
@@ -144,7 +138,7 @@
     }
 
     function calcularTotal() {
-      let articulos = Local.get('carrito')
+      let articulos = Local.get('carrito') ?? []
       let total = articulos.map(item => {
         let monto
         if (Number(item.descuento) !== 0) {
@@ -159,26 +153,12 @@
       const suma = total.reduce((total, elemento) => total + elemento, 0);
 
       $('#itemSubtotal').text(`S/. ${suma} `)
-      const opciones = document.getElementsByName('bordered-radio');
 
-      // Iterar sobre los radio buttons para encontrar el que está seleccionado
-      let valorSeleccionado = 0;
-      opciones.forEach(opcion => {
-        if (opcion.checked) {
-          valorSeleccionado = opcion.value;
-        }
-      });
-
-      // El valor de valorSeleccionado es el valor del radio button seleccionado
-
-
-      total = Number(suma) + Number(valorSeleccionado)
-
-      let carrito = Local.get('carrito')
+      let carrito = Local.get('carrito') ?? []
       // carrito = [...carrito, carrito.total]
       Local.set("carrito", carrito)
 
-      $('#itemsTotalCheck').text(`S/. ${total} `)
+      $('#itemsTotalCheck').text(`S/. ${suma.toFixed(2)} `)
 
     }
 
@@ -234,44 +214,44 @@
 
     //   articulosCarrito.forEach(element => {
     //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-    //       <div class="flex justify-center items-center gap-5">
-    //         <div class="bg-[#F3F5F7] rounded-md p-4">
-    //           <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-    //         </div>
-    //         <div class="flex flex-col gap-3 py-2">
-    //           <h3 class="font-semibold text-[14px] text-[#151515]">
-    //             ${element.producto}
-    //           </h3>
-    //           <p class="font-normal text-[12px] text-[#6C7275]">
-                
-    //           </p>
-    //           <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-    //             <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-    //               <span  class="text-[20px]">-</span>
-    //             </button>
-    //             <div class="w-8 h-8 flex justify-center items-center">
-    //               <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-    //             </div>
-    //             <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-    //               <span class="text-[20px]">+</span>
-    //             </button>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-    //         <p class="font-semibold text-[14px] text-[#151515]">
-    //           S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-    //         </p>
-    //         <div class="flex items-center">
-    //           <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-    //           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    //             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-    //           </svg>
-    //           </button>
+  //       <div class="flex justify-center items-center gap-5">
+  //         <div class="bg-[#F3F5F7] rounded-md p-4">
+  //           <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
+  //         </div>
+  //         <div class="flex flex-col gap-3 py-2">
+  //           <h3 class="font-semibold text-[14px] text-[#151515]">
+  //             ${element.producto}
+  //           </h3>
+  //           <p class="font-normal text-[12px] text-[#6C7275]">
 
-    //         </div>
-    //       </div>
-    //     </div>`
+  //           </p>
+  //           <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
+  //             <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
+  //               <span  class="text-[20px]">-</span>
+  //             </button>
+  //             <div class="w-8 h-8 flex justify-center items-center">
+  //               <span  class="font-semibold text-[12px]">${element.cantidad }</span>
+  //             </div>
+  //             <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
+  //               <span class="text-[20px]">+</span>
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
+  //         <p class="font-semibold text-[14px] text-[#151515]">
+  //           S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
+  //         </p>
+  //         <div class="flex items-center">
+  //           <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
+  //           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  //             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+  //           </svg>
+  //           </button>
+
+  //         </div>
+  //       </div>
+  //     </div>`
 
     //     itemsCarrito.append(plantilla)
     //     itemsCarritoCheck.append(plantilla)
@@ -377,7 +357,7 @@
       const valorSeleccionado = $(this).val();
 
 
-      articulosCarrito = Local.get('carrito')
+      articulosCarrito = Local.get('carrito') ?? []
       let carritoCheck = articulosCarrito.map(item => {
         let obj = {
           id: item.id,
@@ -392,7 +372,6 @@
         return obj
       })
 
-      console.log(carritoCheck)
       Local.set("carrito", carritoCheck)
       checkedRadio = true
 
@@ -400,22 +379,17 @@
       limpiarHTML()
       PintarCarrito()
     });
-    // $("#btnSiguiente").on('click', function(e) {
-
-    //   console.log(checkedRadio)
-    //   if (!checkedRadio) {
-    //     e.preventDefault()
-    //     Swal.fire({
-
-    //       icon: "warning",
-    //       title: "Opss ",
-    //       text: 'Recuerde elegir un metodo de envio'
-
-
-    //     });
-
-    //   }
-    // })
+    $("#btnSiguiente").on('click', function(e) {
+      const carrito = Local.get('carrito') ?? []
+      if (carrito.length == 0) {
+        e.preventDefault()
+        Swal.fire({
+          title: `Ups!!`,
+          text: `Debes agregar al menos un producto al carrito`,
+          icon: "error"
+        });
+      }
+    })
   </script>
   <script src="{{ asset('js/storage.extend.js') }}"></script>
 @stop

@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "anhskohbo/no-captcha": "^3.6",
+        "culqi/culqi-php": "*",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "*",
         "laravel/framework": "^10.10",
@@ -15,8 +16,9 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
         "phpmailer/phpmailer": "^6.9",
-        "spatie/laravel-permission": "^6.7",
-        "sode/extend": "dev-master"
+        "rmccue/requests": "^2.0",
+        "sode/extend": "dev-master",
+        "spatie/laravel-permission": "^6.7"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.9",

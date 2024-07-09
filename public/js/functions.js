@@ -434,8 +434,8 @@ cuentas.forEach((cuenta) => {
 
 function PintarCarrito() {
 
-  let itemsCarrito = $('#itemsCarrito')
-  let itemsCarritoCheck = $('#itemsCarritoCheck')
+  let itemsCarrito = $('[id="itemsCarrito"]')
+  let itemsCarritoCheck = $('[id="itemsCarritoCheck"]')
 
   articulosCarrito.forEach(element => {
     let plantilla = `<tr class=" font-poppins border-b">

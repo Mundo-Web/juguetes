@@ -105,10 +105,10 @@
                               <form method="POST" action="{{ route('logout') }}" x-data class="group">
                                   @csrf     
                                   <button type="submit"  href="{{ route('logout') }}"
-                                    class="rounded-2xl bg-[#F3F5F7] md:bg-[#FCFCFC] group-hover:bg-[#74A68D]  group-hover:text-white text-[#151515] font-medium text-[16px] py-3 px-4 flex justify-between items-center w-64 mt-0 md:mt-[200px]">
+                                    class="rounded-2xl bg-[#F3F5F7] md:bg-[#FCFCFC] group-hover:bg-[#74A68D]  group-hover:text-white text-[#272727] font-medium text-[16px] py-3 px-4 flex justify-between items-center w-64 mt-0 md:mt-[200px]">
                                     <span>Cerrar Sesión</span>
                                     <svg width="20" height="18" viewBox="0 0 14 13" fill="none" >
-                                      <path class="group-hover:stroke-white"  d="M4.8533 0.900391H2.38271C2.00829 0.900391 1.6492 1.04789 1.38444 1.31044C1.11969 1.57299 0.970947 1.92909 0.970947 2.30039V10.7004C0.970947 11.0717 1.11969 11.4278 1.38444 11.6903C1.6492 11.9529 2.00829 12.1004 2.38271 12.1004H4.8533M5.02876 6.50039H13.0288M13.0288 6.50039L9.97199 3.30039M13.0288 6.50039L9.97199 9.70039" stroke="#151515" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <path class="group-hover:stroke-white"  d="M4.8533 0.900391H2.38271C2.00829 0.900391 1.6492 1.04789 1.38444 1.31044C1.11969 1.57299 0.970947 1.92909 0.970947 2.30039V10.7004C0.970947 11.0717 1.11969 11.4278 1.38444 11.6903C1.6492 11.9529 2.00829 12.1004 2.38271 12.1004H4.8533M5.02876 6.50039H13.0288M13.0288 6.50039L9.97199 3.30039M13.0288 6.50039L9.97199 9.70039" stroke="#272727" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                                       </svg>                                      
                                   </button>
                               </form>
@@ -119,7 +119,7 @@
                 <div class="basis-7/12 font-poppins w-11/12 md:w-full mx-auto">
                     <form method="POST" class="flex flex-col gap-5 mb-10" enctype='multipart/form-data' id="detalleCuenta">
                         @csrf
-                        <h2 class="text-[20px] font-semibold text-[#151515]">
+                        <h2 class="text-[20px] font-semibold text-[#272727]">
                             Detalles de la cuenta
                         </h2>
                         <input type="hidden" name="id" value="{{ $user->id }}" />
@@ -139,15 +139,21 @@
 
                         <div class="flex flex-col gap-2">
                             <label for="email_user" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
-                            <input id="email_user" type="email" placeholder="hola@gmail.com" value="{{ $user->email }}"
+                            <input name="email" id="email_user" type="email" placeholder="hola@gmail.com" value="{{ $user->email }}"
+                                class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="phone" class="font-medium text-[12px] text-[#6C7275]">Celular</label>
+                            <input name="phone" id="phone" type="email" placeholder="51 999 999 999" value="{{ $user->phone }}"
                                 class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
                         </div>
 
                         <div>
-                            <hr class="bg-[#151515] h-[2px]" />
+                            <hr class="bg-[#272727] h-[2px]" />
                         </div>
 
-                        <h2 class="text-[20px] font-semibold text-[#151515]">
+                        <h2 class="text-[20px] font-semibold text-[#272727]">
                             Contraseña
                         </h2>
 
@@ -179,7 +185,7 @@
                                 cambios</a>
 
                             <a onclick="window.location.href = window.location.href;"
-                                class="text-[#151515] py-3 px-5 rounded-2xl cursor-pointer font-semibold text-[16px] text-center inline-block border-[1px] border-[#151515]">Cancelar</a>
+                                class="text-[#272727] py-3 px-5 rounded-2xl cursor-pointer font-semibold text-[16px] text-center inline-block border-[1px] border-[#272727]">Cancelar</a>
                         </div>
                     </form>
                 </div>
@@ -258,6 +264,7 @@
                     formData.append('name', $('#detalleCuenta input[name="name"]').val());
                     formData.append('lastname', $('#detalleCuenta input[name="lastname"]').val());
                     formData.append('email', $('#detalleCuenta input[name="email"]').val());
+                    formData.append('phone', $('#detalleCuenta input[name="phone"]').val());
                     formData.append('password', $('#detalleCuenta input[name="password"]').val());
                     formData.append('newpassword', $('#detalleCuenta input[name="newpassword"]').val());
                     formData.append('confirmnewpassword', $('#detalleCuenta input[name="confirmnewpassword"]')
