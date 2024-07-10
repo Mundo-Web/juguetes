@@ -61,12 +61,20 @@ export default {
                 colorBackgroundMainTop: "#21201E",
                 colorBackgroundProducts: "#F8F6F2",
                 colorBackgroundNewProduct: "#38CB89",
+                coloBkthirdJL: "#FFD632",
+                coloBksecondJl: "#00bf63",
+                coloBkprimJl: "#FF3131",
             },
             textColor: {
                 colorSubtitle: "#113E55",
                 colorSubtitleLittle: "#173525",
                 colorAdd: "#2D694B",
                 colorTextBlack: "#151515",
+                colorJL: "#102E5B",
+                color2JL: "#f93d3d",
+                color3JL: "#05D370",
+                color4JL: "#102E5BA3",
+                
             },
             borderColor: {
                 selectCheck: "#173525",
@@ -80,7 +88,7 @@ export default {
 
             screens: {
                 xs: '320px',
-                "2xs": "370px",
+                "2xs": "420px",
                 sm: "640px",
                 md: "768px",
                 "2md": "980px",

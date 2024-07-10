@@ -1,80 +1,85 @@
-<footer class="font-poppins bg-[#21201E] text-white mt-12 pb-10">
-    <div class="flex flex-col gap-10 md:flex-row md:justify-center w-11/12 mx-auto py-16 border-b-2 border-[#6C7275]">
-        <div class="basis-3/6 flex flex-col gap-10">
+<footer class="font-poppins bg-coloBkprimJl text-white pb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12  md:justify-center w-11/12 mx-auto py-16 ">
+        <div class="lg:col-span-4 w-full flex flex-col gap-10">
             <div>
                 <a href="{{ route('index') }}">
-                    <img src="{{ asset('/images/img/logo_footer_decotab.png') }}" alt="decotab" /></a>
+                    <img src="{{ asset('/images/svg/jl_logofooter.svg') }}" alt="Juguetes" /></a>
             </div>
-            <p class="font-medium text-[20px]">
-                Deco Tab es reconocido por la excelente calidad de sus productos, como Wall Panel, mármol UV y piedra
-                PU. La
-                empresa cuenta con un equipo capacitado en la producción de estos materiales que harán de tu espacio más
-                moderno
-                y acogedor. ¿Te encuentras interesado? Contamos con oficinas en Lima y realizamos envíos a nivel
-                nacional.
-            </p>
-            @foreach ($datosgenerales as $item)
-                <div class="flex gap-5">
-
-                    @if ($item->instagram)
-                        <a href="{{ $item->instagram }}" target="_blank"><img
-                                src="{{ asset('/images/svg/instagram.svg') }}" alt="instagram" /></a>
-                    @endif
-
-                    @if ($item->facebook)
-                        <a href="{{ $item->facebook }}" target="_blank"><img
-                                src="{{ asset('/images/svg/facebook.svg') }}" alt="facebook" /></a>
-                    @endif
-
-                    @if ($item->youtube)
-                        <a href="{{ $item->youtube }}" target="_blank"><img src="{{ asset('/images/svg/youtube.svg') }}"
-                                alt="youtube" /></a>
-                    @endif
-                </div>
+            <nav>
+                <ul class="flex flex-col gap-3 text-base font-normal">
+                    <li class="flex flex-row gap-2"><img src="{{ asset('/images/svg/jl_map.svg') }}" /> Av. Camino Real 356 - San Isidro. Lima - Perú</li>
+                    <li class="flex flex-row gap-2"><img src="{{ asset('/images/svg/jl_mail.svg') }}" /> soporte@jugueteslúdicos.com.pe</li>
+                    <li class="flex flex-row gap-2"><img src="{{ asset('/images/svg/jl_whatsapp.svg') }}" /> +51 987435733</li>
+                </ul>
+            </nav>
+            
+                
         </div>
 
-        <div class="basis-1/6 flex flex-col gap-5">
-            <h3 class="font-medium text-[16px]">Page</h3>
+        <div class="lg:col-span-3 w-full  flex flex-col gap-5">
+            <h3 class="font-bold text-lg">Términos Legales</h3>
 
-            <a href="/" class="font-normal text-[14px]">Home</a>
-            <a href="{{ route('catalogo.all') }}" class="font-normal text-[14px]">Catálogo</a>
-            <a href="{{ route('contacto') }}" class="font-normal text-[14px]">Contacto</a>
-        </div>
-
-        <div class="basis-1/6 flex flex-col gap-5">
-            <h3 class="font-medium text-[16px]">Info</h3>
-
-            <a href="{{route('terms_condition')}}" class="font-normal text-[14px]">Terminos y Condiciones</a>
-            <a href="{{route('politicas_dev')}}" class="font-normal text-[14px]">Política de cambio</a>
-            <a href="{{route('index')}}" class="font-normal text-[14px]">FAQs</a>
-        </div>
-
-        <div class="basis-1/6 flex flex-col gap-5">
-
-
-            <h3 class="font-medium text-[16px]">Office</h3>
-            <p class="font-normal text-[14px]">{{ $item->address }}</p>
-            <p class="font-normal text-[14px]">
-                @if ($item->district && $item->city)
-                    {{ $item->district }}, {{ $item->city }}
-                @elseif ($item->district)
-                    {{ $item->district }}
-                @elseif ($item->city)
-                    {{ $item->city }}
-                @endif
-            </p>
-            <p class="font-normal text-[14px]">{{ $item->country }}</p>
-            <p class="font-normal text-[14px]">{{ $item->cellphone }}</p>
-            @endforeach
+             <nav>
+                <ul class="flex flex-col gap-3 text-base font-normal">
+                    <li class="flex flex-row gap-2"><a href="{{ route('catalogo.all') }}"> Políticas de privacidad </a></li>
+                    <li class="flex flex-row gap-2"><a href="{{ route('catalogo.all') }}"> Políticas de envío </a></li>
+                    <li class="flex flex-row gap-2"><a href="{{ route('catalogo.all') }}"> Políticas de devolución y cambio </a></li>
+                </ul>
+            </nav>
 
             <a href="{{route('librodereclamaciones')}}"><img class="w-28" src="{{ asset('images/img/reclamaciones.png') }}"/></a>
+        </div>
+
+        <div class="lg:col-span-2 w-full flex flex-col gap-5">
+           <h3 class="font-bold text-lg">Menú</h3>
+
+            <nav>
+                <ul class="flex flex-col gap-3 text-base font-normal">
+                    <li class="flex flex-row gap-2"><a href="#"> Inicio </a></li>
+                    <li class="flex flex-row gap-2"><a href="#"> Productos </a></li>
+                    <li class="flex flex-row gap-2"><a href="#"> Blog </a></li>
+                    <li class="flex flex-row gap-2"><a href="#"> Contáctanos </a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="lg:col-span-3 w-full  flex flex-col gap-5">
+
+
+            <h3 class="text-2xl font-bold">Suscríbete a nuestro blog</h3>
+            <p class="font-normal text-base">Mantente actualizado sobre las últimas noticias y ofertas.</p>
+            
+           <div class="flex flex-col gap-2">
+                <form action="" id="footerFormulario"
+                    class="flex flex-col md:flex-row md:justify-start md:items-center gap-3">
+                    @csrf
+                    <div class="w-full">
+                        <input required name="email" type="email" id="emailFooter" class="ring-0 focus:ring-0 border-transparent focus:border-transparent bg-white px-5 py-3 rounded-xl w-full text-colorJL placeholder:text-colorJL" placeholder="info@mail.com" />
+                    </div>
+                    <input type="hidden" id="nameFooter" required name="full_name" value="Usuario suscrito" />
+                    <input type="hidden" id="tipo" placeholder="tipo" name="tipo_message" value="Inscripción" />
+
+                    <div class="flex justify-center items-center w-full md:w-auto">
+                         <button
+                            type="submit"
+                            class="font-helveticaBold text-base text-white border border-white py-3 px-3 rounded-xl w-full md:w-auto text-center">Suscribirme
+                        </button>
+                    </div>
+                </form>
+                <p class="font-helveticaLight text-text12 text-white">
+                    Al suscribirse, acepta nuestra Política de privacidad y brinda su
+                    consentimiento para recibir actualizaciones de nuestra empresa.
+                </p>
+            </div>
+
+            
         </div>
     </div>
 
     <div class="mt-5 flex flex-col md:flex-row md:justify-between md:items-center gap-5 w-11/12 mx-auto">
         <div class="flex flex-col md:flex-row gap-2">
-            <p class="font-normal text-[12px]">
-                Copyright &copy; 2023 Mundo Web. Reservados todos los derechos
+            <p class="font-normal text-[13px]">
+                Copyright &copy; <a target="_blank" href="http://mundoweb.pe/" class="font-bold">2024 Mundo Web</a>. Reservados todos los derechos
             </p>
             {{-- <p class="hidden md:block">|</p>
 
@@ -85,12 +90,9 @@
         </div>
 
         <div class="flex flex-wrap gap-2 pb-5">
-            <img src="{{ asset('images/svg/visa.svg') }}" alt="visa" />
-            <img src="{{ asset('images/svg/american.svg') }}" alt="american" />
-            <img src="{{ asset('images/svg/mastercad.svg') }}" alt="mastercad" />
-            <img src="{{ asset('images/svg/stripe.svg') }}" alt="stripe" />
-            <img src="{{ asset('images/svg/paypal.svg') }}" alt="paypal" />
-            <img src="{{ asset('images/svg/pay.svg') }}" alt="pay" />
+            <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_facebook.svg') }}" alt="facebook" /></a>
+            <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_instagram.svg') }}" alt="instagram" /></a>
+            <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_whatsapp2.svg') }}" alt="whatsapp" /></a>
         </div>
     </div>
 </footer>

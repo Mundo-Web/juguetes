@@ -7,763 +7,1198 @@
 
 @section('content')
 
-  <main class="z-[15]">
+    <main class="z-[15]">
 
-
-    <!------Slider Header ------>
-    @if ($slider->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes sliders visibles</div>
-            </div> --}}
-    @else
-      <div class="swiper header-slider">
-        <div class="swiper-wrapper">
-          @foreach ($slider as $item)
-            <div class="swiper-slide rounded-2xl">
-              <div
-                style="height: calc(100vh - 53px); background-image: 
-                                @if ($item->name_image) url('{{ asset($item->url_image . $item->name_image) }}')
-                                @else
-                                 url('{{ asset('images/img/noimagenslider.jpg') }}') @endif"
-                class="bg-cover bg-center bg-no-repeat min-h-[700px] flex flex-col items-start py-16 md:justify-center bg-colorBackgroundHeader ">
-                <div class="flex justify-start items-center md:py-16 w-11/12 mx-auto">
-                  <div class="text-white font-poppins flex flex-col gap-10">
-                    <h1 data-aos="zoom-in"
-                      class="font-semibold text-[32px] md:text-[48px] leading-none md:leading-tight pt-16">
-                      {{ $item->title }}
-                    </h1>
-                    <h2 data-aos="zoom-in" class="font-normal text-[16px] md:text-[18px]">
-                      {{ $item->description }}
+        <section class="relative h-500 lg:h-700 gap-20 bg-no-repeat object-top bg-cover px-[3%] lg:px-[5%] rounded-b-[50px]"
+            style="background-image: url('{{ asset('images/img/jl_portada.webp') }}');">
+            <div class="flex flex-row justify-center items-center gap-2 w-full lg:w-1/2 py-10 lg:py-20">
+                <div class="flex flex-col gap-5 lg:gap-10 items-start pt-8 pb-32 lg:pb-16 px-0 lg:px-[2%]">
+                    <h3 class="font-poppins font-bold  text-xl leading-none lg:text-primary  text-white max-w-4xl ">
+                        Juguetes Lúdicos
+                    </h3>
+                    <h2 class="text-white text-3xl lg:text-5xl tracking-normal font-poppins font-bold">
+                        Despierta la Creatividad y Aprendizaje de tu Hijo con Nuestros Juguetes
                     </h2>
-
-                    <div class="flex flex-col md:flex-row gap-5 md:gap-10 items-center">
-                      @if (!empty($item->botontext1) && !empty($item->link1))
-                        <a href="{{ $item->link1 }}"
-                          class="font-semibold text-[16px] bg-[#74A68D] text-white py-2 px-5 rounded-3xl md:duration-500 transform transition-all hover:scale-105 animate-slideInFromBottom w-full text-center md:w-auto">
-                          {{ $item->botontext1 }}</a>
-                      @endif
-
-                      @if (!empty($item->botontext2) && !empty($item->link2))
-                        <a href="{{ $item->link2 }}"
-                          class="font-semibold text-[16px] border-2 border-white bg-transparent text-white py-2 px-5 rounded-3xl transform transition-all hover:scale-105 animate-slideInFromBottom w-full md:w-auto text-center">
-                          {{ $item->botontext2 }}</a>
-                      @endif
-                    </div>
-                  </div>
+                    <p class="text-white text-base tracking-wider font-poppins font-normal">
+                        Nuestros juguetes están diseñados para inspirar, educar y divertir, desarrollando habilidades
+                        esenciales desde temprana edad.
+                    </p>
+                    <a href=""
+                        class="px-6 py-4 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl">Explorar
+                        nuestro Catálogo</a>
                 </div>
-              </div>
             </div>
-          @endforeach
-
-
-        </div>
-
-      </div>
-    @endif
-
-    <div id="categorias"></div>
-
-    <!------Valores agregados------>
-    <section class="hidden lg:block focus-within:group">
-      <div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          <div
-            class="group bg-colorBackgroundMainTop hover:bg-white p-14 md:duration-1000 transform transition-transform hover:scale-105 hover:z-10 transition-opacity duration-500 ease-out group-focus-within:opacity-100 focus-within:animate-slideInFromLeft">
-            <div class="pb-5 flex justify-center items-center md:justify-start">
-              <svg width="44" height="40" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M26 34V10M26 34H30M26 34H16M26 10C26 5.58172 22.4183 2 18 2H10C5.58172 2 2 5.58172 2 10V26C2 29.7304 4.55333 32.8645 8.00769 33.7499M26 10H32.4182C33.4344 10 34.4126 10.3868 35.154 11.0819L40.7358 16.3148C41.5424 17.071 42 18.1273 42 19.2329V30C42 32.2091 40.2091 34 38 34M38 34C38 36.2091 36.2091 38 34 38C31.7909 38 30 36.2091 30 34M38 34C38 31.7909 36.2091 30 34 30C31.7909 30 30 31.7909 30 34M16 34C16 36.2091 14.2091 38 12 38C9.79086 38 8 36.2091 8 34C8 33.916 8.00259 33.8326 8.00769 33.7499M16 34C16 31.7909 14.2091 30 12 30C9.87484 30 8.13677 31.6573 8.00769 33.7499"
-                  stroke="white" stroke-width="2.5" class="group-hover:stroke-[#151515]" />
-              </svg>
-            </div>
-            <div data-aos="fade-left"
-              class="font-poppins text-center md:text-left transform transition-transform group-hover:scale-105">
-              <h2 class="text-white group-hover:text-colorTextBlack font-semibold text-[24px]">
-                Envío gratis
-              </h2>
-              <p class="text-white group-hover:text-colorTextBlack font-normal text-[16px]">
-                compras superior a s/200
-              </p>
-            </div>
-          </div>
-          <div
-            class="group bg-colorBackgroundMainTop hover:bg-white p-14 md:duration-1000 transform transition-transform hover:scale-105 hover:z-10 transition-opacity duration-500 ease-out group-focus-within:opacity-100 focus-within:animate-slideInFromLeft">
-            <div class="pb-5 flex justify-center items-center md:justify-start">
-              <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4.33398" y="8" width="40" height="32" rx="4" stroke="white" stroke-width="2.5"
-                  class="group-hover:stroke-[#151515]" />
-                <circle cx="4" cy="4" r="4" transform="matrix(1 0 0 -1 20.334 28)" stroke="white"
-                  stroke-width="2.5" class="group-hover:stroke-[#151515]" />
-                <circle cx="2" cy="2" r="2" transform="matrix(1 0 0 -1 34.334 26)" fill="white"
-                  class="group-hover:stroke-[#151515]" />
-                <circle cx="2" cy="2" r="2" transform="matrix(1 0 0 -1 10.334 26)" fill="white"
-                  class="group-hover:stroke-[#151515]" />
-              </svg>
-            </div>
-            <div data-aos="fade-left"
-              class="font-poppins text-center md:text-left transform transition-transform group-hover:scale-105">
-              <h2 class="text-white group-hover:text-colorTextBlack font-semibold text-[24px]">
-                Devolución de dinero
-              </h2>
-              <p class="text-white group-hover:text-colorTextBlack font-normal text-[16px]">
-                Garantía de 30 días
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="group bg-colorBackgroundMainTop hover:bg-white p-14 md:duration-1000 transform transition-transform hover:scale-105 hover:z-10 transition-opacity duration-500 ease-out group-focus-within:opacity-100 focus-within:animate-slideInFromRight">
-            <div class="pb-5 flex justify-center items-center md:justify-start">
-              <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M32.666 16H16.666M32.666 16C37.0843 16 40.666 19.5817 40.666 24V36C40.666 40.4183 37.0843 44 32.666 44H16.666C12.2477 44 8.66602 40.4183 8.66602 36V24C8.66602 19.5817 12.2477 16 16.666 16M32.666 16V12C32.666 7.58172 29.0843 4 24.666 4C20.2477 4 16.666 7.58172 16.666 12V16M24.666 32V28"
-                  stroke="white" stroke-width="2.5" stroke-linecap="round" class="group-hover:stroke-[#151515]" />
-              </svg>
-            </div>
-            <div data-aos="fade-right"
-              class="font-poppins text-center md:text-left transform transition-transform group-hover:scale-105">
-              <h2 class="text-white group-hover:text-colorTextBlack font-semibold text-[24px]">
-                Pagos seguros
-              </h2>
-              <p class="text-white group-hover:text-colorTextBlack font-normal text-[16px]">
-                Asegurado por...
-              </p>
-            </div>
-          </div>
-
-          <div
-            class="group bg-colorBackgroundMainTop hover:bg-white p-14 md:duration-1000 transform transition-transform hover:scale-105 hover:z-10 transition-opacity duration-500 ease-out group-focus-within:opacity-100 focus-within:animate-slideInFromRight">
-            <div class="pb-5 flex justify-center items-center md:justify-start">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M42 38V34.7081C42 33.0725 41.0042 31.6017 39.4856 30.9942L35.4173 29.3669C33.4857 28.5943 31.2844 29.4312 30.354 31.292L30 32C30 32 25 31 21 27C17 23 16 18 16 18L16.708 17.646C18.5688 16.7156 19.4057 14.5143 18.6331 12.5827L17.0058 8.51444C16.3983 6.99581 14.9275 6 13.2919 6H10C7.79086 6 6 7.79086 6 10C6 27.6731 20.3269 42 38 42C40.2091 42 42 40.2091 42 38Z"
-                  stroke="white" stroke-width="2.5" stroke-linejoin="round" class="group-hover:stroke-[#151515]" />
-              </svg>
-            </div>
-            <div data-aos="fade-right"
-              class="font-poppins text-center md:text-left transform transition-transform group-hover:scale-105">
-              <h2 class="text-white group-hover:text-colorTextBlack font-semibold text-[24px]">
-                Soporte 24/7
-              </h2>
-              <p class="text-white group-hover:text-colorTextBlack font-normal text-[16px]">
-                Soporte telefónico y por correo electrónico
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!------Categorias destacadas - Grilla------>
-
-    @if (!$category->isEmpty())
-      <section class="mt-20">
-        <h2 class="block lg:hidden font-poppins font-semibold text-[40px] w-11/12 mx-auto">
-          Categorías
-        </h2>
-        <div>
-          @if (count($category->take(4)) == 1)
-
-            <section class="mt-10 hidden lg:block relative">
-
-              <div class="grid grid-cols-1 gap-4 w-10/12 mx-auto" data-aos="fade-up">
-
-                @foreach ($category->take(1) as $index => $slide)
-                  <div class="col-span-2 row-span-2">
-                    <div class="bg-[#F3F5F7] flex flex-row h-full rounded-xl">
-                      <div class="flex justify-start items-center basis-1/2">
-                        @if ($slide->name_image)
-                          <img src="{{ asset($slide->url_image . $slide->name_image) }}" alt="{{ $slide->name }}"
-                            class="w-full h-30 object-contain" />
-                        @else
-                          <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                            class="w-full h-30 object-contain" />
-                        @endif
-                      </div>
-
-                      <div class="font-poppins basis-1/2 p-4 flex flex-col gap-2 justify-center">
-                        <h2 class="font-semibold text-[24px]">
-                          {{ $slide->name }}
-                        </h2>
-                        <p class="my-2 font-normal text-[16px] mb-4">
-                          {{ $slide->description }}
-                        </p>
-
-                        <div>
-                          <a href="/catalogo/{{ $slide->slug }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-2 px-8 rounded-3xl border-[1px] border-colorBorder">
-                            Ver categoría
-                          </a>
-                        </div>
-                      </div>
+            <div class="absolute inset-x-0 -mt-40 flex flex-col justify-center items-center gap-2 w-full px-[2%] py-[5%]">
+                <div class="w-full grid grid-cols-6 xl:grid-cols-12 justify-around  max-w-7xl bg-coloBksecondJl h-96 lg:h-[250px] rounded-3xl overflow-hidden px-0 lg:px-6 py-5 xl:py-10 md:bg-right bg-no-repeat bg-cover lg:bg-contain bg-none "
+                    style="background-image: url('{{ asset('images/svg/jl_textura1.svg') }}');">
+                    <div class="col-span-3 md:col-span-2 flex flex-col items-center justify-center gap-3 px-[10%]">
+                        <img src="{{ asset('/images/svg/jl_cerebro.svg') }}" />
+                        <h3 class="font-medium font-poppins text-white text-[15px] md:text-text16  text-center">
+                            Promover el aprendizaje independiente
+                        </h3>
                     </div>
-                  </div>
-                @endforeach
 
-              </div>
-
-            </section>
-          @elseif(count($category->take(4)) == 2)
-            <section class="mt-10 hidden lg:block relative">
-
-              <div class="grid grid-cols-4 gap-4 w-10/12 mx-auto">
-
-                @foreach ($category->take(2) as $index => $slide)
-                  <div class="col-span-2 row-span-1" data-aos="fade-{{ $index == 0 ? 'right' : 'left' }}">
-                    <div class="bg-[#F3F5F7] flex flex-row h-full rounded-xl">
-                      <div class="flex justify-start items-center basis-1/2">
-                        @if ($slide->name_image)
-                          <img src="{{ asset($slide->url_image . $slide->name_image) }}" alt="{{ $slide->name }}"
-                            class="w-full h-30 object-contain" />
-                        @else
-                          <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                            class="w-full h-30 object-contain" />
-                        @endif
-                      </div>
-
-                      <div class="font-poppins basis-1/2 p-4 pb-6 flex flex-col gap-2 justify-center">
-                        <h2 class="font-semibold text-[24px] truncate">
-                          {{ $slide->name }}
-                        </h2>
-                        <p class="my-2 font-normal text-[16px] mb-4">
-                          {{ $slide->description }}
-                        </p>
-
-                        <div>
-                          <a href="/catalogo/{{ $slide->slug }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">
-                            Ver categoria
-                          </a>
-                        </div>
-                      </div>
+                    <div class="col-span-3 md:col-span-2 flex flex-col items-center justify-center gap-3 px-[5%]">
+                        <img src="{{ asset('/images/svg/jl_rompecabezas.svg') }}" />
+                        <h3 class="font-medium font-poppins text-white text-[15px] md:text-text16 text-center">
+                            Desarrollar el pensamiento crítico y las habilidades para resolver problemas.
+                        </h3>
                     </div>
-                  </div>
 
-                  <!--Fin Columna 1 -->
-                @endforeach
-              </div>
-            </section>
-          @elseif(count($category->take(4)) == 3)
-            <section class="mt-10 hidden lg:block relative">
-
-              <div class="grid grid-cols-4 gap-4 w-10/12 mx-auto">
-
-                @foreach ($category->take(3) as $index => $slide)
-                  <!-- Columna 1 2 y 3-->
-
-                  <div
-                    class="col-span-2 @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif"
-                    data-aos="fade-{{ $index == 0 ? 'right' : ($index == 1 ? 'down-left' : 'up-left') }}">
-                    <div
-                      class="bg-[#F3F5F7] flex  @if ($loop->first) flex-col @elseif(!$loop->first) flex-row @endif  h-full rounded-xl">
-                      <div class="flex justify-start items-center basis-1/2">
-                        @if ($slide->name_image)
-                          <img src="{{ asset($slide->url_image . $slide->name_image) }}" alt="{{ $slide->name }}"
-                            class="w-full h-30 object-contain" />
-                        @else
-                          <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                            class="w-full h-30 object-contain" />
-                        @endif
-                      </div>
-
-                      <div class="font-poppins basis-1/2 p-4 pb-6 flex flex-col gap-2 justify-center">
-                        <h2 class="font-semibold text-[24px] truncate">
-                          {{ $slide->name }}
-                        </h2>
-                        <p class="my-2 font-normal text-[16px] mb-4">
-                          {{ $slide->description }}
-                        </p>
-
-                        <div>
-                          <a href="/catalogo/{{ $slide->slug }}"
-                            class="font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%] rounded-3xl border-[1px] border-colorBorder">
-                            Ver categoria
-                          </a>
-                        </div>
-                      </div>
+                    <div class="col-span-3 md:col-span-2 flex flex-col items-center justify-center gap-3 px-[5%]">
+                        <img src="{{ asset('/images/svg/jl_bebe.svg') }}" />
+                        <h3 class="font-medium font-poppins text-white text-[15px] md:text-text16  text-center">
+                            Fomentar la exploración y el descubrimiento.
+                        </h3>
                     </div>
-                  </div>
 
+                    <div class="hidden lg:col-span-1"></div>
 
+                    <div class="col-span-3 md:col-span-6 flex flex-col items-center justify-center gap-3 px-[5%]">
 
-                  <!--Fin Columna 1 -->
-                @endforeach
-              </div>
-            </section>
-          @elseif(count($category->take(4)) == 4)
-            <section class="mt-10 hidden lg:block relative">
-
-              <div class="grid grid-cols-4 gap-4 w-10/12 mx-auto">
-
-                @foreach ($category->take(4) as $index => $slide)
-                  <!-- Columna 1 2 3 y 4-->
-
-                  <div
-                    class="@if ($loop->index == 0 || $loop->index == 1) col-span-2  @elseif($loop->index == 2 || $loop->index == 3) col-span-1 @endif  @if ($loop->first) row-span-2 @elseif(!$loop->first)  row-span-1 @endif"
-                    data-aos="fade-{{ $index == 0 ? 'right' : ($index == 1 ? 'left' : ($index == 2 ? 'up-right' : 'up-left')) }}">
-                    <div
-                      class="bg-[#F3F5F7] flex  @if ($loop->index == 0 || $loop->index == 2 || $loop->index == 3) flex-col @elseif($loop->index == 1) flex-row @endif  h-full rounded-xl">
-                      <div class="flex justify-start items-center basis-1/2">
-                        @if ($slide->name_image)
-                          <img src="{{ asset($slide->url_image . $slide->name_image) }}" alt="{{ $slide->name }}"
-                            class="w-full h-30 object-contain" />
-                        @else
-                          <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                            class="w-full h-30 object-contain" />
-                        @endif
-                      </div>
-
-                      <div class="font-poppins basis-1/2 p-4 pb-6  flex flex-col gap-2 justify-center">
-                        <h2 class="font-semibold text-[24px] truncate">
-                          {{ $slide->name }}
-                        </h2>
-                        <p class="my-2 font-normal text-[16px] mb-4">
-                          {{ $slide->description }}
-                        </p>
-
-                        <div>
-                          <a href="/catalogo/{{ $slide->slug }} "
-                            class=" font-semibold text-[16px] bg-transparent md:duration-500 py-3 px-[8%]  rounded-3xl border-[1px] border-colorBorder">Ver
-                            categoría
-                          </a>
-                        </div>
-                      </div>
+                        <h3
+                            class="font-bold font-poppins text-white text-lg md:text-3xl text-center lg:text-left leading-normal md:leading-relaxed py-3">
+                            ¡Encuentra juguetes que hagan sonreír a tus hijos!
+                        </h3>
                     </div>
-                  </div>
-
-                  <!--Fin Columna 1 -->
-                @endforeach
-              </div>
-            </section>
-
-          @endif
-
-
-          <!------Categorias destacadas - carrusel------>
-          <section class="block lg:hidden">
-            <div class="swiper categorias">
-              {{-- <div class="swiper-pagination-categorias mb-24"></div>  --}}
-              <div class="swiper-wrapper mb-[32x]">
-                @foreach ($category as $item)
-                  <div class="swiper-slide mt-0 mb-4">
-                    <a href="/catalogo/{{ $item->id }}">
-                      <div class="flex flex-col p-4">
-                        <div class="flex flex-col bg-[#F8F6F2] rounded-2xl">
-                          <h2 class="font-semibold text-[24px] text-center mt-5">
-                            {{ $item->name }}
-                          </h2>
-                          <div class="flex justify-center items-center">
-                            @if ($slide->name_image)
-                              <img src="{{ asset($slide->url_image . $slide->name_image) }}"
-                                alt="{{ $slide->name_image }}" class="w-full h-30 object-contain" />
-                            @else
-                              <img src="{{ asset('images/img/noimagen.jpg') }}" alt="imagen_alternativa"
-                                class="w-full h-30 object-contain" />
-                            @endif
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                @endforeach
-              </div>
-              <div class="swiper-pagination-categorias"></div>
-            </div>
-          </section>
-
-        </div>
-      </section>
-    @endif
-
-    <!-- Productos destacados -->
-    @if ($destacados->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes productos destacados visibles</div>
-            </div> --}}
-    @else
-      <section class="font-poppins">
-        <div class="grid grid-cols-1 gap-12 md:gap-0 md:grid-cols-4 grid-rows-1 pt-12 w-11/12 mx-auto">
-          <div data-aos="zoom-in-right" class="col-span-1 md:col-span-3 order-1 md:order-1 flex flex-col gap-2">
-            <h2 class="font-medium text-[40px] mt-2 leading-none md:leading-tight">
-              Transforma tu Espacio 🏡✨
-            </h2>
-            <p class="font-normal text-lg">
-              Descubre nuestros paneles de piedra, mármol, Wall Panel Mix y piedra PU. Dale vida a tus interiores con
-              estilo y durabilidad. ¡Haz de tu hogar un lugar único y sofisticado!
-            </p>
-          </div>
-          <div data-aos="zoom-in-left"
-            class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
-            <a href="/catalogo"
-              class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
-              Ver todo
-            </a>
-          </div>
-
-          <div class="col-span-1 md:col-span-4 order-2 md:order-3">
-            <div class="productos-home swiper my-5 mt-16">
-              <div class="swiper-wrapper mt-2 mb-4">
-                @foreach ($destacados as $item)
-                  <div class="swiper-slide rounded-2xl">
-                    <x-product.container :item="$item" />
-                  </div>
-                @endforeach
-              </div>
-              <div class="swiper-scrollbar-productos-home h-2"></div>
-              <div class="mt-4 text-end">
-                <button type="button"
-                  class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
-                  ←
-                </button>
-                <button type="button"
-                  class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
-                  →
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    @endif
-
-    <!-- Productos en oferta -->
-    @if ($descuentos->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes productos en oferta visibles</div>
-            </div> --}}
-    @else
-      <section class="font-poppins mt-10 mb-20">
-        <div class="grid grid-cols-1 gap-12 md:gap-0 md:grid-cols-4 grid-rows-1 pt-12 w-11/12 mx-auto">
-          <div data-aos="zoom-in-right" class="col-span-1 md:col-span-3 order-1 md:order-1">
-            <h2 class="font-medium text-[40px] mt-2 leading-none md:leading-tight">
-              ¡Ofertas Increíbles en Deco Tab! 🏠💫
-            </h2>
-
-            <p class="font-normal text-lg basis-3/6">
-              Renueva tu hogar con estilo y calidad a precios irresistibles. ¡No te pierdas nuestras promociones y crea el
-              espacio de tus sueños!
-            </p>
-          </div>
-
-          <div data-aos="zoom-in-left"
-            class="col-span-1 md:col-span-1 order-3 md:order-2 flex justify-center items-center w-full">
-            <a href="/catalogo"
-              class="font-semibold text-[16px] bg-transparent md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial w-full md:w-56 text-center inline-block">
-              Ver todo
-            </a>
-          </div>
-
-          <div class="col-span-1 md:col-span-4 order-2 md:order-3">
-            <!-- grilla de productos en oferta -->
-            <div class="productos-home swiper my-5 mt-16">
-              <div class="swiper-wrapper mt-2 mb-4">
-                @foreach ($descuentos as $item)
-                  <div class="swiper-slide rounded-2xl">
-                    <x-product.container :item="$item" />
-                  </div>
-                @endforeach
-              </div>
-              <div class="swiper-scrollbar-productos-home h-2"></div>
-              <div class="mt-4 text-end">
-                <button type="button"
-                  class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
-                  ←
-                </button>
-                <button type="button"
-                  class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
-                  →
-                </button>
-              </div>
-            </div>
-            {{-- <div class="md:hidden grid grid-cols-2 gap-5">
-
-              @foreach ($descuentos as $item)
-                <x-product.container :item="$item" />
-              @endforeach
-            </div>
-
-            <!-- carrousel productos oferta -->
-            <div class="hidden md:block">
-              <div class="swiper productos-oferta my-5">
-                <div class="swiper-pagination-productos-oferta mb-80 md:mb-32"></div>
-
-                <div class="swiper-wrapper mt-[80px]">
-
-                  @foreach ($descuentos as $item)
-                    <div class="swiper-slide rounded-2xl">
-                      <x-product.container :item="$item" />
-                    </div>
-                  @endforeach
 
                 </div>
-                <!-- <div class="swiper-pagination-productos-oferta"></div> -->
-              </div>
-            </div> --}}
-          </div>
-        </div>
-      </section>
-    @endif
-
-    <!-- Beneficios -->
-
-    @if ($benefit->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes beneficios visibles</div>
-            </div> --}}
-    @else
-      <section>
-        <div class="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:grid-rows-[700px] h-[100%]">
-          <div class="basis-1/2 flex items-center justify-center">
-            <img src="{{ asset('/images/img/vestibulo.png') }}" alt="vestibulo"
-              class="w-full h-full object-cover object-center" />
-          </div>
-          <div class="basis-1/2 beneficioRelative px-5 md:px-10">
-            <div class="swiper myBeneficios h-full">
-              <div class="swiper-wrapper">
-                @foreach ($benefit as $item)
-                  <div class="swiper-slide">
-                    <div class="flex flex-col gap-5 my-12">
-                      <p class="font-semibold text-[24px]">{{ $item->titulo }}</p>
-
-                      <h2 class="font-semibold text-[48px] leading-none md:leading-tight">
-                        {{ $item->descripcionshort }}
-                      </h2>
-
-                      <div class="font-normal text-[18px]">
-                        {!! $item->descripcion !!}
-                      </div>
-
-                    </div>
-                  </div>
-                @endforeach
-              </div>
-              <div class="swiper-pagination-beneficios"></div>
             </div>
-          </div>
-        </div>
-      </section>
-    @endif
+        </section>
 
-    <!-- FAQS -->
 
-    @if ($faqs->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes faqs visibles</div>
-            </div> --}}
-    @else
-      <section class="my-12">
-        <div class="bg-[#F5F5F5] font-poppins">
-          <div class="relative bg-[#F5F5F5] px-6 pt-10 pb-8 mt-8 ring-gray-900/5 sm:mx-auto sm:rounded-lg sm:px-10">
-            <div class="mx-auto px-5">
-              <div class="flex flex-col items-center">
-                <h2 class="font-semibold text-[40px] text-[#151515] text-center leading-none md:leading-tight">
-                  Preguntas Frecuentes
+
+        <section class="flex flex-col w-full gap-12 relative mt-80 lg:mt-[20%] xl:mt-[15%]">
+            <div class="w-full px-[3%] lg:px-[5%]  flex flex-col gap-4 md:flex-row justify-between">
+                <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
+                    Nuestras Categorías
                 </h2>
-              </div>
-              <div class="mx-auto mt-8 grid max-w-[900px] divide-y divide-neutral-200">
-
-                @foreach ($faqs as $faq)
-                  <div class="py-5">
-                    <details class="group">
-                      <summary class="flex cursor-pointer list-none items-center justify-between font-medium">
-                        <span class="font-bold text-[20px] text-[#151515]">
-                          {!! $faq->pregunta !!}</span>
-                        <span class="transition group-open:rotate-180">
-                          <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M16.2923 11.3882L9.00065 18.3327M9.00065 18.3327L1.70898 11.3882M9.00065 18.3327L9.00065 1.66602"
-                              stroke="#EB5D2C" stroke-width="3.33333" stroke-linecap="round"
-                              stroke-linejoin="round" />
-                          </svg>
-                        </span>
-                      </summary>
-                      <p class="group-open:animate-fadeIn mt-3 text-neutral-600">
-                        {{ $faq->respuesta }}
-                      </p>
-                    </details>
-                  </div>
-                @endforeach
-
-
-              </div>
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todas
+                        las categorías</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
             </div>
-          </div>
-        </div>
-        </div>
-      </section>
-    @endif
 
-    <!-- Testimonios -->
-
-    @if ($testimonie->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes testimonios visibles</div>
-            </div> --}}
-    @else
-      <section class="font-poppins text-[#151515] w-full testimoniosRelative">
-        <h2 class="w-11/12 mx-auto font-semibold text-[40px] text-center md:text-left">
-          Testimonios
-        </h2>
-
-        <div class="swiper myTestimonios mt-5">
-          <div class="swiper-pagination-testimonios"></div>
-          <div class="swiper-wrapper mb-12 md:mt-[80px]">
-            @foreach ($testimonie as $item)
-              <div class="swiper-slide">
-                <div class="carousel-cell bg-[#F5F5F5] p-10">
-                  {{-- <div class="flex gap-2 py-2">
-                                <img src="./images/svg/start.svg" alt="estrella" />
-                                <img src="./images/svg/start.svg" alt="estrella" />
-                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                            </div> --}}
-                  <div class="flex gap-5 items-center">
-                    <p class="font-bold text-[20px]">{{ $item->name }}</p>
-                    <img src="{{ asset('/images/svg/check.svg') }}" alt="check" />
-                  </div>
-                  <p class="font-normal text-[16px]">
-                    {{ $item->testimonie }}
-                  </p>
+            <div class="swiper categorias flex flex-row w-full !px-[5%] !lg:pl-[5%]">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="flex flex-col ">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner1.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Juguetes para todos
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner2.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Nuestras Ofertas
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner3.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Divierte Jugando
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner2.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Juguetes para todos
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-      </section>
+            </div>
 
-    @endif
+            {{-- <div class="custom-swiper-buttons absolute bottom-0">
+                <div class="flex flex-row gap5 w-24">
+                    <div class="swiper-button-prev left-0"></div>
+                    <div class="swiper-button-next left-28"></div>
+                </div>
+            </div> --}}
+        </section>
 
-  </main>
+
+        <section class="py-12 lg:py-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
+            <div class="flex flex-col gap-4 md:flex-row justify-between">
+                <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
+                    Destacados
+                </h2>
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todos
+                        los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[3%] lg:pl-[5%] bg-cover bg-no-repeat"
+            style="background-image: url('{{ asset('images/img/jl_textura2.webp') }}');">
+            <div class="flex flex-col items-start justify-center py-12 lg:py-24 w-[100%] lg:w-[40%] gap-7">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <p class="font-poppins font-bold text-colorJL text-8xl">50%</p>
+                    <h3 class="font-poppins font-bold text-colorJL text-4xl">descuento en juguetes</h3>
+                </div>
+                <p class="font-poppins font-normal text-colorJL text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit. Vivamus eu fermentum justo, ac fermentum nulla.
+                    Sed sed scelerisque urna, vitae ultrices libero. Pellentesque vehicula et urna in venenatis.</p>
+                <div
+                    class="flex flex-row items-center gap-1 px-5 py-3 text-base text-white bg-coloBkprimJl font-poppins font-bold rounded-3xl w-auto">
+                    Ver los Descuentos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+            </div>
+            <div class="flex flex-col items-end justify-end w-[100%] lg:w-[60%] p-0">
+                <img class="bg-cover bg-bottom object-right-bottom " src="{{ asset('/images/img/jl_banner4.png') }}" />
+            </div>
+        </section>
+
+        <section class="py-12 lg:py-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
+            <div class="flex flex-col gap-4 md:flex-row justify-between">
+                <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
+                    En oferta
+                </h2>
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todos
+                        los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section class="py-12 lg:py-20 flex flex-col w-full gap-12 relative bg-coloBkprimJl bg-cover bg-no-repeat"
+            style="background-image: url('{{ asset('images/img/jl_textura3.png') }}');">
+
+            <div class="swiper testimonios flex flex-row w-full !px-[5%] !lg:pl-[5%]">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                            <div class="flex flex-col justify-center items-center  px-[5%]">
+
+                                <video class="w-full h-[500px] lg:h-[700px] border border-gray-200 rounded-3xl" controls>
+                                    <source src="/docs/videos/flowbite.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+
+                            </div>
+
+                            <div class="flex flex-col gap-5 lg:gap-10 justify-center items-start w-[95%] lg:w-[85%]">
+                                <h3 class="text-white text-xl font-bold font-poppins">Testimonios</h3>
+                                <h2 class="text-white text-2xl lg:text-5xl font-bold font-poppins">
+                                    "Mis hijos adoran estos juguetes. No solo se divierten, sino que también están
+                                    aprendiendo mucho."
+                                </h2>
+                                <div class="flex flex-col justify-start items-center">
+                                    <div class="flex flex-row items-center gap-3">
+                                        {{-- <img class="rounded-full w-20 h-20 object-cover"
+                                            src="{{ asset('images/img/person_3.png') }}" /> --}}
+                                        <div>
+                                            <h3 class="text-white text-xl font-semibold font-poppins">Ana, mamá de los
+                                                niños</h3>
+                                            <p class="text-white text-base font-normal font-poppins">Lima - Perú</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                            <div class="flex flex-col justify-center items-center  px-[5%]">
+
+                                <video class="w-full h-[500px] lg:h-[700px] border border-gray-200 rounded-3xl" controls>
+                                    <source src="/docs/videos/flowbite.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+
+                            </div>
+
+                            <div class="flex flex-col gap-5 lg:gap-10 justify-center items-start w-[95%] lg:w-[85%]">
+                                <h3 class="text-white text-xl font-bold font-poppins">Testimonios</h3>
+                                <h2 class="text-white text-2xl lg:text-5xl font-bold font-poppins">
+                                    "Mis hijos adoran estos juguetes. No solo se divierten, sino que también están
+                                    aprendiendo mucho."
+                                </h2>
+                                <div class="flex flex-col justify-start items-center">
+                                    <div class="flex flex-row items-center gap-3">
+                                        {{-- <img class="rounded-full w-20 h-20 object-cover"
+                                            src="{{ asset('images/img/person_3.png') }}" /> --}}
+                                        <div>
+                                            <h3 class="text-white text-xl font-semibold font-poppins">Ana, mamá de los
+                                                niños</h3>
+                                            <p class="text-white text-base font-normal font-poppins">Lima - Perú</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                            <div class="flex flex-col justify-center items-center  px-[5%]">
+
+                                <video class="w-full h-[500px] lg:h-[700px] border border-gray-200 rounded-3xl" controls>
+                                    <source src="/docs/videos/flowbite.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+
+                            </div>
+
+                            <div class="flex flex-col gap-5 lg:gap-10 justify-center items-start w-full lg:w-[90%]">
+                                <h3 class="text-white text-xl font-bold font-poppins">Testimonios</h3>
+                                <h2 class="text-white text-2xl lg:text-5xl font-bold font-poppins">
+                                    "Mis hijos adoran estos juguetes. No solo se divierten, sino que también están
+                                    aprendiendo mucho."
+                                </h2>
+                                <div class="flex flex-col justify-start items-center">
+                                    <div class="flex flex-row items-center gap-3">
+                                        {{-- <img class="rounded-full w-20 h-20 object-cover"
+                                            src="{{ asset('images/img/person_3.png') }}" /> --}}
+                                        <div>
+                                            <h3 class="text-white text-xl font-semibold font-poppins">Ana, mamá de los
+                                                niños</h3>
+                                            <p class="text-white text-base font-normal font-poppins">Lima - Perú</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-swiper-buttons absolute bottom-[4%] lg:bottom-[6%] right-[5%] z-10">
+                <div class="flex flex-row gap-2 lg:gap-3">
+                    <a class="swiper-button-prev-testimonioss-home">
+                        <img src="{{ asset('images/svg/jl_rightttestimonio.svg') }}" />
+                    </a>
+                    <a class="swiper-button-next-testimonioss-home">
+                        <img src="{{ asset('images/svg/jl_lefttestimonios.svg') }}" />
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-12 lg:py-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
+            <div class="flex flex-col gap-8">
+                <div class="flex flex-col lg:flex-row justify-start lg:justify-between items-start gap-10">
+
+                    <div class="flex flex-col gap-2 w-[100%] lg:w-[70%]">
+                        <h2 class="text-5xl font-bold font-poppins text-colorJL">Nuestro Blog
+                        </h2>
+                        <p class="text-lg font-normal font-poppins text-colorJL">Nam tempor diam quis urna maximus, ac laoreet arcu convallis. 
+                        Aenean dignissim nec sem quis consequata.</p>
+                    </div>
+
+                    <div
+                    class="flex flex-row items-center gap-1 px-5 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-auto">
+                    Ver más Publicaciones <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+                     <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-center items-center">
+                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post3.png') }}"
+                                        class="w-full object-cover rounded-xl" alt="blog"></a>
+                            </div>
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
+                            <a href="#">
+                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
+                                 sit amet malesuada</h2>
+                            </a>
+                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                        </div>
+
+                        <div class="flex justify-start items-center gap-2">
+                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
+                                el 29 de julio de 2023</p>
+                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
+                            <p class="text-color3JL font-poppins font-normal text-sm">
+                                Leido hace 5 min
+                            </p>
+
+                        </div>
+                    </div>
+
+                     <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-center items-center">
+                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post2.png') }}"
+                                        class="w-full object-cover rounded-xl" alt="blog"></a>
+                            </div>
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
+                            <a href="#">
+                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
+                                 sit amet malesuada</h2>
+                            </a>
+                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                        </div>
+
+                        <div class="flex justify-start items-center gap-2">
+                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
+                                el 29 de julio de 2023</p>
+                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
+                            <p class="text-color3JL font-poppins font-normal text-sm">
+                                Leido hace 5 min
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-center items-center">
+                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post1.png') }}"
+                                        class="w-full object-cover rounded-xl" alt="blog"></a>
+                            </div>
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
+                            <a href="#">
+                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
+                                 sit amet malesuada</h2>
+                            </a>
+                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                        </div>
+
+                        <div class="flex justify-start items-center gap-2">
+                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
+                                el 29 de julio de 2023</p>
+                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
+                            <p class="text-color3JL font-poppins font-normal text-sm">
+                                Leido hace 5 min
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
 
 
 @section('scripts_importados')
 
-  <script>
-    // $(document).ready(function() {
-    function capitalizeFirstLetter(string) {
-      string = string.toLowerCase()
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    // })
-    $('#disminuir').on('click', function() {
-      console.log('disminuyendo')
-      let cantidad = Number($('#cantidadSpan span').text())
-      if (cantidad > 0) {
-        cantidad--
-        $('#cantidadSpan span').text(cantidad)
-      }
+    <script>
+        /*  */
+        var swiper = new Swiper(".categorias", {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            initialSlide: 0,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
 
-    })
-    // cantidadSpan
-    $('#aumentar').on('click', function() {
-      console.log('aumentando')
-      let cantidad = Number($('#cantidadSpan span').text())
-      cantidad++
-      $('#cantidadSpan span').text(cantidad)
 
-    })
-  </script>
+        var swiper = new Swiper(".testimonios", {
+            slidesPerView: 1,
+            spaceBetween: 50,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            initialSlide: 0,
+            navigation: {
+                nextEl: ".swiper-button-prev-testimonioss-home",
+                prevEl: ".swiper-button-next-testimonioss-home",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 1,
+                },
+            },
+        });
+    </script>
 
-  <script>
-    let articulosCarrito = [];
 
 
-    function deleteOnCarBtn(id, operacion) {
-      console.log('Elimino un elemento del carrito');
-      console.log(id, operacion)
-      const prodRepetido = articulosCarrito.map(item => {
-        if (item.id === id && item.cantidad > 0) {
-          item.cantidad -= Number(1);
-          return item; // retorna el objeto actualizado 
-        } else {
-          return item; // retorna los objetos que no son duplicados 
+    <script>
+        // $(document).ready(function() {
+        function capitalizeFirstLetter(string) {
+            string = string.toLowerCase()
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        // })
+        $('#disminuir').on('click', function() {
+            console.log('disminuyendo')
+            let cantidad = Number($('#cantidadSpan span').text())
+            if (cantidad > 0) {
+                cantidad--
+                $('#cantidadSpan span').text(cantidad)
+            }
+
+        })
+        // cantidadSpan
+        $('#aumentar').on('click', function() {
+            console.log('aumentando')
+            let cantidad = Number($('#cantidadSpan span').text())
+            cantidad++
+            $('#cantidadSpan span').text(cantidad)
+
+        })
+    </script>
+
+    <script>
+        let articulosCarrito = [];
+
+
+        function deleteOnCarBtn(id, operacion) {
+            console.log('Elimino un elemento del carrito');
+            console.log(id, operacion)
+            const prodRepetido = articulosCarrito.map(item => {
+                if (item.id === id && item.cantidad > 0) {
+                    item.cantidad -= Number(1);
+                    return item; // retorna el objeto actualizado 
+                } else {
+                    return item; // retorna los objetos que no son duplicados 
+                }
+
+            });
+            Local.set('carrito', articulosCarrito)
+            limpiarHTML()
+            PintarCarrito()
+
+
         }
 
-      });
-      Local.set('carrito', articulosCarrito)
-      limpiarHTML()
-      PintarCarrito()
+        function calcularTotal() {
+            let articulos = Local.get('carrito')
+            console.log(articulos)
+            let total = articulos.map(item => {
+                let monto
+                if (Number(item.descuento) !== 0) {
+                    monto = item.cantidad * Number(item.descuento)
+                } else {
+                    monto = item.cantidad * Number(item.precio)
 
+                }
+                return monto
 
-    }
+            })
+            const suma = total.reduce((total, elemento) => total + elemento, 0);
 
-    function calcularTotal() {
-      let articulos = Local.get('carrito')
-      console.log(articulos)
-      let total = articulos.map(item => {
-        let monto
-        if (Number(item.descuento) !== 0) {
-          monto = item.cantidad * Number(item.descuento)
-        } else {
-          monto = item.cantidad * Number(item.precio)
+            $('#itemsTotal').text(`S/. ${suma} `)
 
         }
-        return monto
 
-      })
-      const suma = total.reduce((total, elemento) => total + elemento, 0);
+        function addOnCarBtn(id, operacion) {
+            console.log('agrego un elemento del cvarrio');
+            console.log(id, operacion)
 
-      $('#itemsTotal').text(`S/. ${suma} `)
+            const prodRepetido = articulosCarrito.map(item => {
+                if (item.id === id) {
+                    item.cantidad += Number(1);
+                    return item; // retorna el objeto actualizado 
+                } else {
+                    return item; // retorna los objetos que no son duplicados 
+                }
 
-    }
+            });
+            console.log(articulosCarrito)
+            Local.set('carrito', articulosCarrito)
+            // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+            limpiarHTML()
+            PintarCarrito()
 
-    function addOnCarBtn(id, operacion) {
-      console.log('agrego un elemento del cvarrio');
-      console.log(id, operacion)
 
-      const prodRepetido = articulosCarrito.map(item => {
-        if (item.id === id) {
-          item.cantidad += Number(1);
-          return item; // retorna el objeto actualizado 
-        } else {
-          return item; // retorna los objetos que no son duplicados 
         }
 
-      });
-      console.log(articulosCarrito)
-      Local.set('carrito', articulosCarrito)
-      // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
-      limpiarHTML()
-      PintarCarrito()
+        function deleteItem(id) {
+            console.log('borrando elemento')
+            articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
+
+            Local.set('carrito', articulosCarrito)
+            limpiarHTML()
+            PintarCarrito()
+        }
+
+        var appUrl = <?php echo json_encode($url_env); ?>;
+        console.log(appUrl);
+        $(document).ready(function() {
+            articulosCarrito = Local.get('carrito') || [];
+
+            PintarCarrito();
+        });
+
+        function limpiarHTML() {
+            //forma lenta 
+            /* contenedorCarrito.innerHTML=''; */
+            $('#itemsCarrito').html('')
 
 
-    }
-
-    function deleteItem(id) {
-      console.log('borrando elemento')
-      articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
-
-      Local.set('carrito', articulosCarrito)
-      limpiarHTML()
-      PintarCarrito()
-    }
-
-    var appUrl = <?php echo json_encode($url_env); ?>;
-    console.log(appUrl);
-    $(document).ready(function() {
-      articulosCarrito = Local.get('carrito') || [];
-
-      PintarCarrito();
-    });
-
-    function limpiarHTML() {
-      //forma lenta 
-      /* contenedorCarrito.innerHTML=''; */
-      $('#itemsCarrito').html('')
-
-
-    }
+        }
 
 
 
-    // function PintarCarrito() {
-    //   console.log('pintando carrito ')
+        // function PintarCarrito() {
+        //   console.log('pintando carrito ')
 
-    //   let itemsCarrito = $('#itemsCarrito')
+        //   let itemsCarrito = $('#itemsCarrito')
 
-    //   articulosCarrito.forEach(element => {
-    //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
+        //   articulosCarrito.forEach(element => {
+        //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
     //         <div class="flex justify-center items-center gap-5">
     //           <div class="bg-[#F3F5F7] rounded-md p-4">
     //             <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
@@ -773,7 +1208,7 @@
     //               ${element.producto}
     //             </h3>
     //             <p class="font-normal text-[12px] text-[#6C7275]">
-                  
+
     //             </p>
     //             <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
     //               <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
@@ -803,112 +1238,112 @@
     //         </div>
     //       </div>`
 
-    //     itemsCarrito.append(plantilla)
+        //     itemsCarrito.append(plantilla)
 
-    //   });
+        //   });
 
-    //   calcularTotal()
-    // }
-
-
+        //   calcularTotal()
+        // }
 
 
 
 
-    $('#btnAgregarCarrito').on('click', function() {
-      let url = window.location.href;
-      let partesURl = url.split('/')
-      let item = partesURl[partesURl.length - 1]
-      let cantidad = Number($('#cantidadSpan span').text())
-      item = item.replace('#', '')
+
+
+        $('#btnAgregarCarrito').on('click', function() {
+            let url = window.location.href;
+            let partesURl = url.split('/')
+            let item = partesURl[partesURl.length - 1]
+            let cantidad = Number($('#cantidadSpan span').text())
+            item = item.replace('#', '')
 
 
 
-      // id='nodescuento'
+            // id='nodescuento'
 
 
-      $.ajax({
+            $.ajax({
 
-        url: `{{ route('carrito.buscarProducto') }}`,
-        method: 'POST',
-        data: {
-          _token: $('input[name="_token"]').val(),
-          id: item,
-          cantidad
+                url: `{{ route('carrito.buscarProducto') }}`,
+                method: 'POST',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    id: item,
+                    cantidad
 
-        },
-        success: function(success) {
-          console.log(success)
-          let {
-            producto,
-            id,
-            descuento,
-            precio,
-            imagen,
-            color
-          } = success.data
-          let cantidad = Number(success.cantidad)
-          let detalleProducto = {
-            id,
-            producto,
-            descuento,
-            precio,
-            imagen,
-            cantidad,
-            color
+                },
+                success: function(success) {
+                    console.log(success)
+                    let {
+                        producto,
+                        id,
+                        descuento,
+                        precio,
+                        imagen,
+                        color
+                    } = success.data
+                    let cantidad = Number(success.cantidad)
+                    let detalleProducto = {
+                        id,
+                        producto,
+                        descuento,
+                        precio,
+                        imagen,
+                        cantidad,
+                        color
 
-          }
-          let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
-          if (existeArticulo) {
-            //sumar al articulo actual 
-            const prodRepetido = articulosCarrito.map(item => {
-              if (item.id === detalleProducto.id) {
-                item.cantidad += Number(detalleProducto.cantidad);
-                return item; // retorna el objeto actualizado 
-              } else {
-                return item; // retorna los objetos que no son duplicados 
-              }
+                    }
+                    let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
+                    if (existeArticulo) {
+                        //sumar al articulo actual 
+                        const prodRepetido = articulosCarrito.map(item => {
+                            if (item.id === detalleProducto.id) {
+                                item.cantidad += Number(detalleProducto.cantidad);
+                                return item; // retorna el objeto actualizado 
+                            } else {
+                                return item; // retorna los objetos que no son duplicados 
+                            }
 
-            });
-          } else {
-            articulosCarrito = [...articulosCarrito, detalleProducto]
+                        });
+                    } else {
+                        articulosCarrito = [...articulosCarrito, detalleProducto]
 
-          }
+                    }
 
-          Local.set('carrito', articulosCarrito)
-          let itemsCarrito = $('#itemsCarrito')
-          let ItemssubTotal = $('#ItemssubTotal')
-          let itemsTotal = $('#itemsTotal')
-          limpiarHTML()
-          PintarCarrito()
+                    Local.set('carrito', articulosCarrito)
+                    let itemsCarrito = $('#itemsCarrito')
+                    let ItemssubTotal = $('#ItemssubTotal')
+                    let itemsTotal = $('#itemsTotal')
+                    limpiarHTML()
+                    PintarCarrito()
 
-        },
-        error: function(error) {
-          console.log(error)
-        }
+                },
+                error: function(error) {
+                    console.log(error)
+                }
 
-      })
-
-
-
-      // articulosCarrito = {...articulosCarrito , detalleProducto }
-    })
-    // $('#openCarrito').on('click', function() {
-    //   console.log('abriendo carrito ');
-    //   $('.main').addClass('blur')
-    // })
-    // $('#closeCarrito').on('click', function() {
-    //   console.log('cerrando  carrito ');
-
-    //   $('.cartContainer').addClass('hidden')
-    //   $('#check').prop('checked', false);
-    //   $('.main').removeClass('blur')
+            })
 
 
-    // })
-  </script>
 
-  <script src="{{ asset('js/storage.extend.js') }}"></script>
+            // articulosCarrito = {...articulosCarrito , detalleProducto }
+        })
+        // $('#openCarrito').on('click', function() {
+        //   console.log('abriendo carrito ');
+        //   $('.main').addClass('blur')
+        // })
+        // $('#closeCarrito').on('click', function() {
+        //   console.log('cerrando  carrito ');
+
+        //   $('.cartContainer').addClass('hidden')
+        //   $('#check').prop('checked', false);
+        //   $('.main').removeClass('blur')
+
+
+        // })
+    </script>
+
+    <script src="{{ asset('js/storage.extend.js') }}"></script>
 @stop
 
 @stop

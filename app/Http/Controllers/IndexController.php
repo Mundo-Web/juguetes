@@ -973,4 +973,19 @@ class IndexController extends Controller
     $termsAndCondicitions = TermsAndCondition::first();
     return view('public.terminosycondiciones', compact('termsAndCondicitions'));
   }
+
+  public function blog()
+  {
+    $categorias = Category::all();
+    $url_env = env('APP_URL');
+    return view('public.blog', compact('url_env', 'categorias'));
+  }
+
+  public function post()
+  {
+    $categorias = Category::all();
+    $url_env = env('APP_URL');
+    return view('public.post', compact('url_env', 'categorias'));
+  }
+
 }

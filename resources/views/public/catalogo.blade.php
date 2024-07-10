@@ -7,409 +7,702 @@
 
 @section('content')
 
-  {{-- <div class="w-full md:w-11/12 md:mx-auto">
-    <div style="background-image: url('{{ asset('images/img/header_catalogo.png') }}')"
-      class="bg-cover bg-center bg-no-repeat min-h-[600px] flex flex-col justify-center items-center">
-      <div class="flex justify-start py-10 md:py-16 w-11/12 mx-auto">
-        <div class="text-white font-poppins flex flex-col gap-10 text-center">
-          <h1 class="font-semibold text-[32px] md:text-[48px] leading-none md:leading-tight">
-            Armo Tu Proyecto Con Deco Tab
-          </h1>
-          <p class="font-normal text-[16px] md:text-[18px]">
-            Descubre la variedad de productos que tenemos para ti. Contamos con la mejor calidad en Wall Panel, Paneles de
-            Piedra Cincelada, UV Mármol y más. ¡Te ayudaremos a crear un entorno más acogedor y confortable!
-          </p>
-        </div>
-      </div>
-    </div>
-  </div> --}}
-
-  <main class="z-[70]">
-    <div class="flex flex-col md:flex-row md:gap-10 w-11/12 mx-auto mt-10 font-poppins">
-      {{-- <aside class="flex flex-col gap-5">
-        <div class="flex gap-3 open">
-          <div>
-            <img src="{{ asset('images/svg/catalogo_filtro_icon.svg') }}" alt="logo_filtros" />
-          </div>
-          <p class="font-semibold text-[20px]">Filtros</p>
-        </div>
-
-        <div class="hidden-categoria-precio">
-          <div class="hidden md:flex flex-col gap-5 show-categoria-precio">
-            <div class="flex flex-col gap-5">
-              <p class="font-semibold text-[16px]">Categorías</p>
-              <a href="/catalogo/0"
-                class="{{ $filtro == 0 ? 'font-semibold text-[14px] underline' : 'text-[#6C7275]' }}">Todas</a>
-
-              <div>
-                <div
-                  class="overflow-y-scroll lg:overflow-y-hidden flex flex-col h-[150px] lg:h-full scroll__categorias items-start font-semibol text-[14px] text-[#6C7275] gap-2">
-                  <ul class="flex flex-col gap-2">
-
-                    @foreach ($categorias as $item)
-                      <a href="/catalogo/{{ $item->id }}">
-                        <li
-                          class="w-full mr-44 cursor-pointer @if ($filtro == 0) @else
-
-                                             {{ $item->id == $categoria->id ? 'font-semibold text-[14px] underline text-black' : '' }} @endif ">
-                          {{ $item->name }}</li>
-                      </a>
-                    @endforeach
-
-                  </ul>
+    <main>
+        
+        <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[3%] lg:pl-[5%] bg-cover bg-no-repeat bg-[40%] min-h-[500px]"
+            style="background-image: url('{{ asset('images/img/jl_banner5.png') }}');">
+            <div class="flex flex-col items-start justify-center py-7 lg:py-24 w-[100%] lg:w-[40%] gap-7">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <h3 class="font-poppins font-bold text-white text-4xl">Catálogo</h3>
                 </div>
-              </div>
+                <p class="font-poppins font-normal text-white text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit. Vivamus eu fermentum justo, ac fermentum nulla.
+                    Sed sed scelerisque urna, vitae ultrices libero. Pellentesque vehicula et urna in venenatis.</p>
             </div>
-          </div>
-        </div>
-      </aside> --}}
-      <!-- modal filtros -->
-      <!-- <a class="mostrar-modal">Filtrossss</a> -->
-      <div class="modal-filtros z-[100]">
-        <div class="modal__mostrar-filtro">
-          <div class="flex justify-end">
-            <a href="#" class="modal__close-filtro">
-              <img src="{{ asset('/images/svg/close.svg') }}" alt="close" />
-            </a>
-          </div>
+            <div class="flex flex-col items-start lg:items-end justify-end w-[100%] lg:w-[60%] p-0">
+                <img class="bg-cover bg-bottom object-right-bottom " src="{{ asset('/images/img/jl_banner4.png') }}" />
+            </div>
+        </section>
 
-          <div class="addCategoriaPrecio"></div>
-        </div>
-      </div>
-      <!-- --- -->
-      <section class="font-poppins my-10 w-full">
-        <div class="flex flex-col gap-2">
-
-          @if ($category == 0)
-            <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡</h2>
-          @else
-            <h2 class="font-medium text-[40px]">Nuestros Productos 🛠️🏡 - {{ $categoria->name }}</h2>
-          @endif
-
-
-          <p class="font-normal text-[18px]">
-            En Deco Tab, somos especialistas en <b>Wall Panel</b>, <b>mármol UV</b> y <b>piedra PU</b>. Revisa las mejores
-            imágenes y precios de estos productos que son la mejor opción para decorar tus ambientes.
-          </p>
-        </div>
-
-        <!-- GRILLA PRODUCTOS -->
-        <div class="mt-20">
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 my-5 gap-10">
-            @foreach ($productos as $item)
-              <x-product.container :item="$item" />
-            @endforeach
-          </div>
-        </div>
-        <div class="flex justify-center items-center mt-12">
-
-          {{ $productos->appends(['rangefrom' => $rangefrom, 'rangeto' => $rangeto])->links() }}
-
-          {{-- <a href="catalogo.html"
-                        class="font-semibold text-[16px] bg-white md:duration-500 py-4 px-5 rounded-3xl border-[1px] border-colorBorder flex-initial text-center w-full md:w-56">
-                        Cargar más
-                    </a> --}}
-        </div>
-      </section>
-    </div>
-
-    <!-- FAQS -->
-
-    @if ($faqs->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes faqs visibles</div>
-            </div> --}}
-    @else
-      <section class="my-12">
-        <div class="bg-[#F5F5F5] font-poppins">
-          <div class="relative bg-[#F5F5F5] px-6 pt-10 pb-8 mt-8 ring-gray-900/5 sm:mx-auto sm:rounded-lg sm:px-10">
-            <div class="mx-auto px-5">
-              <div class="flex flex-col items-center">
-                <h2 class="font-semibold text-[40px] text-[#151515] text-center leading-none md:leading-tight">
-                  Preguntas Frecuentes
+        <section class="flex flex-col w-full gap-12 relative py-12 lg:py-20">
+            <div class="w-full px-[3%] lg:px-[5%]  flex flex-col gap-4 md:flex-row justify-between">
+                <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
+                    Nuestras Categorías
                 </h2>
-              </div>
-              <div class="mx-auto mt-8 grid max-w-[900px] divide-y divide-neutral-200">
-
-                @foreach ($faqs as $faq)
-                  <div class="py-5">
-                    <details class="group">
-                      <summary class="flex cursor-pointer list-none items-center justify-between font-medium">
-                        <span class="font-bold text-[20px] text-[#151515]">
-                          {!! $faq->pregunta !!}</span>
-                        <span class="transition group-open:rotate-180">
-                          <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M16.2923 11.3882L9.00065 18.3327M9.00065 18.3327L1.70898 11.3882M9.00065 18.3327L9.00065 1.66602"
-                              stroke="#EB5D2C" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
-                        </span>
-                      </summary>
-                      <p class="group-open:animate-fadeIn mt-3 text-neutral-600">
-                        {{ $faq->respuesta }}
-                      </p>
-                    </details>
-                  </div>
-                @endforeach
-
-
-              </div>
             </div>
-          </div>
-        </div>
-        </div>
-      </section>
-    @endif
 
-
-    <!-- Testimonios -->
-
-    @if ($testimonie->isEmpty())
-      {{-- <div class="w-full flex flex-row justify-center items-center">
-                <div class="p-5 text-xl font-bold">No tienes testimonios visibles</div>
-            </div> --}}
-    @else
-      <section class="font-poppins text-[#151515] w-full testimoniosRelative">
-        <h2 class="w-11/12 mx-auto font-semibold text-[40px] text-center md:text-left">
-          Testimonios
-        </h2>
-
-        <div class="swiper myTestimonios mt-5">
-          <div class="swiper-pagination-testimonios"></div>
-          <div class="swiper-wrapper mb-12 md:mt-[80px]">
-            @foreach ($testimonie as $item)
-              <div class="swiper-slide">
-                <div class="carousel-cell bg-[#F5F5F5] p-10">
-                  {{-- <div class="flex gap-2 py-2">
-                                <img src="./images/svg/start.svg" alt="estrella" />
-                                <img src="./images/svg/start.svg" alt="estrella" />
-                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                                <img src="./images/svg/start_sin_color.svg" alt="estrella" />
-                            </div> --}}
-                  <div class="flex gap-5 items-center">
-                    <p class="font-bold text-[20px]">{{ $item->name }}</p>
-                    <img src="{{ asset('/images/svg/check.svg') }}" alt="check" />
-                  </div>
-                  <p class="font-normal text-[16px]">
-                    {{ $item->testimonie }}
-                  </p>
+            <div class="swiper categorias flex flex-row w-full !px-[5%] !lg:pl-[5%]">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="flex flex-col ">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner1.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Juguetes para todos
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner2.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Nuestras Ofertas
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner3.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Divierte Jugando
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="flex flex-col">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 px-12 py-16 rounded-3xl h-72 bg-cover"
+                                style="background-image: url('{{ asset('images/img/jl_banner2.png') }}');">
+                                <div class="flex flex-col gap-6 justify-center items-start lg:col-span-2">
+                                    <h2 class="font-bold font-poppins text-4xl leading-tight  text-white  text-left">
+                                        Juguetes para todos
+                                    </h2>
+                                    <a href="">
+                                        <div
+                                            class="flex flex-row items-center gap-1 px-4 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-44">
+                                            Ver productos <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-      </section>
+            </div>
 
-    @endif
+            {{-- <div class="custom-swiper-buttons absolute bottom-0">
+                <div class="flex flex-row gap5 w-24">
+                    <div class="swiper-button-prev left-0"></div>
+                    <div class="swiper-button-next left-28"></div>
+                </div>
+            </div> --}}
+        </section>
 
 
-  </main>
+         <section class="py-6 lg:pb-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
+            <div class="flex flex-col gap-4 md:flex-row justify-between">
+                <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
+                    Todos juguetes
+                </h2>
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2 border-2 rounded-3xl px-4 py-2 border-orange-600">Ordenar <img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+         <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[3%] lg:pl-[5%] bg-cover bg-no-repeat"
+            style="background-image: url('{{ asset('images/img/jl_banner6.png') }}');">
+            <div class="flex flex-col items-start justify-center py-12 lg:py-24 w-[100%] lg:w-[40%] gap-7">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <p class="font-poppins font-bold text-white text-8xl">50%</p>
+                    <h3 class="font-poppins font-bold text-white text-4xl">descuento en juguetes</h3>
+                </div>
+                <p class="font-poppins font-normal text-white text-xl">Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit. Vivamus eu fermentum justo, ac fermentum nulla.
+                    Sed sed scelerisque urna, vitae ultrices libero. Pellentesque vehicula et urna in venenatis.</p>
+                <div
+                    class="flex flex-row items-center gap-1 px-5 py-3 text-base text-white bg-coloBkprimJl font-poppins font-bold rounded-3xl w-auto">
+                    Ver los Descuentos <img src="{{ asset('/images/svg/jl_flechablanco.svg') }}" /></div>
+            </div>
+            <div class="flex flex-col items-end justify-end w-[100%] lg:w-[60%] p-0">
+                <img class="bg-cover bg-bottom object-right-bottom " src="{{ asset('/images/img/jl_banner7.png') }}" />
+            </div>
+        </section>
+
+    </main>
 
 
 @section('scripts_importados')
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Captura el click de abrir
-      /*  const openModal = document.querySelector(".mostrar-modal"); */
-      // Captura al modal que se quiere mostrar
-      const modal = document.querySelector(".modal-filtros");
-      //Captura el evento de cierre
-      const closeModal = document.querySelector(".modal__close-filtro");
-      // Captura el body para bloqueo
-      const body = document.querySelector(".body");
 
-      const hiddenCategoriaPrecio = document.querySelector(
-        ".hidden-categoria-precio"
-      );
+    <script>
+        /*  */
+        var swiper = new Swiper(".categorias", {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            initialSlide: 0,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
 
-      const open = document.querySelector(".open");
-      const showCategoriaPrecio = document.querySelector(".show-categoria-precio");
-      const addCategoriaPrecio = document.querySelector(".addCategoriaPrecio");
-      let openModal = null;
 
-      function getWidth() {
-        // Corregir el modal !importante
-        let width = window.innerWidth;
-        if (width < 768) {
-          //Habilita el click para modal
-          open.classList.add("mostrar-modal", "cursor-pointer");
-          openModal = document.querySelector(".mostrar-modal");
-          openModal.addEventListener("click", showModal);
-          hiddenCategoriaPrecio.innerHTML = "";
-        } else {
-          // Quita la opcion de click
-          open.classList.remove("mostrar-modal", "cursor-pointer");
-          if (openModal) {
-            openModal.removeEventListener("click", showModal);
-            showCategoriaPrecio.classList.remove("hidden");
-            hiddenCategoriaPrecio.innerHTML = showCategoriaPrecio.innerHTML;
-          }
+        var swiper = new Swiper(".testimonios", {
+            slidesPerView: 1,
+            spaceBetween: 50,
+            loop: true,
+            grabCursor: true,
+            centeredSlides: false,
+            initialSlide: 0,
+            navigation: {
+                nextEl: ".swiper-button-prev-testimonioss-home",
+                prevEl: ".swiper-button-next-testimonioss-home",
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 1,
+                },
+            },
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Captura el click de abrir
+            /*  const openModal = document.querySelector(".mostrar-modal"); */
+            // Captura al modal que se quiere mostrar
+            const modal = document.querySelector(".modal-filtros");
+            //Captura el evento de cierre
+            const closeModal = document.querySelector(".modal__close-filtro");
+            // Captura el body para bloqueo
+            const body = document.querySelector(".body");
+
+            const hiddenCategoriaPrecio = document.querySelector(
+                ".hidden-categoria-precio"
+            );
+
+            const open = document.querySelector(".open");
+            const showCategoriaPrecio = document.querySelector(".show-categoria-precio");
+            const addCategoriaPrecio = document.querySelector(".addCategoriaPrecio");
+            let openModal = null;
+
+            function getWidth() {
+                // Corregir el modal !importante
+                let width = window.innerWidth;
+                if (width < 768) {
+                    //Habilita el click para modal
+                    open.classList.add("mostrar-modal", "cursor-pointer");
+                    openModal = document.querySelector(".mostrar-modal");
+                    openModal.addEventListener("click", showModal);
+                    hiddenCategoriaPrecio.innerHTML = "";
+                } else {
+                    // Quita la opcion de click
+                    open.classList.remove("mostrar-modal", "cursor-pointer");
+                    if (openModal) {
+                        openModal.removeEventListener("click", showModal);
+                        showCategoriaPrecio.classList.remove("hidden");
+                        hiddenCategoriaPrecio.innerHTML = showCategoriaPrecio.innerHTML;
+                    }
+                }
+            }
+
+            function showModal(e) {
+                e.preventDefault();
+
+                addCategoriaPrecio.innerHTML = showCategoriaPrecio.innerHTML;
+                hiddenCategoriaPrecio.innerHTML = "";
+
+                modal.classList.add("modal--show-filtro");
+                body.classList.add("overflow-hidden");
+
+                modal.style.display = "flex";
+            }
+
+            getWidth(); // Se ejecuta por primera vez
+            window.addEventListener("resize", getWidth);
+
+            closeModal.addEventListener("click", (e) => {
+                e.preventDefault();
+                modal.classList.remove("modal--show-filtro");
+                body.classList.remove("overflow-hidden");
+            });
+
+            // Función para cerrar el modal
+            function closeModa(event) {
+                if (event.target === modal) {
+                    modal.classList.remove("modal--show-filtro");
+                    body.classList.remove("overflow-hidden");
+
+                    /* hiddenCategoriaPrecio.innerHTML = addCategoriaPrecio.innerHTML; */
+                }
+            }
+
+            window.addEventListener("click", closeModa);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+
+            function capitalizeFirstLetter(string) {
+                string = string.toLowerCase()
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        })
+        $('#disminuir').on('click', function() {
+            console.log('disminuyendo')
+            let cantidad = Number($('#cantidadSpan span').text())
+            if (cantidad > 0) {
+                cantidad--
+                $('#cantidadSpan span').text(cantidad)
+            }
+
+
+        })
+        // cantidadSpan
+        $('#aumentar').on('click', function() {
+            console.log('aumentando')
+            let cantidad = Number($('#cantidadSpan span').text())
+            cantidad++
+            $('#cantidadSpan span').text(cantidad)
+
+        })
+    </script>
+    <script>
+        let articulosCarrito = [];
+
+
+        function deleteOnCarBtn(id, operacion) {
+            console.log('Elimino un elemento del carrito');
+            console.log(id, operacion)
+            const prodRepetido = articulosCarrito.map(item => {
+                if (item.id === id && item.cantidad > 0) {
+                    item.cantidad -= Number(1);
+                    return item; // retorna el objeto actualizado 
+                } else {
+                    return item; // retorna los objetos que no son duplicados 
+                }
+
+            });
+            Local.set('carrito', articulosCarrito)
+            limpiarHTML()
+            PintarCarrito()
+
+
         }
-      }
 
-      function showModal(e) {
-        e.preventDefault();
+        function calcularTotal() {
+            let articulos = Local.get('carrito')
+            console.log(articulos)
+            let total = articulos.map(item => {
+                let monto
+                if (Number(item.descuento) !== 0) {
+                    monto = item.cantidad * Number(item.descuento)
+                } else {
+                    monto = item.cantidad * Number(item.precio)
 
-        addCategoriaPrecio.innerHTML = showCategoriaPrecio.innerHTML;
-        hiddenCategoriaPrecio.innerHTML = "";
+                }
+                return monto
 
-        modal.classList.add("modal--show-filtro");
-        body.classList.add("overflow-hidden");
+            })
+            const suma = total.reduce((total, elemento) => total + elemento, 0);
 
-        modal.style.display = "flex";
-      }
-
-      getWidth(); // Se ejecuta por primera vez
-      window.addEventListener("resize", getWidth);
-
-      closeModal.addEventListener("click", (e) => {
-        e.preventDefault();
-        modal.classList.remove("modal--show-filtro");
-        body.classList.remove("overflow-hidden");
-      });
-
-      // Función para cerrar el modal
-      function closeModa(event) {
-        if (event.target === modal) {
-          modal.classList.remove("modal--show-filtro");
-          body.classList.remove("overflow-hidden");
-
-          /* hiddenCategoriaPrecio.innerHTML = addCategoriaPrecio.innerHTML; */
-        }
-      }
-
-      window.addEventListener("click", closeModa);
-    });
-  </script>
-
-  <script>
-    $(document).ready(function() {
-
-
-      function capitalizeFirstLetter(string) {
-        string = string.toLowerCase()
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-    })
-    $('#disminuir').on('click', function() {
-      console.log('disminuyendo')
-      let cantidad = Number($('#cantidadSpan span').text())
-      if (cantidad > 0) {
-        cantidad--
-        $('#cantidadSpan span').text(cantidad)
-      }
-
-
-    })
-    // cantidadSpan
-    $('#aumentar').on('click', function() {
-      console.log('aumentando')
-      let cantidad = Number($('#cantidadSpan span').text())
-      cantidad++
-      $('#cantidadSpan span').text(cantidad)
-
-    })
-  </script>
-  <script>
-    let articulosCarrito = [];
-
-
-    function deleteOnCarBtn(id, operacion) {
-      console.log('Elimino un elemento del carrito');
-      console.log(id, operacion)
-      const prodRepetido = articulosCarrito.map(item => {
-        if (item.id === id && item.cantidad > 0) {
-          item.cantidad -= Number(1);
-          return item; // retorna el objeto actualizado 
-        } else {
-          return item; // retorna los objetos que no son duplicados 
-        }
-
-      });
-      Local.set('carrito', articulosCarrito)
-      limpiarHTML()
-      PintarCarrito()
-
-
-    }
-
-    function calcularTotal() {
-      let articulos = Local.get('carrito')
-      console.log(articulos)
-      let total = articulos.map(item => {
-        let monto
-        if (Number(item.descuento) !== 0) {
-          monto = item.cantidad * Number(item.descuento)
-        } else {
-          monto = item.cantidad * Number(item.precio)
+            $('#itemsTotal').text(`S/. ${suma} `)
 
         }
-        return monto
 
-      })
-      const suma = total.reduce((total, elemento) => total + elemento, 0);
+        function addOnCarBtn(id, operacion) {
+            console.log('agrego un elemento del cvarrio');
+            console.log(id, operacion)
 
-      $('#itemsTotal').text(`S/. ${suma} `)
+            const prodRepetido = articulosCarrito.map(item => {
+                if (item.id === id) {
+                    item.cantidad += Number(1);
+                    return item; // retorna el objeto actualizado 
+                } else {
+                    return item; // retorna los objetos que no son duplicados 
+                }
 
-    }
+            });
+            console.log(articulosCarrito)
+            Local.set('carrito', articulosCarrito)
+            // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+            limpiarHTML()
+            PintarCarrito()
 
-    function addOnCarBtn(id, operacion) {
-      console.log('agrego un elemento del cvarrio');
-      console.log(id, operacion)
 
-      const prodRepetido = articulosCarrito.map(item => {
-        if (item.id === id) {
-          item.cantidad += Number(1);
-          return item; // retorna el objeto actualizado 
-        } else {
-          return item; // retorna los objetos que no son duplicados 
         }
 
-      });
-      console.log(articulosCarrito)
-      Local.set('carrito', articulosCarrito)
-      // localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
-      limpiarHTML()
-      PintarCarrito()
+        function deleteItem(id) {
+            console.log('borrando elemento')
+            articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
+
+            Local.set('carrito', articulosCarrito)
+            limpiarHTML()
+            PintarCarrito()
+        }
+
+        var appUrl = <?php echo json_encode($url_env); ?>;
+        console.log(appUrl);
+        $(document).ready(function() {
+            articulosCarrito = Local.get('carrito') || [];
+
+            PintarCarrito();
+        });
+
+        function limpiarHTML() {
+            //forma lenta 
+            /* contenedorCarrito.innerHTML=''; */
+            $('#itemsCarrito').html('')
 
 
-    }
-
-    function deleteItem(id) {
-      console.log('borrando elemento')
-      articulosCarrito = articulosCarrito.filter(objeto => objeto.id !== id);
-
-      Local.set('carrito', articulosCarrito)
-      limpiarHTML()
-      PintarCarrito()
-    }
-
-    var appUrl = <?php echo json_encode($url_env); ?>;
-    console.log(appUrl);
-    $(document).ready(function() {
-      articulosCarrito = Local.get('carrito') || [];
-
-      PintarCarrito();
-    });
-
-    function limpiarHTML() {
-      //forma lenta 
-      /* contenedorCarrito.innerHTML=''; */
-      $('#itemsCarrito').html('')
-
-
-    }
+        }
 
 
 
-    // function PintarCarrito() {
-    //   console.log('pintando carrito ')
+        // function PintarCarrito() {
+        //   console.log('pintando carrito ')
 
-    //   let itemsCarrito = $('#itemsCarrito')
+        //   let itemsCarrito = $('#itemsCarrito')
 
-    //   articulosCarrito.forEach(element => {
-    //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
+        //   articulosCarrito.forEach(element => {
+        //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
     //       <div class="flex justify-center items-center gap-5">
     //         <div class="bg-[#F3F5F7] rounded-md p-4">
     //           <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
@@ -419,7 +712,7 @@
     //             ${element.producto}
     //           </h3>
     //           <p class="font-normal text-[12px] text-[#6C7275]">
-                
+
     //           </p>
     //           <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
     //             <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
@@ -449,110 +742,110 @@
     //       </div>
     //     </div>`
 
-    //     itemsCarrito.append(plantilla)
+        //     itemsCarrito.append(plantilla)
 
-    //   });
+        //   });
 
-    //   calcularTotal()
-    // }
-
-
+        //   calcularTotal()
+        // }
 
 
 
 
-    $('#btnAgregarCarrito').on('click', function() {
-      let url = window.location.href;
-      let partesURl = url.split('/')
-      let item = partesURl[partesURl.length - 1]
-      let cantidad = Number($('#cantidadSpan span').text())
-      item = item.replace('#', '')
+
+
+        $('#btnAgregarCarrito').on('click', function() {
+            let url = window.location.href;
+            let partesURl = url.split('/')
+            let item = partesURl[partesURl.length - 1]
+            let cantidad = Number($('#cantidadSpan span').text())
+            item = item.replace('#', '')
 
 
 
-      // id='nodescuento'
+            // id='nodescuento'
 
 
-      $.ajax({
+            $.ajax({
 
-        url: `{{ route('carrito.buscarProducto') }}`,
-        method: 'POST',
-        data: {
-          _token: $('input[name="_token"]').val(),
-          id: item,
-          cantidad
+                url: `{{ route('carrito.buscarProducto') }}`,
+                method: 'POST',
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    id: item,
+                    cantidad
 
-        },
-        success: function(success) {
-          console.log(success)
-          let {
-            producto,
-            id,
-            descuento,
-            precio,
-            imagen,
-            color
-          } = success.data
-          let cantidad = Number(success.cantidad)
-          let detalleProducto = {
-            id,
-            producto,
-            descuento,
-            precio,
-            imagen,
-            cantidad,
-            color
+                },
+                success: function(success) {
+                    console.log(success)
+                    let {
+                        producto,
+                        id,
+                        descuento,
+                        precio,
+                        imagen,
+                        color
+                    } = success.data
+                    let cantidad = Number(success.cantidad)
+                    let detalleProducto = {
+                        id,
+                        producto,
+                        descuento,
+                        precio,
+                        imagen,
+                        cantidad,
+                        color
 
-          }
-          let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
-          if (existeArticulo) {
-            //sumar al articulo actual 
-            const prodRepetido = articulosCarrito.map(item => {
-              if (item.id === detalleProducto.id) {
-                item.cantidad += Number(detalleProducto.cantidad);
-                return item; // retorna el objeto actualizado 
-              } else {
-                return item; // retorna los objetos que no son duplicados 
-              }
+                    }
+                    let existeArticulo = articulosCarrito.some(item => item.id === detalleProducto.id)
+                    if (existeArticulo) {
+                        //sumar al articulo actual 
+                        const prodRepetido = articulosCarrito.map(item => {
+                            if (item.id === detalleProducto.id) {
+                                item.cantidad += Number(detalleProducto.cantidad);
+                                return item; // retorna el objeto actualizado 
+                            } else {
+                                return item; // retorna los objetos que no son duplicados 
+                            }
 
-            });
-          } else {
-            articulosCarrito = [...articulosCarrito, detalleProducto]
+                        });
+                    } else {
+                        articulosCarrito = [...articulosCarrito, detalleProducto]
 
-          }
+                    }
 
-          Local.set('carrito', articulosCarrito)
-          let itemsCarrito = $('#itemsCarrito')
-          let ItemssubTotal = $('#ItemssubTotal')
-          let itemsTotal = $('#itemsTotal')
-          limpiarHTML()
-          PintarCarrito()
+                    Local.set('carrito', articulosCarrito)
+                    let itemsCarrito = $('#itemsCarrito')
+                    let ItemssubTotal = $('#ItemssubTotal')
+                    let itemsTotal = $('#itemsTotal')
+                    limpiarHTML()
+                    PintarCarrito()
 
-        },
-        error: function(error) {
-          console.log(error)
-        }
+                },
+                error: function(error) {
+                    console.log(error)
+                }
 
-      })
+            })
 
 
 
-      // articulosCarrito = {...articulosCarrito , detalleProducto }
-    })
-    // $('#openCarrito').on('click', function() {
-    //   console.log('abriendo carrito ');
-    //   $('.main').addClass('blur')
-    // })
-    // $('#closeCarrito').on('click', function() {
-    //   console.log('cerrando  carrito ');
+            // articulosCarrito = {...articulosCarrito , detalleProducto }
+        })
+        // $('#openCarrito').on('click', function() {
+        //   console.log('abriendo carrito ');
+        //   $('.main').addClass('blur')
+        // })
+        // $('#closeCarrito').on('click', function() {
+        //   console.log('cerrando  carrito ');
 
-    //   $('.cartContainer').addClass('hidden')
-    //   $('#check').prop('checked', false);
-    //   $('.main').removeClass('blur')
-    // })
-  </script>
+        //   $('.cartContainer').addClass('hidden')
+        //   $('#check').prop('checked', false);
+        //   $('.main').removeClass('blur')
+        // })
+    </script>
 
-  <script src="{{ asset('js/storage.extend.js') }}"></script>
+    <script src="{{ asset('js/storage.extend.js') }}"></script>
 
 
 @stop
