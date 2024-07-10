@@ -106,23 +106,23 @@ var carrouselBeneficios = new Swiper(".myBeneficios", {
 
 /* ------------------------------------------- */
 
-var carrouselCategorias = new Swiper(".categorias", {
-  slidesPerView: 1,
-  spaceBetween: 30,
-  loop: false,
-  grab: false,
-  centeredSlides: true,
-  initialSlide: 0, // Empieza en el cuarto slide (índice 3)
-  pagination: {
-    el: ".swiper-pagination-categorias",
-    clickable: true,
-  },
-  breakpoints: {
-    0: {
-      slidesPerView: 1,
-    },
-  },
-});
+// var carrouselCategorias = new Swiper(".categorias", {
+//   slidesPerView: 1,
+//   spaceBetween: 30,
+//   loop: false,
+//   grab: false,
+//   centeredSlides: true,
+//   initialSlide: 0, // Empieza en el cuarto slide (índice 3)
+//   pagination: {
+//     el: ".swiper-pagination-categorias",
+//     clickable: true,
+//   },
+//   breakpoints: {
+//     0: {
+//       slidesPerView: 1,
+//     },
+//   },
+// });
 
 /* --------------------------------------------- */
 

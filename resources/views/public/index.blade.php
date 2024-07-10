@@ -9,7 +9,7 @@
 
     <main class="z-[15]">
 
-        <section class="relative h-500 lg:h-700 gap-20 bg-no-repeat object-top bg-cover px-[3%] lg:px-[5%] rounded-b-[50px]"
+        <section class="relative h-500 lg:h-700 gap-20 bg-no-repeat object-top bg-cover px-[5%] lg:px-[5%] rounded-b-[50px]"
             style="background-image: url('{{ asset('images/img/jl_portada.webp') }}');">
             <div class="flex flex-row justify-center items-center gap-2 w-full lg:w-1/2 py-10 lg:py-20">
                 <div class="flex flex-col gap-5 lg:gap-10 items-start pt-8 pb-32 lg:pb-16 px-0 lg:px-[2%]">
@@ -69,7 +69,7 @@
 
 
         <section class="flex flex-col w-full gap-12 relative mt-80 lg:mt-[20%] xl:mt-[15%]">
-            <div class="w-full px-[3%] lg:px-[5%]  flex flex-col gap-4 md:flex-row justify-between">
+            <div class="w-full px-[5%] lg:px-[5%]  flex flex-col gap-4 md:flex-row justify-between">
                 <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
                     Nuestras Categorías
                 </h2>
@@ -464,7 +464,7 @@
         </section>
 
 
-        <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[3%] lg:pl-[5%] bg-cover bg-no-repeat"
+        <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[5%] lg:pl-[5%] bg-cover bg-no-repeat"
             style="background-image: url('{{ asset('images/img/jl_textura2.webp') }}');">
             <div class="flex flex-col items-start justify-center py-12 lg:py-24 w-[100%] lg:w-[40%] gap-7">
                 <div class="flex flex-col lg:flex-row gap-6">
