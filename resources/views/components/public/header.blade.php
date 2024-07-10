@@ -42,10 +42,6 @@
     padding: 0 !important;
     margin: 0 !important;
   }
-
-  .jquery-modal.blocker.current {
-    z-index: 30;
-  }
 </style>
 
 <div class="navigation shadow-xl" style="z-index: 9999; background-color: #fff !important">
@@ -359,49 +355,10 @@
             <span id="itemsCount" class="text-white"></span>
           </div> --}}
           <div class="flex justify-center items-center pl-1">
-            <div id="open-cart"
-              class="relative cursor-pointer {{ $pageName == 'carrito' || $pageName == 'pago' ? 'hidden' : 'inline-block' }}">
-              <span id="itemsCount"
-                class="bg-[#EB5D2C] text-xs font-medium text-white text-center p-1 leading-none rounded-full px-2 absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0">0</span>
-              <img src="{{ asset('images/svg/header_bag.svg') }}"
-                class="bg-white rounded-lg p-1 max-w-full h-auto cursor-pointer" />
-            </div>
+            <x-ecommerce.cart.button
+              class="relative cursor-pointer {{ $pageName == 'carrito' || $pageName == 'pago' ? 'hidden' : 'inline-block' }}" />
             {{-- <input type="checkbox" class="bag__modal" id="check" /> --}}
-            <div id="cart-modal"
-              class="bag !fixed top-0 right-0 md:w-[450px] cartContainer border shadow-2xl !rounded-l-2xl !rounded-r-none !p-0 !z-30"
-              style="display: none">
-              <div class="p-4 flex flex-col h-screen justify-between gap-2">
-                <div class="flex flex-col">
-                  <div class="flex justify-between ">
-                    <h2 class="font-medium text-[28px] text-[#151515] pb-5">Carrito</h2>
-                    <div id="close-cart" class="cursor-pointer">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke="#272727" stroke-linecap="round" stroke-linejoin="round"
-                          d="M6 18 18 6M6 6l12 12" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="overflow-y-scroll h-[calc(100vh-200px)] scroll__carrito">
-                    <table class="w-full">
-                      <tbody id="itemsCarrito">
-                        {{-- <div class="flex flex-col gap-10 align-top" id="itemsCarrito"></div> --}}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="font-poppins flex flex-col gap-2 pt-2">
-                  <div class="text-[#141718] font-medium text-[20px] flex justify-between items-center">
-                    <p>Total</p>
-                    <p id="itemsTotal">S/ 0.00</p>
-                  </div>
-                  <div>
-                    <a href="/carrito"
-                      class="font-semibold text-base bg-[#74A68D] py-3 px-5 rounded-2xl text-white cursor-pointer w-full inline-block text-center">Checkout</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <x-ecommerce.cart.modal />
           </div>
         </div>
       </div>
@@ -420,14 +377,6 @@
   })
 </script>
 <script>
-  function mostrarTotalItems() {
-    let articulos = Local.get('carrito') ?? []
-    let contarArticulos = articulos.reduce((total, articulo) => {
-      return total + articulo.cantidad;
-    }, 0);
-
-    $('#itemsCount').text(contarArticulos)
-  }
   $(document).ready(function() {
     if ({{ $isIndex ? 1 : 0 }}) {
       $(window).scroll(function() {
@@ -475,4 +424,3 @@
     mostrarTotalItems()
   })
 </script>
-<script src="{{ asset('js/storage.extend.js') }}"></script>

@@ -36,6 +36,7 @@
 
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="/js/tippy.all.min.js"></script>
+  <script src="/js/storage.extend.js"></script>
   <script src="/js/cookies.extend.js"></script>
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">

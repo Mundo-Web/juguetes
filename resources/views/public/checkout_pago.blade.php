@@ -9,45 +9,30 @@
 
 @section('content')
 
+  <style>
+    .swal2-container {
+      z-index: 9999999999999;
+    }
+  </style>
   <main>
     <form id="paymentForm" class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
       @csrf
-      <div>
-        <a href="/" class="font-normal text-[14px] text-[#6C7275]">Home</a>
-        <span>/</span>
-        <a href="/carrito" class="font-semibold text-[14px] text-[#141718]">Carrito</a>
-      </div>
-      <div class="flex md:gap-10">
+
+      <x-breadcrumb>
+        <x-breadcrumb.item href="/carrito">Carrito</x-breadcrumb.item>
+        <x-breadcrumb.item>Pago</x-breadcrumb.item>
+      </x-breadcrumb>
+
+      <div class="flex md:gap-20">
         <div class="flex justify-between items-center md:basis-8/12 w-full md:w-auto">
-          <p
-            class="font-semibold text-[18px] text-[#EB5D2C] border-b-[1px] border-[#EB5D2C] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Carro de compra</span>
-          </p>
-
-          <p
-            class="font-medium text-[18px] text-[#151515] border-b-[1px] border-[#6C7275] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Detalles de pago</span>
-          </p>
-
-          <p
-            class="font-medium text-[18px] text-[#C8C8C8] border-b-[1px] border-[#6C7275] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Orden completada</span>
-          </p>
-        </div>
-        <div class="md:basis-4/12"></div>
-      </div>
-
-      <div class="flex flex-col 2md:flex-row gap-16 md:gap-10">
-        <div class="basis-8/12 flex flex-col gap-10 order-2 2md:order-1">
-          <div class="flex flex-col gap-5">
-            <div>
-              <!-- form -199 -513 -->
-              <form id="formHome">
+          <x-ecommerce.gateway.container completed="{{ 2 }}">
+            <div class="flex flex-col gap-5">
+              <div>
                 <div class="flex flex-col gap-8">
 
                   <input type="hidden" name="_token" value="KetUXGJHlBNXwBFdNlcg8R9ueYHpfGMUECXmlNyQ"
                     autocomplete="off">
-                  <div class="flex flex-col gap-5 pb-10 border-b-2 border-[#151515]">
+                  <div class="flex flex-col gap-5 pb-10 border-b-2 border-gray-200 dark:border-gray-700">
                     <h2 class="font-semibold text-[20px] text-[#151515]">
                       Información del contacto
                     </h2>
@@ -170,7 +155,8 @@
                                 <select name="provincia_id" id="provincia_id"
                                   class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
                                   data-address>
-                                  <option value="" data-select2-id="select2-data-4-gokf">Seleccione una provincia
+                                  <option value="" data-select2-id="select2-data-4-gokf">Seleccione una
+                                    provincia
                                   </option>
 
                                 </select>
@@ -219,7 +205,8 @@
                           </div>
 
                           <div class="basis-1/2 flex flex-col gap-2">
-                            <label for="direccion" class="font-medium text-[12px] text-[#6C7275]">Dpto./ Interior/ Piso/
+                            <label for="direccion" class="font-medium text-[12px] text-[#6C7275]">Dpto./ Interior/
+                              Piso/
                               Lote/ Bloque
                               (opcional)</label>
                             <input id="direccion" type="text" name="dir_bloq_lote"
@@ -234,11 +221,10 @@
 
 
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
+          </x-ecommerce.gateway.container>
         </div>
-
         <div
           class="basis-4/12 flex flex-col justify-start gap-10 py-4 order-1 2md:order-2 2md:sticky top-4 h-max border rounded-md">
           <h2 class="font-semibold text-[20px] text-[#151515] px-4">
@@ -325,7 +311,9 @@
             icon: "success",
           });
 
-          location.href = `/agradecimiento?code=${data.reference_code}`
+          Local.delete('carrito')
+
+          location.href = `/agradecimiento?code=${data.data.reference_code}`
 
         } else if (Culqi.order) { // ¡Objeto Order creado exitosamente!
           const order = Culqi.order;
@@ -334,6 +322,7 @@
         } else {
           // Mostramos JSON de objeto error en consola
           console.log('Error : ', Culqi.error);
+          throw new Error(Culqi.error.message);
         }
       } catch (error) {
         Swal.fire({
@@ -354,8 +343,13 @@
         title: 'Decotab',
         currency: 'PEN',
         amount: Math.round((precioProductos + precioEnvio) * 100),
-        email: 'gamboapalomino@gmail.com'
       });
+      Culqi.options({
+        style: {
+          logo: 'http://decotab.mundoweb.localhost/images/svg/logo_decotab_header.svg',
+          bannerColor: '#272727'
+        }
+      })
       Culqi.open();
     })
 
@@ -527,33 +521,6 @@
       PintarCarrito()
 
 
-    }
-    const getTotalPrice = () => {
-      const carrito = Local.get('carrito') ?? []
-      const productPrice = carrito.reduce((total, x) => {
-        let price = Number(x.precio) * x.cantidad
-        if (Number(x.descuento)) {
-          price = Number(x.descuento) * x.cantidad
-        }
-        total += price
-        return total
-      }, 0)
-      return productPrice
-    }
-    const getCostoEnvio = () => {
-      if ($('[name="envio"]:checked').val() == 'recojo') return 0
-      const priceStr = $('#distrito_id option:selected').attr('data-price')
-      const price = Number(priceStr) || 0
-      return price
-    }
-
-    function calcularTotal() {
-      const precioProductos = getTotalPrice()
-      $('#itemSubtotal').text(`S/. ${precioProductos.toFixed(2)}`)
-      const precioEnvio = getCostoEnvio()
-      const total = precioProductos + precioEnvio
-
-      $('#itemTotal').text(`S/. ${total.toFixed(2)} `)
     }
 
     function addOnCarBtn(id, operacion) {

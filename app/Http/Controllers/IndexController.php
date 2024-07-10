@@ -21,6 +21,7 @@ use App\Models\Department;
 use App\Models\Galerie;
 use App\Models\PolyticsCondition;
 use App\Models\Price;
+use App\Models\Sale;
 use App\Models\Specifications;
 use App\Models\TermsAndCondition;
 use App\Models\User;
@@ -398,13 +399,14 @@ class IndexController extends Controller
     return $codigoAleatorio;
   }
 
-  public function agradecimiento()
+  public function agradecimiento(Request $request)
   {
-    //
+    if (!$request->code) return redirect('/');
+
     $categorias = Category::all();
-    return view('public.checkout_agradecimiento', compact(
-      'categorias'
-    ));
+    return view('public.checkout_agradecimiento')
+      ->with('categorias', $categorias)
+      ->with('code', $request->code);
   }
 
   public function cambiofoto(Request $request)
@@ -485,7 +487,10 @@ class IndexController extends Controller
   {
     $user = Auth::user();
     $categorias = Category::all();
-    return view('public.dashboard_order',  compact('user', 'categorias'));
+    $sales = Sale::where('email', $user->email)
+      ->orderBy('id', 'desc')
+      ->get();
+    return view('public.dashboard_order',  compact('user', 'categorias', 'sales'));
   }
 
 

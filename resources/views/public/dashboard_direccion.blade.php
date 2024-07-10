@@ -10,22 +10,12 @@
 
 
   <main>
-    {{-- <section class="font-poppins my-12">
-            <div class="flex flex-col w-11/12 mx-auto">
-                <div class="flex flex-col gap-10 my-5">
-                    <div class="flex gap-1">
-                        <a href="index.html" class="font-normal text-[14px] text-[#6C7275]">Home</a>
-                        <span>/</span>
-                        <a href="#" class="font-semibold text-[14px] text-[#141718]">
-                            Mi cuenta
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-    <!--  -->
     <form id="modal-address" class="!max-w-[600px]" style="display: none; padding: 0">
+      @csrf
+      <input type="hidden" id="id" name="id" value="">
       <div class="flex flex-col gap-4 p-8">
+        <p class="text-gray-500">Nota: En algunos casos podrías no encontrar tu ciudad. Eso quiere decir que no tenemos
+          cobertura para dicho lugar.</p>
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-4 md:flex-row">
             <div class="basis-1/3 flex flex-col gap-3 z-[45]">
@@ -210,7 +200,7 @@
             class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div class="flex items-center justify-between mb-4">
               <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Mi lista de direcciones</h5>
-              <a href="#modal-address" rel="modal:open"
+              <a id="btn-add" href="#modal-address" rel="modal:open"
                 class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                 + Agregar
               </a>
@@ -218,6 +208,9 @@
             <div class="flow-root">
               <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
                 @foreach ($addresses as $address)
+                  @php
+                    $isFree = $address->price->price == 0;
+                  @endphp
                   <li class="py-3 sm:py-4">
                     <div class="flex items-center">
                       <div class="flex-1 min-w-0">
@@ -225,6 +218,13 @@
                           {{ $address->price->district->province->department->description }},
                           {{ $address->price->district->province->description }},
                           {{ $address->price->district->description }}
+
+                          <span
+                            class="inline-flex items-center {{ $isFree ? 'bg-green-100' : 'bg-blue-100' }} {{ $isFree ? 'text-green-800' : 'text-blue-800' }} text-xs font-medium px-2.5 py-0.5 rounded-full dark:{{ $isFree ? 'bg-green-900' : 'bg-blue-900' }} dark:{{ $isFree ? 'text-green-300' : 'text-blue-300' }}">
+                            <span
+                              class="w-2 h-2 me-1 {{ $isFree ? 'bg-green-500' : 'bg-blue-500' }} rounded-full"></span>
+                            {{ $isFree ? 'Gratis' : 'S/. ' . $address->price->price }}
+                          </span>
                         </p>
                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                           {{ $address->street }} - {{ $address->number }} - {{ $address->description }}
@@ -232,15 +232,13 @@
                       </div>
                       <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                         <div class="inline-flex rounded-md shadow-sm" role="group">
-                          <button type="button"
-                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                          <button id="btn-edit" data-address="{{ $address }}" type="button"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                             <i class="fa fa-pen"></i>
-                            <span class="ms-1">Editar</span>
                           </button>
-                          <button type="button"
-                            class="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-2 focus:ring-red-500 focus:text-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
+                          <button id="btn-delete" data-id="{{ $address->id }}" type="button"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-2 focus:ring-red-500 focus:text-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
                             <i class="fa fa-trash"></i>
-                            <span class="ms-1">Eliminar</span>
                           </button>
                         </div>
                       </div>
@@ -297,6 +295,8 @@
     $('#modal-address').on('submit', async (e) => {
       e.preventDefault()
       const request = {
+        id: $('#id').val(),
+        _token: $('[name="_token"]').val(),
         price_id: $('#distrito_id option:selected').attr('price-id'),
         street: $('#street').val(),
         number: $('#number').val(),
@@ -318,6 +318,8 @@
           text: `Direccion guardada correctamente`,
           icon: "success",
         });
+
+        location.reload()
       } catch (error) {
         Swal.fire({
           title: `Ups!!`,
@@ -325,6 +327,80 @@
           icon: "error",
         });
       }
+    })
+
+    $(document).on('click', '#btn-delete', async function() {
+      const id = $(this).attr('data-id')
+      try {
+        const result = await Swal.fire({
+          title: "Seguro?",
+          text: 'Esta accion no se puede revertir',
+          showCancelButton: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: `Cancelar`
+        })
+        if (!result.isConfirmed) return
+        const res = await fetch(`/api/address/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-type': 'application/json',
+            'XSRF-TOKEN': decodeURIComponent(Cookies.get('XSRF-TOKEN'))
+          },
+          body: JSON.stringify({
+            _token: $('[name="_token"]').val()
+          })
+        })
+        if (!res.ok) throw new Error('Ocurrio un error al guardar la direccion')
+
+        Swal.fire({
+          title: `Exito!!`,
+          text: `Se ha eliminado la direccion correctamente`,
+          icon: "success",
+        });
+
+        location.reload()
+      } catch (error) {
+        Swal.fire({
+          title: `Ups!!`,
+          text: error.message,
+          icon: "error",
+        });
+      }
+    })
+
+    $(document).on('click', '#btn-edit', function() {
+      const data = $(this).data('address')
+
+      $('#id').val(data.id)
+      $('#departamento_id')
+        .val(data.price.district.province.department.id)
+        .trigger('change')
+      $('#provincia_id')
+        .val(data.price.district.province.id)
+        .trigger('change')
+      $('#distrito_id')
+        .val(data.price.district.id)
+        .trigger('change')
+
+      $('#street').val(data.street)
+      $('#number').val(data.number)
+      $('#description').val(data.description)
+
+      $('#modal-address').modal('show')
+    })
+
+    $(document).on('click', '#btn-add', function() {
+      const data = $(this).data('address')
+
+      $('#id').val(null)
+      $('#departamento_id')
+        .val(null)
+        .trigger('change')
+      $('#street').val(null)
+      $('#number').val(null)
+      $('#description').val(null)
+
+      $('#modal-address').modal('show')
     })
   </script>
 
@@ -337,7 +413,7 @@
     const bodyModalCarrito = document.querySelector(".body");
     let isMenuOpen = false; // Variable para controlar el estado del menú
     const card = document.querySelector(".cartContainer");
-    checkbox.addEventListener("click", checkboxOnClick);
+    checkbox?.addEventListener("click", checkboxOnClick);
 
     // Agregar event listener al checkbox para controlar el estado del menú
     function checkboxOnClick() {

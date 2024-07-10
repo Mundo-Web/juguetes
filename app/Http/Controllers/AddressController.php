@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SoDe\Extend\Response;
@@ -39,9 +40,24 @@ class AddressController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function delete(Request $request, string $id)
     {
-        //
+        $response = new Response();
+        try {
+            $deleted = Address::where('id', $id)->delete();
+            if ($deleted == 0) throw new Exception('No hay registros a eliminar');
+
+            $response->status = 200;
+            $response->message = 'Operacion correcta';
+        } catch (\Throwable $th) {
+            $response->status = 400;
+            $response->message = $th->getMessage();
+        } finally {
+            return response(
+                $response->toArray(),
+                $response->status
+            );
+        }
     }
 
     /**

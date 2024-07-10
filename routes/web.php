@@ -227,6 +227,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
     Route::post('/micuenta/actualizarPerfil', [IndexController::class, 'actualizarPerfil'])->name('actualizarPerfil');
-
-    Route::post('/micuenta/direccion', [AddressController::class, 'save'])->name('address.save');
 });
