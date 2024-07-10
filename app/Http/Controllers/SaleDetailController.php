@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\SaleDetail;
-use App\Http\Requests\StoreSaleDetailRequest;
-use App\Http\Requests\UpdateSaleDetailRequest;
+use Illuminate\Http\Request;
 
 class SaleDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function bySale(Request $request, string $sale)
     {
-        //
+        $details = SaleDetail::where('sale_id', $sale)->get();
+        return $details;
     }
 
     /**

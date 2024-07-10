@@ -97,7 +97,7 @@
                             </svg>
 
                             <div class="w-full text-lg font-semibold">Recojo en tienda</div>
-                            <div class="w-full text-sm">Gratis</div>
+                            <div class="w-full text-sm">Envio gratis</div>
                           </div>
                         </label>
                       </li>
@@ -123,6 +123,28 @@
                     </ul>
                     <div id="direccionContainer" class="flex flex-col gap-5">
                       <div class="flex flex-col gap-5">
+                        @if (count($addresses) > 0)
+                          <div class="flex flex-col gap-5 md:flex-row">
+                            <div class="basis-2/3 flex flex-col gap-2 z-[45]">
+                              <label class="font-medium text-[12px] text-[#6C7275]">Lista de direcciones<span
+                                  class="text-red-500">*</span></label>
+                              <div class="w-full">
+                                <div class="dropdown w-full">
+                                  <select id="addresses"
+                                    class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
+                                    data-address>
+                                    @foreach ($addresses as $address)
+                                      <option value="{{ $address->id }}" data="{{$address}}">
+                                        <b class="block font-bold">Lima lima lima</b>
+                                        {{ $address->street }} #{{ $address->number }}
+                                      </option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endif
                         <div class="flex flex-col gap-5 md:flex-row">
                           <div class="basis-1/3 flex flex-col gap-2 z-[45]">
                             <label class="font-medium text-[12px] text-[#6C7275]">Departamento <span
@@ -374,6 +396,30 @@
     const provinces = @json($provinces);
     const districts = @json($districts);
 
+    $('#addresses').select2({
+      templateResult: (address) => {
+        if (!address.id) {
+          return address.text;
+        }
+
+        var $address = $(
+          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
+        );
+
+        return $address;
+      },
+      templateSelection: (address) => {
+        if (!address.id) {
+          return address.text;
+        }
+
+        var $address = $(
+          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
+        );
+
+        return $address;
+      }
+    })
     $('#departamento_id').select2()
     $('#provincia_id').select2()
     $('#distrito_id').select2()

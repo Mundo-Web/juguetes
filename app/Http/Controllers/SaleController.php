@@ -5,30 +5,42 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Http\Classes\dxResponse;
 use App\Models\dxDataGrid;
+use App\Models\Status;
+use App\Models\User;
 use SoDe\Extend\JSON;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Auth;
+use SoDe\Extend\Response;
+use Throwable;
 
 class SaleController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $statuses = Status::all();
+        return view('pages.pedidos.index')
+            ->with('statuses', $statuses);
+    }
+
     public function paginate(Request $request): HttpResponse|ResponseFactory
     {
         $response =  new dxResponse();
         try {
-            $instance = Sale::select();
+            $instance = Sale::select()->with('status');
 
             if ($request->group != null) {
                 [$grouping] = $request->group;
                 $selector = \str_replace('.', '__', $grouping['selector']);
                 $instance = Sale::select([
                     "{$selector} AS key"
-                ])
+                ])->with('status')
                     ->groupBy($selector);
             }
 
-            if (!Auth::user()->hasRole('Admin')) {
+            if (!Auth::user()->hasRole('Admin') || $request->data == 'mine') {
                 $instance->where('email', Auth::user()->email);
             }
 
@@ -79,6 +91,59 @@ class SaleController extends Controller
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage() . " " . $th->getFile() . ' Ln.' . $th->getLine();
+        } finally {
+            return response(
+                $response->toArray(),
+                $response->status
+            );
+        }
+    }
+
+    public function confirmation(Request $request): HttpResponse|ResponseFactory
+    {
+        $response =  new Response();
+        try {
+            $sale = Sale::findOrfail($request->id);
+
+            if ($request->field == 'client') {
+                $sale->confirmation_client = true;
+                $sale->confirmation_user = true;
+            } else if ($request->field == 'user') {
+                $sale->confirmation_user = true;
+                if (!User::where('email', $sale->email)->exists()) {
+                    $sale->confirmation_client = true;
+                }
+            }
+
+            $sale->save();
+
+            $response->status = 200;
+            $response->message = 'Operación correcta';
+        } catch (Throwable $th) {
+            $response->status = 400;
+            $response->message = $th->getMessage();
+        } finally {
+            return response(
+                $response->toArray(),
+                $response->status
+            );
+        }
+    }
+
+    public function status(Request $request): HttpResponse|ResponseFactory
+    {
+        $response =  new Response();
+        try {
+            $sale = Sale::findOrfail($request->id);
+
+            $sale->status_id = $request->status_id;
+            $sale->save();
+
+            $response->status = 200;
+            $response->message = 'Operación correcta';
+        } catch (Throwable $th) {
+            $response->status = 400;
+            $response->message = $th->getMessage();
         } finally {
             return response(
                 $response->toArray(),

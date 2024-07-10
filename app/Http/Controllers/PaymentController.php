@@ -9,6 +9,7 @@ use App\Models\SaleDetail;
 use Culqi\Culqi;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use SoDe\Extend\JSON;
 use SoDe\Extend\Response;
 
@@ -23,7 +24,7 @@ class PaymentController extends Controller
     $sale = new Sale();
     try {
 
-      $productsJpa = Products::select(['id','imagen', 'producto', 'precio', 'descuento'])
+      $productsJpa = Products::select(['id', 'imagen', 'producto', 'precio', 'descuento'])
         ->whereIn('id', array_map(fn ($x) => $x['id'], $body['cart']))
         ->get();
 
@@ -39,7 +40,7 @@ class PaymentController extends Controller
 
       $sale->name = $body['contact']['name'];
       $sale->lastname = $body['contact']['lastname'];
-      $sale->email = $body['contact']['email'];
+      $sale->email = Auth::check() ? Auth::user()->email : $body['contact']['email'];
       $sale->phone = $body['contact']['phone'];
       $sale->address_price = 0;
       $sale->total = $totalCost;
@@ -67,8 +68,8 @@ class PaymentController extends Controller
         }
       }
 
-      $sale->status_code = 'En proceso';
-      $sale->status_message = 'En proceso';
+      $sale->status_id = 1;
+      $sale->status_message = 'La venta se ha creado. Aun no se ha pagado';
       $sale->code = '000000000000';
 
       $sale->save();
@@ -120,14 +121,14 @@ class PaymentController extends Controller
         'amount' => $totalCost
       ];
 
-      $sale->status_code = 'Pagado';
-      $sale->status_message = 'Se ha generado un cargo correctamente';
+      $sale->status_id = 3;
+      $sale->status_message = 'La venta se ha generado y ha sido pagada';
       $sale->code = $charge?->reference_code ?? null;
     } catch (\Throwable $th) {
       $response->status = 400;
       $response->message = $th->getMessage();
 
-      $sale->status_code = 'Rechazado';
+      $sale->status_id = 2;
       $sale->status_message = $th->getMessage();
     } finally {
       $sale->save();

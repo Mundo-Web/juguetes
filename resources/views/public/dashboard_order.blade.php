@@ -6,11 +6,7 @@
 
 
 @section('content')
-  <link href="/js/dxdatagrid/css/dx.light.compact.css?v=06d3ebc8-645c-4d80-a600-c9652743c425" rel="stylesheet"
-    type="text/css" id="dg-default-stylesheet" />
-  <script src="/js/dxdatagrid/js/dx.all.js"></script>
-  <script src="/js/dxdatagrid/js/localization/dx.messages.es.js"></script>
-  <script src="/js/moment/min/moment.min.js"></script>
+  
 
   <main>
     {{-- <section class="font-poppins my-12">
@@ -122,216 +118,16 @@
         </div>
 
         <div class="basis-7/12 font-poppins w-11/12 md:w-full mx-auto">
-          <h2 class="text-[#151515] font-semibold text-[20px] py-5">
+          <h2 class="text-[#151515] font-semibold text-[20px]">
             Historial de pedidos
           </h2>
-          <div id="gridContainer"></div>
+          <x-sales.table/>
         </div>
       </div>
     </section>
   </main>
 
-  <div id="invoice-modal" class="!max-w-[720px]">
-    <h3 class="h3">Orden #<span id="invoice-code"></span></h3>
-  </div>
-
-  <script>
-    const dataGrid = $('#gridContainer').dxDataGrid({
-      language: "es",
-      dataSource: {
-        load: async (params) => {
-          const res = await fetch("{{ route('sales.paginate') }}", {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'XSRF-TOKEN': decodeURIComponent(Cookies.get('XSRF-TOKEN'))
-            },
-            body: JSON.stringify({
-              _token: $('[name="_token"]').val(),
-              ...params
-            })
-          })
-          const data = await res.json()
-          return data
-        },
-      },
-      onToolbarPreparing: (e) => {
-        const items = e.toolbarOptions.items;
-        items.unshift({
-          widget: 'dxButton',
-          location: 'after',
-          options: {
-            icon: 'revert',
-            hint: 'REFRESCAR TABLA',
-            onClick: () => {
-              dataGrid.refresh()
-            }
-          }
-        });
-      },
-      remoteOperations: true,
-      columnResizingMode: "widget",
-      allowColumnResizing: true,
-      allowColumnReordering: true,
-      columnAutoWidth: true,
-      scrollbars: 'auto',
-      // filterPanel: {
-      //   visible: true
-      // },
-      // searchPanel: {
-      //   visible: true
-      // },
-      // headerFilter: {
-      //   visible: true,
-      //   search: {
-      //     enabled: true
-      //   }
-      // },
-      // height: 'calc(100vh - 185px)',
-      rowAlternationEnabled: true,
-      showBorders: true,
-      // filterRow: {
-      //   visible: true,
-      //   applyFilter: "auto"
-      // },
-      // filterBuilderPopup: {
-      //   visible: false,
-      //   position: {
-      //     of: window,
-      //     at: 'top',
-      //     my: 'top',
-      //     offset: {
-      //       y: 10
-      //     },
-      //   },
-      // },
-      paging: {
-        pageSize: 5,
-      },
-      pager: {
-        visible: true,
-        allowedPageSizes: [5, 10, 25, 50, 100],
-        showPageSizeSelector: true,
-        showInfo: true,
-        showNavigationButtons: true,
-      },
-      // allowFiltering: true,
-      scrolling: {
-        mode: 'standard',
-        useNative: true,
-        preloadEnabled: true,
-        rowRenderingMode: 'standard'
-      },
-      // columnChooser: {
-      //   title: 'Mostrar/Ocultar columnas',
-      //   enabled: true,
-      //   mode: 'select',
-      //   search: {
-      //     enabled: true
-      //   }
-      // },
-      columns: [{
-          dataField: 'code',
-          caption: 'ORDEN',
-          cellTemplate: (container, {
-            data
-          }) => {
-            container.addClass('!px-2 !py-1')
-            const div = $('<div>')
-            const orderContainer = $('<a>', {
-              class: 'block text-sm font-medium truncate dark:text-white text-blue-500',
-              text: `#${data.code}`
-            })
-            orderContainer.on('click', () => {
-              $('#invoice-code').text(data.code)
-              $('#invoice-modal').modal('show')
-            })
-            const addressContainer = $('<p>', {
-              class: 'text-sm text-gray-500 dark:text-gray-400',
-              text: data.address_description ?
-                `${data.address_department}, ${data.address_province}, ${data.address_district} - ${data.address_street} #${data.address_number}` :
-                'Recojo en tienda'
-            })
-            const dateContainer = $('<p>', {
-              class: 'text-xs text-gray-400',
-              text: moment(data.created_at).format('YYYY-MM-DD HH:mm:ss')
-            })
-            div.append(orderContainer)
-            div.append(addressContainer)
-            div.append(dateContainer)
-
-            container.html(div)
-          }
-        },
-        {
-          dataField: 'status_code',
-          caption: 'ESTADO',
-          cellTemplate: (container, {
-            data
-          }) => {
-            container.addClass('!px-2 !py-1 !text-center')
-            container.css('vertical-align', 'middle')
-
-            let $class = 'gray';
-            switch (data.status_code) {
-              case 'En proceso':
-                $class = 'gray'
-                break
-              case 'Denegado':
-                $class = 'red'
-                break
-              case 'Pagado':
-                $class = 'green'
-                break
-              default:
-                $class = 'gray'
-                break
-            }
-            container.html(
-              `<span class="inline-flex items-center bg-${$class}-100 text-${$class}-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-${$class}-900 dark:text-${$class}-300 w-max">${data.status_code}</span>`
-            )
-          }
-        },
-        {
-          dataField: 'total',
-          caption: 'MONTO',
-          cellTemplate: (container, {
-            data
-          }) => {
-            container.addClass('!px-2 !py-1 !text-center')
-            container.css('vertical-align', 'middle')
-
-            const isFree = !Boolean(Number(data.address_price))
-            const div = $('<div>', {
-              class: 'text-center'
-            })
-            const priceContainer = $('<span>', {
-              class: 'block w-max mx-auto',
-              text: `S/. ${data.total}`
-            })
-            const envioContainer = $('<span>', {
-                class: `inline-flex items-center ${ isFree ? 'bg-green-100' : 'bg-blue-100'} ${ isFree ? 'text-green-800' : 'text-blue-800'} text-xs font-medium px-2.5 py-0.5 rounded-full dark:${ isFree ? 'bg-green-900' : 'bg-blue-900'} dark:${ isFree ? 'text-green-300' : 'text-blue-300'} w-max`
-              })
-              .append(
-                `<span class="/w-2 h-2 me-1 ${isFree ? 'bg-green-500' : 'bg-blue-500' } rounded-full"></span>`)
-              .append(isFree ? 'Envio gratis' : `S/. ${Number(data.address_price).toFixed(2)}`)
-
-            div.append(priceContainer)
-            div.append(envioContainer)
-
-            container.html(div)
-          }
-        }
-      ],
-      onContentReady: (...props) => {
-        tippy('.tippy-here', {
-          arrow: true,
-          animation: 'scale'
-        })
-      }
-    }).dxDataGrid('instance')
-  </script>
+  <x-sales.modal/>
 
 @section('scripts_importados')
   <script>

@@ -25,4 +25,9 @@ class Sale extends Model
     //     'status_code',
     //     'status_message',
     // ];
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
 }

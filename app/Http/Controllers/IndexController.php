@@ -23,6 +23,7 @@ use App\Models\PolyticsCondition;
 use App\Models\Price;
 use App\Models\Sale;
 use App\Models\Specifications;
+use App\Models\Status;
 use App\Models\TermsAndCondition;
 use App\Models\User;
 use App\Models\UserDetails;
@@ -273,7 +274,9 @@ class IndexController extends Controller
 
     $url_env = env('APP_URL');
     $culqi_public_key = env('CULQI_PUBLIC_KEY');
-    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados', 'culqi_public_key'));
+
+    $addresses = Address::where('email', $user->email)->get();
+    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados', 'culqi_public_key', 'addresses'));
   }
 
   public function procesarPago(Request $request)
@@ -487,10 +490,8 @@ class IndexController extends Controller
   {
     $user = Auth::user();
     $categorias = Category::all();
-    $sales = Sale::where('email', $user->email)
-      ->orderBy('id', 'desc')
-      ->get();
-    return view('public.dashboard_order',  compact('user', 'categorias', 'sales'));
+    $statuses = [];
+    return view('public.dashboard_order',  compact('user', 'categorias', 'statuses'));
   }
 
 

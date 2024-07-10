@@ -33,8 +33,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PolyticsConditionController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StrengthController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ValoresAtributosController;
@@ -104,6 +106,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/terminos-y-condiciones', TermsAndConditionController::class);
 
 
+        Route::resource('/pedidos', SaleController::class);
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
@@ -119,6 +122,10 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/testimonios', TestimonyController::class);
         Route::post('/testimonios/deleteTestimony', [TestimonyController::class, 'deleteTestimony'])->name('testimonios.deleteTestimony');
         Route::post('/testimonios/updateVisible', [TestimonyController::class, 'updateVisible'])->name('testimonios.updateVisible');
+
+        // Estados
+        Route::resource('/estados', StatusController::class);
+        Route::delete('/estados/{estado}', [StatusController::class, 'delete'])->name('estados.delete');
 
         //Categorías
         Route::resource('/categorias', CategoryController::class);

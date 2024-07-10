@@ -6,6 +6,7 @@ use App\Models\General;
 use App\Models\LibroReclamaciones;
 use App\Models\Message;
 use App\Models\PolyticsCondition;
+use App\Models\Sale;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Facades\View;
@@ -30,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             // Obtener los datos del footer
             $datosgenerales = General::all(); // Suponiendo que tienes un modelo Footer y un método footerData() en él
             // Pasar los datos a la vista
-           
+
             $view->with('datosgenerales', $datosgenerales);
         });
 
@@ -43,12 +44,16 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('components.app.sidebar', function ($view) {
             // Obtener los datos del footer
-            $mensajes = Message::where('is_read', '!=', 1 )->where('status', '!=', 0)->count(); // Suponiendo que tienes un modelo Footer y un método footerData() en él
-            $reclamo =  LibroReclamaciones::where('is_read', '!=', 1 )->where('status', '!=', 0)->count();
+            $salesCount = Sale::where('status_id', 3)->count();
+            $mensajes = Message::where('is_read', '!=', 1)->where('status', '!=', 0)->count(); // Suponiendo que tienes un modelo Footer y un método footerData() en él
+            $reclamo =  LibroReclamaciones::where('is_read', '!=', 1)->where('status', '!=', 0)->count();
             // Pasar los datos a la vista
-            $view->with('mensajes', $mensajes)->with('reclamo', $reclamo);
+            $view
+                ->with('salesCount', $salesCount)
+                ->with('mensajes', $mensajes)
+                ->with('reclamo', $reclamo);
         });
-        
-         PaginationPaginator::useTailwind();   
+
+        PaginationPaginator::useTailwind();
     }
 }
