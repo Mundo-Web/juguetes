@@ -229,13 +229,93 @@
                                 class="py-5  font-medium font-poppins text-text16 px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
                                 <span class="underline-this">Inicio</span>
                             </a>
-                            
-                            <a href="{{ route('catalogo.all') }}"
+                            <div @mouseenter="openCatalogo = true" @mouseleave="openCatalogo = false" class="px-3 py-5">
+                                <a href="{{ route('catalogo.all') }}"
                                     class="font-medium font-poppins text-text16 hover:opacity-75 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}"
                                     aria-haspopup="true">
                                     <span class="underline-this">Juguetes</span>
-                            </a>
-                          
+                                </a>
+                                <div x-show="openCatalogo"
+                                    class="origin-top-right absolute top-full left-0 w-[100vw] mt-0 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-8 shadow-lg overflow-hidden grid gap-8 grid-cols-12"
+                                    @click.outside="openCatalogo = false" @keydown.escape.window="openCatalogo = false">
+                                    <div class="col-span-3">
+                                        <span class="h4 text-[#272727] px-3 py-1">Categorias</span>
+                                        <hr class="mx-3 my-3">
+                                        <ul class="col-span-3">
+                                            @foreach ($categorias as $category)
+                                                @if (count($category->subcategories()))
+                                                    <li>
+                                                        <a @click="openSubMenu === {{ $category->id }} ? openSubMenu = null : openSubMenu = {{ $category->id }}"
+                                                            href="javascript:void(0)"
+                                                            class="text-[#272727] flex justify-between items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                                            <span class="underline-this">
+                                                                {{ $category->name }}
+                                                            </span>
+                                                            <span
+                                                                :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
+                                                                class="ms-1 inline-block transform transition-transform duration-300">↓</span>
+                                                        </a>
+                                                        <ul x-show="openSubMenu === {{ $category->id }}" x-transition
+                                                            class="ml-3 mt-1 space-y-1 border-l border-gray-300">
+                                                            <li>
+                                                                <a href="/catalogo/{{ $category->slug }}"
+                                                                    class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                                                    <span class="underline-this">
+                                                                        Ver todo {{ $category->name }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            @foreach ($category->subcategories() as $subcategory)
+                                                                <li>
+                                                                    <a href="/catalogo/{{ $category->slug }}/{{ $subcategory->slug }}"
+                                                                        class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                                                        <span
+                                                                            class="underline-this">{{ $subcategory->name }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </li>
+                                                @else
+                                                    <li>
+                                                        <a href="{{ route('catalogo', $category->slug) }}"
+                                                            class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                                            <span class="underline-this">
+                                                                {{ $category->name }}
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-span-9">
+                                        <div class="categories-header swiper">
+                                            <div class="swiper-wrapper mt-2 mb-4">
+                                                @foreach ($categorias as $category)
+                                                    @if ($category->destacar)
+                                                        <div class="swiper-slide rounded-2xl">
+                                                            <x-category.container :item="$category" />
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                            <div class="swiper-scrollbar-categories-header h-2"></div>
+                                            <div class="mt-4 text-end">
+                                                <button type="button"
+                                                    class="swiper-button-prev-categories-header text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                                                    ←
+                                                </button>
+                                                <button type="button"
+                                                    class="swiper-button-next-categories-header text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                                                    →
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <a href="{{ route('blog')}}"
                                 class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">

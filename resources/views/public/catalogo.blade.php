@@ -134,7 +134,7 @@
 
                         </div>
                         <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
                                     class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
                         </div>
                     </div>
@@ -158,6 +158,152 @@
                     </div>
 
                 </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
+                    <div
+                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
+                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
+
+                            <span
+                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
+                                -20%</span>
+
+                        </div>
+                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="flex flex-col gap-1">
+                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
+                            <a href="#">
+                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
+                                    producto</h2>
+                            </a>
+
+                            <p
+                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
+                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
+                            </p>
+                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
+                                S/ 89.99
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
                     <div
@@ -206,153 +352,7 @@
 
                         </div>
                         <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                            <a href="{{route('producto', 1)}}"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
                                     class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
                         </div>
                     </div>
