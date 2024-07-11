@@ -10,217 +10,109 @@
 @section('content')
 
   <style>
-    .select2-container .select2-selection--single {
-      margin-top: 0.25rem;
-      /* mt-1 */
-      background-color: #F9FAFB;
-      /* bg-gray-50 */
-      border: 1px solid #D1D5DB;
-      /* border-gray-300 */
-      color: #111827;
-      /* text-gray-900 */
-      border-radius: 0.5rem;
-      /* rounded-lg */
-      padding-left: 2.5rem;
-      /* pl-10 */
-      padding: 7px 14px;
-      /* p-2.5 */
-      height: unset;
-      font-size: 0.875rem;
-      /* text-sm */
-    }
-
-    .select2-container--open .select2-dropdown--below {
-      border-color: #D1D5DB;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-      color: #111827;
-      /* text-gray-900 */
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-      height: 100%;
-      right: 1rem;
-      /* align with pl-10 */
-    }
-
-    .select2-container--default .select2-selection--single:focus {
-      border-color: #3B82F6;
-      /* focus:border-blue-500 */
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-      /* focus:ring-blue-500 */
-    }
-
-    /* Dark mode styles */
-    .dark .select2-container .select2-selection--single {
-      background-color: #374151;
-      /* dark:bg-gray-700 */
-      border-color: #4B5563;
-      /* dark:border-gray-600 */
-      color: #F9FAFB;
-      /* dark:text-white */
-    }
-
-    .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
-      color: #F9FAFB;
-      /* dark:text-white */
-    }
-
-    .dark .select2-container--default .select2-selection--single:focus {
-      border-color: #3B82F6;
-      /* dark:focus:border-blue-500 */
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-      /* dark:focus:ring-blue-500 */
-    }
-
-    /* Adjust the width to match Tailwind CSS block w-full */
-    .select2-container {
-      width: 100% !important;
-      /* block w-full */
+    .swal2-container {
+      z-index: 9999999999999;
     }
   </style>
-
   <main>
-    <section class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
-      <div>
-        <a href="index.html" class="font-normal text-[14px] text-[#6C7275]">Home</a>
-        <span>/</span>
-        <a href="carrito.html" class="font-semibold text-[14px] text-[#141718]">Carrito</a>
-      </div>
-      <div class="flex md:gap-10">
+    <form id="paymentForm" class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
+      @csrf
+
+      <x-breadcrumb>
+        <x-breadcrumb.item href="/carrito">Carrito</x-breadcrumb.item>
+        <x-breadcrumb.item>Pago</x-breadcrumb.item>
+      </x-breadcrumb>
+
+      <div class="flex md:gap-20">
         <div class="flex justify-between items-center md:basis-8/12 w-full md:w-auto">
-          <p
-            class="font-semibold text-[18px] text-[#EB5D2C] border-b-[1px] border-[#EB5D2C] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Carro de compra</span>
-          </p>
-
-          <p
-            class="font-medium text-[18px] text-[#151515] border-b-[1px] border-[#6C7275] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Detalles de pago</span>
-          </p>
-
-          <p
-            class="font-medium text-[18px] text-[#C8C8C8] border-b-[1px] border-[#6C7275] md:px-4 py-4 basis-1/3 h-full text-center">
-            <span class="flex items-center h-full">Orden completada</span>
-          </p>
-        </div>
-        <div class="md:basis-4/12"></div>
-      </div>
-
-      <div class="flex flex-col 2md:flex-row gap-16 md:gap-10">
-        <div class="basis-8/12 flex flex-col gap-10 order-2 2md:order-1">
-          <div class="flex flex-col gap-5">
-            <div>
-              <!-- form -199 -513 -->
-              <form id="formHome">
+          <x-ecommerce.gateway.container completed="{{ 2 }}">
+            <div class="flex flex-col gap-5">
+              <div>
                 <div class="flex flex-col gap-8">
 
-                  @csrf
-                  <div class="flex flex-col gap-5 pb-10 border-b-2 border-[#151515]">
+                  <input type="hidden" name="_token" value="KetUXGJHlBNXwBFdNlcg8R9ueYHpfGMUECXmlNyQ"
+                    autocomplete="off">
+                  <div class="flex flex-col gap-5 pb-10 border-b-2 border-gray-200 dark:border-gray-700">
                     <h2 class="font-semibold text-[20px] text-[#151515]">
                       Información del contacto
                     </h2>
-
                     <div class="flex flex-col gap-5">
-                      {{-- llenar los datos si la persona existe --}}
-                      <div class="flex flex-col md:flex-row gap-5">
-
-                        <div class="basis-1/2 flex flex-col gap-2">
-                          <label for="nombre" class="font-medium text-[12px] text-[#6C7275]">Nombre</label>
-                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                            <input id="nombre" type="text" placeholder="Nombre" name="nombre"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
-                              value="{{ $detalleUsuario[0]->nombre }}" />
-                          @else
-                            <input id="nombre" type="text" placeholder="Nombre" name="nombre"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                          @endif
-
-                        </div>
-
-
-                        <div class="basis-1/2 flex flex-col gap-2">
-                          <label for="apellidos" class="font-medium text-[12px] text-[#6C7275]">Apellido</label>
-                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                            <input id="apellidos" type="text" placeholder="Apellido" name="apellidos"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
-                              value="{{ $detalleUsuario[0]->apellidos }}" />
-                          @else
-                            <input id="apellido" type="text" placeholder="Apellido" name="apellidos"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                          @endif
-
-                        </div>
-                      </div>
-
-
-
                       <div class="flex flex-col md:flex-row gap-5">
                         <div class="basis-2/3 flex flex-col gap-2">
-                          <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail</label>
-
-                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                            <input id="email" type="email" placeholder="Correo electrónico" required name="email"
-                              value="{{ $detalleUsuario[0]->email }}"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                          @else
-                            <input id="email" type="email" placeholder="Correo electrónico" required name="email"
-                              value=""
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                          @endif
-
+                          <label for="email" class="font-medium text-[12px] text-[#6C7275]">E-mail <span
+                              class="text-red-500">*</span></label>
+                          <input id="email" type="email" placeholder="Correo electrónico" required=""
+                            name="email" value="{{ auth()->check() ? auth()->user()->email : '' }}"
+                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
+                            required>
                         </div>
                         <div class="basis-1/3 flex flex-col gap-2">
-                          <label for="celular" class="font-medium text-[12px] text-[#6C7275]">Celular</label>
+                          <label for="celular" class="font-medium text-[12px] text-[#6C7275]">Celular <span
+                              class="text-red-500">*</span></label>
+                          <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
+                            value="{{ auth()->check() ? auth()->user()->phone : '' }}"
+                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl"
+                            required>
+                        </div>
+                      </div>
+                      <div class="flex flex-col md:flex-row gap-5">
+                        <div class="basis-1/2 flex flex-col gap-2">
+                          <label for="nombre" class="font-medium text-[12px] text-[#6C7275]">Nombre <span
+                              class="text-red-500">*</span></label>
+                          <input id="nombre" type="text" placeholder="Nombre" name="nombre"
+                            value="{{ auth()->check() ? auth()->user()->name : '' }}"
+                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
+                            required>
+                        </div>
+                        <div class="basis-1/2 flex flex-col gap-2">
+                          <label for="apellidos" class="font-medium text-[12px] text-[#6C7275]">Apellido <span
+                              class="text-red-500">*</span></label>
+                          <input id="apellidos" type="text" placeholder="Apellido" name="apellidos"
+                            value="{{ auth()->check() ? auth()->user()->lastname : '' }}"
+                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
+                            required>
 
-                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                            <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl"
-                              value="{{ $detalleUsuario[0]->phone }}" />
-                          @else
-                            <input id="celular" type="text" placeholder="(+51) 000 000 000" name="phone"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
-                          @endif
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="flex flex-col gap-5 pb-10 border-b-2 border-[#151515]">
+                  <div class="flex flex-col gap-5 pb-10 w-full">
                     <h2 class="font-semibold text-[20px] text-[#151515]">
                       Dirección de envío
                     </h2>
                     <ul class="grid w-full gap-6 md:grid-cols-3">
                       <li>
-                        <input type="radio" name="envio" id="react-option" value="" class="hidden peer" required="">
+                        <input type="radio" name="envio" id="react-option" value="recoger" class="hidden peer"
+                          required checked>
                         <label for="react-option"
-                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-3 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-[#74A68D] hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div class="block">
                             <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                               viewBox="0 0 24 24">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z" />
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z">
+                              </path>
                             </svg>
 
                             <div class="w-full text-lg font-semibold">Recojo en tienda</div>
-                            <div class="w-full text-sm">Gratis</div>
+                            <div class="w-full text-sm">Envio gratis</div>
                           </div>
                         </label>
                       </li>
                       <li>
-                        <input type="radio" name="envio" id="flowbite-option" value="" class="hidden peer">
+                        <input type="radio" name="envio" id="flowbite-option" value="express" class="hidden peer">
                         <label for="flowbite-option"
-                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                          class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-3 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-[#74A68D] hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div class="block">
                             <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                               viewBox="0 0 24 24">
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M10 21v-9m3-4H7.5a2.5 2.5 0 1 1 0-5c1.5 0 2.875 1.25 3.875 2.5M14 21v-9m-9 0h14v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8ZM4 8h16a1 1 0 0 1 1 1v3H3V9a1 1 0 0 1 1-1Zm12.155-5c-3 0-5.5 5-5.5 5h5.5a2.5 2.5 0 0 0 0-5Z" />
+                                d="M10 21v-9m3-4H7.5a2.5 2.5 0 1 1 0-5c1.5 0 2.875 1.25 3.875 2.5M14 21v-9m-9 0h14v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8ZM4 8h16a1 1 0 0 1 1 1v3H3V9a1 1 0 0 1 1-1Zm12.155-5c-3 0-5.5 5-5.5 5h5.5a2.5 2.5 0 0 0 0-5Z">
+                              </path>
                             </svg>
 
                             <div class="w-full text-lg font-semibold">Envio express</div>
@@ -229,20 +121,45 @@
                         </label>
                       </li>
                     </ul>
-                    <div class="flex flex-col gap-5">
+                    <div id="direccionContainer" class="flex flex-col gap-5">
                       <div class="flex flex-col gap-5">
+                        @if (count($addresses) > 0)
+                          <div class="flex flex-col gap-5 md:flex-row">
+                            <div class="basis-2/3 flex flex-col gap-2 z-[45]">
+                              <label class="font-medium text-[12px] text-[#6C7275]">Lista de direcciones<span
+                                  class="text-red-500">*</span></label>
+                              <div class="w-full">
+                                <div class="dropdown w-full">
+                                  <select id="addresses"
+                                    class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
+                                    data-address>
+                                    @foreach ($addresses as $address)
+                                      <option value="{{ $address->id }}" data="{{$address}}">
+                                        <b class="block font-bold">Lima lima lima</b>
+                                        {{ $address->street }} #{{ $address->number }}
+                                      </option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endif
                         <div class="flex flex-col gap-5 md:flex-row">
                           <div class="basis-1/3 flex flex-col gap-2 z-[45]">
-                            <label class="font-medium text-[12px] text-[#6C7275]">Departamento</label>
+                            <label class="font-medium text-[12px] text-[#6C7275]">Departamento <span
+                                class="text-red-500">*</span></label>
 
                             <div>
                               <!-- combo -->
                               <div class="dropdown w-full">
-                                <select name="departamento_id" name="departamento" id="departamento_id"
-                                  class=" mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                  <option value="">Seleccione un departamento </option>
-                                  @foreach ($departments as $item)
-                                    <option value="{{ $item->id }}">{{ $item->description }}</option>
+                                <select name="departamento_id" id="departamento_id"
+                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
+                                  data-address>
+                                  <option value="" data-select2-id="select2-data-2-4o85">Seleccione un
+                                    departamento</option>
+                                  @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->description }}</option>
                                   @endforeach
                                 </select>
                               </div>
@@ -251,36 +168,38 @@
 
                           <div class="basis-1/3 flex flex-col gap-2 z-[40]">
                             <label class="font-medium text-[12px] text-[#6C7275]">
-                              Provincia
+                              Provincia <span class="text-red-500">*</span>
                             </label>
 
                             <div>
                               <!-- combo -->
                               <div class="dropdown-provincia w-full">
                                 <select name="provincia_id" id="provincia_id"
-                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                  <option value="">Seleccione una provincia </option>
+                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
+                                  data-address>
+                                  <option value="" data-select2-id="select2-data-4-gokf">Seleccione una
+                                    provincia
+                                  </option>
 
                                 </select>
-
                               </div>
                             </div>
                           </div>
 
                           <div class="basis-1/3 flex flex-col gap-2 z-[30]">
                             <label class="font-medium text-[12px] text-[#6C7275]">
-                              Distrito
+                              Distrito <span class="text-red-500">*</span>
                             </label>
 
                             <div>
                               <!-- combo -->
                               <div class="dropdown-distrito w-full">
                                 <select name="distrito_id" id="distrito_id"
-                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                  <option value="">Seleccione un distrito </option>
-
+                                  class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
+                                  data-address>
+                                  <option value="" data-select2-id="select2-data-6-ihrp">Seleccione un distrito
+                                  </option>
                                 </select>
-
                               </div>
                             </div>
                           </div>
@@ -288,192 +207,265 @@
 
                         <div class="flex flex-col gap-2">
                           <label for="nombre_calle" class="font-medium text-[12px] text-[#6C7275]">Avenida / Calle /
-                            Jirón</label>
+                            Jirón <span class="text-red-500">*</span></label>
 
-                          @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                            <input id="nombre_calle" type="text" name="dir_av_calle"
-                              placeholder="Ingresa el nombre de la calle"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
-                              value="{{ $detalleUsuario[0]->dir_av_calle }}" />
-                          @else
-                            <input id="nombre_calle" type="text" name="dir_av_calle"
-                              placeholder="Ingresa el nombre de la calle"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                          @endif
+                          <input id="nombre_calle" type="text" name="dir_av_calle"
+                            placeholder="Ingresa el nombre de la calle"
+                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
+                            data-address>
                         </div>
                       </div>
                       <div>
                         <div class="flex flex-col md:flex-row gap-5">
                           <div class="basis-1/2 flex flex-col gap-2">
-                            <label for="numero_calle" class="font-medium text-[12px] text-[#6C7275]">Número</label>
-                            @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                              <input id="numero_calle" name="dir_numero" type="text"
-                                placeholder="Ingresa el número de la callle"
-                                class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
-                                value="{{ $detalleUsuario[0]->dir_numero }}" />
-                            @else
-                              <input id="numero_calle" name="dir_numero" type="text"
-                                placeholder="Ingresa el número de la callle"
-                                class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                            @endif
-
+                            <label for="numero_calle" class="font-medium text-[12px] text-[#6C7275]">Número <span
+                                class="text-red-500">*</span></label>
+                            <input id="numero_calle" name="dir_numero" type="text"
+                              placeholder="Ingresa el número de la callle"
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
+                              data-address>
                           </div>
 
                           <div class="basis-1/2 flex flex-col gap-2">
-                            <label for="direccion" class="font-medium text-[12px] text-[#6C7275]">Dpto./ Interior/ Piso/
+                            <label for="direccion" class="font-medium text-[12px] text-[#6C7275]">Dpto./ Interior/
+                              Piso/
                               Lote/ Bloque
                               (opcional)</label>
-                            @if (isset($detalleUsuario) && count($detalleUsuario) > 0)
-                              <input id="direccion" type="text" name="dir_bloq_lote"
-                                placeholder="Ejem. Casa 3, Dpto 101"
-                                class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]"
-                                value="{{ $detalleUsuario[0]->dir_bloq_lote }}" />
-                            @else
-                              <input id="direccion" type="text" name="dir_bloq_lote"
-                                placeholder="Ejem. Casa 3, Dpto 101"
-                                class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]" />
-                            @endif
+                            <input id="direccion" type="text" name="dir_bloq_lote"
+                              placeholder="Ejem. Casa 3, Dpto 101"
+                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl text-[#6C7275]">
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {{-- <div class="flex flex-col gap-5 pb-10">
-                    <h2 class="font-semibold text-[20px] text-[#151515]">
-                      Dirección de envío
-                    </h2>
-                    <div class="w-full flex flex-col gap-5 border-dashed pb-10 border-b-2 border-[#E8ECEF]">
-                      <div class="flex items-center ps-4 border border-[#F3F5F7] rounded-xl">
-                        <input type="radio" id="bordered-radio-tarjeta" name="bordered-radio-tarjetas"
-                          value="tar_credito" class="background-radius w-5 h-5 cursor-pointer text-[#6C7275]" />
-                        <label for="bordered-radio-tarjeta"
-                          class="w-full py-4 ms-2 text-[16px] font-normal text-[#6C7275] flex justify-between items-center px-4">
-                          <span>Tarjeta de crédito</span>
-                        </label>
-                      </div>
-                      <div class="flex items-center ps-4 border border-[#F3F5F7] rounded-xl">
-                        <input type="radio" id="bordered-radio-debito" name="bordered-radio-tarjetas"
-                          value="tar_debito" class="background-radius w-5 h-5 cursor-pointer text-[#6C7275]" />
-                        <label for="bordered-radio-debito"
-                          class="w-full py-4 ms-2 text-[16px] font-normal text-[#6C7275] flex justify-between items-center px-4">
-                          <span>Tarjeta de Débito</span>
-                        </label>
-                      </div>
-
-                      <div class="flex items-center ps-4 border border-[#F3F5F7] rounded-xl">
-                        <input type="radio" id="bordered-radio-cuenta" name="bordered-radio-tarjetas"
-                          value="depo_cuenta" class="background-radius w-5 h-5 cursor-pointer text-[#6C7275]" />
-                        <label for="bordered-radio-cuenta"
-                          class="w-full py-4 ms-2 text-[16px] font-normal text-[#6C7275] flex justify-between items-center px-4">
-                          <span>Depósito a cuenta</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <div class="pt-5">
-                      <div class="flex flex-col gap-5">
-                        <div class="flex flex-col gap-2">
-                          <label for="nombre_tarjeta" class="font-medium text-[12px] text-[#6C7275]">Nombre de la
-                            tarjeta</label>
-                          <input id="nombre_tarjeta" type="text" name="nombre_tarjeta" placeholder="Nombre"
-                            class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
-                        </div>
-
-                        <div class="flex flex-col gap-2">
-                          <div class=" md:w-1/2">
-                            <label for="numero_tarjeta" class="font-medium text-[12px] text-[#6C7275]">
-                              Número de
-                              tarjeta</label>
-                            <input id="numero_tarjeta" name="numero_tarjeta" type="text"
-                              placeholder="1234 12345 1234"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
 
 
-                          </div>
-                          <div id="iconoTarjeta">
+                </div>
+              </div>
+            </div>
+          </x-ecommerce.gateway.container>
+        </div>
+        <div
+          class="basis-4/12 flex flex-col justify-start gap-10 py-4 order-1 2md:order-2 2md:sticky top-4 h-max border rounded-md">
+          <h2 class="font-semibold text-[20px] text-[#151515] px-4">
+            Resumen del pedido
+          </h2>
 
-                          </div>
-                        </div>
+          <div class="p-4">
+            <div class="flex flex-col gap-10" id="itemsCarritoPago">
+            </div>
 
-                        <div class="flex flex-col md:flex-row gap-5">
-                          <div class="basis-1/2 flex flex-col gap-2">
-                            <label for="fecha_caducidad" class="font-medium text-[12px] text-[#6C7275]">Fecha de
-                              caducidad</label>
-                            <input id="fecha_caducidad" name="fecha_caducidad" type="text" placeholder="MM/AA"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
-                          </div>
+            <div class="font-poppins flex flex-col gap-5 mt-10">
+              <div class="text-[#141718] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
+                <p class="font-normal text-[16px]">Envío</p>
+                <p id="precioEnvio" class="font-semibold text-[16px]">Gratis</p>
+              </div>
 
-                          <div class="basis-1/2 flex flex-col gap-2">
-                            <label for="CVC" class="font-medium text-[12px] text-[#6C7275]">CVC</label>
-                            <input id="CVC" name="CVC" type="text" placeholder="Código CVC"
-                              class="w-full py-3 px-4 focus:outline-none placeholder-gray-400 font-normal text-[16px] border-[1.5px] border-gray-200 rounded-xl" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              <div class="text-[#141718] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
+                <p class="font-normal text-[16px]">Subtotal</p>
+                <p id="itemSubtotal" class="font-semibold text-[16px]">S/. 0.00 </p>
+              </div>
 
+              <div
+                class="text-[#141718] font-medium text-[20px] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
+                <p>Total</p>
+                <p id="itemTotal">S/. 0.00 </p>
+              </div>
 
-                    <div class="pt-10">
-                      <a href="/agradecimiento" id="pagarProductos"
-                        class="text-white bg-[#74A68D] w-full py-3 rounded-3xl cursor-pointer border-2 font-semibold text-[16px] inline-block text-center border-none">Pagar</a>
-                      <!-- <input
-                                                                                                                                                                                                              type="submit"
-                                                                                                                                                                                                              value="Checkout"
-                                                                                                                                                                                                              class="text-white bg-[#74A68D] w-full py-3 rounded-3xl cursor-pointer border-2 font-semibold text-[16px] inline-block text-center border-none"
-                                                                                                                                                                                                            /> -->
-                    </div>
-
-                  </div> --}}
-              </form>
+              <button id="btnPagar"
+                class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center">Pagar</button>
             </div>
           </div>
         </div>
       </div>
-
-      <div
-        class="basis-4/12 flex flex-col justify-start gap-10 py-4 order-1 2md:order-2 md:sticky top-4 h-max border rounded-md">
-        <h2 class="font-semibold text-[20px] text-[#151515] px-4">
-          Resumen del pedido
-        </h2>
-
-        <div class="p-4">
-          <div class="flex flex-col gap-10" id="itemsCarritoPago">
-
-
-
-
-
-
-
-          </div>
-
-          <div class="font-poppins flex flex-col gap-5 mt-10">
-            <div class="text-[#141718] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
-              <p class="font-normal text-[16px]">Envío</p>
-              <p class="font-semibold text-[16px]">Gratis</p>
-            </div>
-
-            <div class="text-[#141718] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
-              <p class="font-normal text-[16px]">Subtotal</p>
-              <p id='itemSubtotal' class="font-semibold text-[16px]">s/ 00.00</p>
-            </div>
-
-            <div
-              class="text-[#141718] font-medium text-[20px] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
-              <p>Total</p>
-              <p id="itemTotal">s/ 234.00</p>
-            </div>
-
-            <a id="btnPagar" href="/agradecimiento"
-                class="text-white bg-[#74A68D] w-full py-4 rounded-3xl cursor-pointer font-semibold text-[16px] inline-block text-center">Pagar</a>
-          </div>
-        </div>
-      </div>
-      </div>
-    </section>
+    </form>
   </main>
 
+  <script src="https://checkout.culqi.com/js/v4"></script>
+  <script>
+    $('#direccionContainer').fadeOut(0)
+    Culqi.publicKey = "{{ $culqi_public_key }}";
+
+    const culqi = async () => {
+      try {
+        const carrito = Local.get('carrito') ?? []
+        if (Culqi.token) {
+          const body = {
+            _token: $('[name="_token"]').val(),
+            cart: carrito.map((x) => ({
+              id: x.id,
+              quantity: x.cantidad
+            })),
+            contact: {
+              name: $('#nombre').val(),
+              lastname: $('#apellidos').val(),
+              email: $('#email').val(),
+              phone: $('#celular').val()
+            },
+            address: null,
+            culqi: Culqi.token
+          }
+          if ($('[name="envio"]:checked').val() == 'express') {
+            body.address = {
+              id: $('#distrito_id option:selected').attr('price-id'),
+              city: $('#distrito_id option:selected').text(),
+              street: $('#nombre_calle').val(),
+              number: $('#numero_calle').val(),
+              description: $('#direccion').val()
+            }
+          }
+
+          const res = await fetch("{{ route('payment.culqi') }}", {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          })
+          const data = await res.json()
+          if (!res.ok) throw new Error(data?.message ?? 'Ocurrio un error inesperado al generar el cargo')
+
+          Swal.fire({
+            title: `Bien!!`,
+            text: `Se ha generado el cargo por S/. ${data.data.amount.toFixed(2)}`,
+            icon: "success",
+          });
+
+          Local.delete('carrito')
+
+          location.href = `/agradecimiento?code=${data.data.reference_code}`
+
+        } else if (Culqi.order) { // ¡Objeto Order creado exitosamente!
+          const order = Culqi.order;
+          console.log('Se ha creado el objeto Order: ', order);
+
+        } else {
+          // Mostramos JSON de objeto error en consola
+          console.log('Error : ', Culqi.error);
+          throw new Error(Culqi.error.message);
+        }
+      } catch (error) {
+        Swal.fire({
+          title: `Error!!`,
+          text: error.message,
+          icon: "error",
+        });
+      }
+    }
+
+    $('#paymentForm').on('submit', function(e) {
+      e.preventDefault();
+
+      const precioProductos = getTotalPrice()
+      const precioEnvio = getCostoEnvio()
+
+      Culqi.settings({
+        title: 'Decotab',
+        currency: 'PEN',
+        amount: Math.round((precioProductos + precioEnvio) * 100),
+      });
+      Culqi.options({
+        style: {
+          logo: 'http://decotab.mundoweb.localhost/images/svg/logo_decotab_header.svg',
+          bannerColor: '#272727'
+        }
+      })
+      Culqi.open();
+    })
+
+    $('[name="envio"]').on('click', () => {
+      const value = $('[name="envio"]:checked').val()
+      if (value == 'express') {
+        $('#direccionContainer').fadeIn(125)
+        if ($('#distrito_id').val()) {
+          $('#distrito_id').trigger('change')
+        } else {
+          $('#precioEnvio').text(`Evaluando`)
+        }
+        $('[data-address]').prop('required', true)
+      } else {
+        $('#direccionContainer').fadeOut(125)
+        $('#precioEnvio').text('Gratis')
+        $('[data-address]').prop('required', false)
+      }
+      calcularTotal()
+    })
+
+    const provinces = @json($provinces);
+    const districts = @json($districts);
+
+    $('#addresses').select2({
+      templateResult: (address) => {
+        if (!address.id) {
+          return address.text;
+        }
+
+        var $address = $(
+          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
+        );
+
+        return $address;
+      },
+      templateSelection: (address) => {
+        if (!address.id) {
+          return address.text;
+        }
+
+        var $address = $(
+          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
+        );
+
+        return $address;
+      }
+    })
+    $('#departamento_id').select2()
+    $('#provincia_id').select2()
+    $('#distrito_id').select2()
+
+    $('#departamento_id').on('change', function() {
+      $('#provincia_id').html('<option value>Seleccione una provincia</option>')
+      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
+      $('#precioEnvio').text(`Evaluando`)
+      provinces.filter(x => x.department_id == this.value).forEach((province) => {
+        const option = $('<option>', {
+          value: province.id,
+          text: province.description
+        })
+        $('#provincia_id').append(option)
+      })
+      $('#provincia_id').select2()
+      calcularTotal()
+    })
+
+    $('#provincia_id').on('change', function() {
+      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
+      $('#precioEnvio').text(`Evaluando`)
+      districts.filter(x => x.province_id == this.value).forEach((district) => {
+        const option = $('<option>', {
+          value: district.id,
+          text: district.description,
+          'data-price': district.price,
+          'price-id': district.price_id
+        })
+        $('#distrito_id').append(option)
+      })
+      $('#distrito_id').select2()
+      calcularTotal()
+    })
+
+    $('#distrito_id').on('change', function() {
+      const priceStr = $('#distrito_id option:selected').attr('data-price')
+      const price = Number(priceStr) || 0
+      if (price == 0) {
+        $('#precioEnvio').text('Gratis')
+      } else {
+        $('#precioEnvio').text(`S/. ${price.toFixed(2)}`)
+      }
+      calcularTotal()
+    })
+  </script>
 
 
 @section('scripts_importados')
@@ -577,52 +569,6 @@
 
     }
 
-    function calcularTotal() {
-      let articulos = Local.get('carrito')
-      let total = articulos.map(item => {
-        let monto
-        if (Number(item.descuento) !== 0) {
-          monto = item.cantidad * Number(item.descuento)
-        } else {
-          monto = item.cantidad * Number(item.precio)
-
-        }
-        return monto
-
-      })
-      const suma = total.reduce((total, elemento) => total + elemento, 0);
-
-      $('#itemSubtotal').text(`S/. ${suma} `)
-      const opciones = document.getElementsByName('bordered-radio');
-
-      // Iterar sobre los radio buttons para encontrar el que está seleccionado
-      let valorSeleccionado = 0;
-      opciones.forEach(opcion => {
-        if (opcion.checked) {
-          valorSeleccionado = opcion.value;
-        }
-      });
-
-      // El valor de valorSeleccionado es el valor del radio button seleccionado
-
-
-      total = Number(suma) + Number(valorSeleccionado)
-
-      let carrito = Local.get('carrito')
-
-      let tipoEnvio = 0
-      if (carrito.length !== 0) {
-        tipoEnvio = carrito[0]["tipo_envio"]
-      }
-      // carrito = [...carrito, carrito.total]
-      Local.set("carrito", carrito)
-      total += tipoEnvio
-      console.log(tipoEnvio)
-
-      $('#itemTotal').text(`S/. ${total} `)
-
-    }
-
     function addOnCarBtn(id, operacion) {
 
       const prodRepetido = articulosCarrito.map(item => {
@@ -665,67 +611,6 @@
 
 
     }
-
-
-
-    // function PintarCarrito() {
-
-    //   let itemsCarrito = $('#itemsCarrito')
-    //   let itemsCarritoPago = $('#itemsCarritoPago')
-
-    //   articulosCarrito.forEach(element => {
-    //     let plantilla = `<div class="flex justify-between bg-white font-poppins border-b-[1px] border-[#E8ECEF] pb-5">
-  //     <div class="flex justify-center items-center gap-5">
-  //       <div class="bg-[#F3F5F7] rounded-md p-4">
-  //         <img src="${appUrl}/${element.imagen}" alt="producto" class="w-24" />
-  //       </div>
-  //       <div class="flex flex-col gap-3 py-2">
-  //         <h3 class="font-semibold text-[14px] text-[#151515]">
-  //           ${element.producto}
-  //         </h3>
-  //         <p class="font-normal text-[12px] text-[#6C7275]">
-
-  //         </p>
-  //         <div class="flex w-20 justify-center text-[#151515] border-[1px] border-[#6C7275] rounded-md">
-  //           <button type="button" onClick="(deleteOnCarBtn(${element.id}, '-'))" class="  w-8 h-8 flex justify-center items-center ">
-  //             <span  class="text-[20px]">-</span>
-  //           </button>
-  //           <div class="w-8 h-8 flex justify-center items-center">
-  //             <span  class="font-semibold text-[12px]">${element.cantidad }</span>
-  //           </div>
-  //           <button type="button" onClick="(addOnCarBtn(${element.id}, '+'))" class="  w-8 h-8 flex justify-center items-center ">
-  //             <span class="text-[20px]">+</span>
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div class="flex flex-col justify-start py-2 gap-5 items-center pr-2">
-  //       <p class="font-semibold text-[14px] text-[#151515]">
-  //         S/ ${Number(element.descuento) !== 0 ? element.descuento : element.precio}
-  //       </p>
-  //       <div class="flex items-center">
-  //         <button type="button" onClick="(deleteItem(${element.id}))" class="  w-8 h-8 flex justify-center items-center ">
-  //         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  //           <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-  //         </svg>
-  //         </button>
-
-  //       </div>
-  //     </div>
-  //   </div>`
-
-    //     itemsCarrito.append(plantilla)
-    //     itemsCarritoPago.append(plantilla)
-
-    //   });
-
-    //   calcularTotal()
-    // }
-
-
-
-
-
 
     $('#btnAgregarCarrito').on('click', function() {
       let url = window.location.href;
@@ -809,84 +694,7 @@
     //   $('#check').prop('checked', false);
 
     // })
-    $('input[type="radio"][name="bordered-radio"]').on('click', function() {
-      // Obtener el valor del radio button seleccionado
-      const valorSeleccionado = $(this).val();
-
-
-      articulosCarrito = Local.get('carrito')
-      let carritoCheck = articulosCarrito.map(item => {
-        let obj = {
-          id: item.id,
-          producto: item.producto,
-          descuento: item.descuento,
-          precio: item.precio,
-          imagen: item.imagen,
-          cantidad: item.cantidad,
-          color: item.color,
-          tipo_envio: Number(valorSeleccionado)
-        };
-        return obj
-      })
-
-      console.log(carritoCheck)
-      Local.set("carrito", carritoCheck)
-      checkedRadio = true
-
-      // Hacer algo con el valor seleccionado, por ejemplo, imprimirlo en la consola
-      limpiarHTML()
-      PintarCarrito()
-    });
-    $("#btnSiguiente").on('click', function(e) {
-
-      console.log(checkedRadio)
-      if (!checkedRadio) {
-        e.preventDefault()
-        Swal.fire({
-
-          icon: "warning",
-          title: "Opss ",
-          text: 'Recuerde elegir un metodo de envio'
-
-
-        });
-
-      }
-    })
-
-    const provinces = @json($provinces);
-    const districts = @json($districts);
-
-    $('#departamento_id').select2()
-    $('#provincia_id').select2()
-    $('#distrito_id').select2()
-
-    $('#departamento_id').on('change', function() {
-      $('#provincia_id').html('<option value>Seleccione una provincia</option>')
-      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
-      provinces.filter(x => x.department_id == this.value).forEach(({
-        id,
-        description
-      }) => {
-        $('#provincia_id').append(`<option value="${id}">${description}</option>`)
-      })
-      $('#provincia_id').select2()
-    })
-
-    $('#provincia_id').on('change', function() {
-      $('#distrito_id').html('<option value>Seleccione un distrito</option>')
-      districts.filter(x => x.province_id == this.value).forEach(({
-        id,
-        description
-      }) => {
-        $('#distrito_id').append(`<option value="${id}">${description}</option>`)
-      })
-      $('#distrito_id').select2()
-    })
   </script>
-
-
-  <script src="{{ asset('js/storage.extend.js') }}"></script>
 @stop
 
 @stop

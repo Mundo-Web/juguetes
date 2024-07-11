@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\EmailConfig;
 use App\Http\Requests\StoreIndexRequest;
 use App\Http\Requests\UpdateIndexRequest;
+use App\Models\Address;
 use App\Models\Attributes;
 use App\Models\AttributesValues;
 use App\Models\Faqs;
@@ -20,10 +21,13 @@ use App\Models\Department;
 use App\Models\Galerie;
 use App\Models\PolyticsCondition;
 use App\Models\Price;
+use App\Models\Sale;
 use App\Models\Specifications;
+use App\Models\Status;
 use App\Models\TermsAndCondition;
 use App\Models\User;
 use App\Models\UserDetails;
+use Culqi\Culqi;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
@@ -36,6 +40,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use SoDe\Extend\Response;
 
 use function PHPUnit\Framework\isNull;
 
@@ -249,11 +254,13 @@ class IndexController extends Controller
     $districts = Price::select([
       'districts.id AS id',
       'districts.description AS description',
-      'districts.province_id AS province_id'
+      'districts.province_id AS province_id',
+      'prices.id AS price_id',
+      'prices.price AS price'
     ])
       ->join('districts', 'districts.id', 'prices.distrito_id')
       ->where('districts.active', 1)
-      ->groupBy('id', 'description', 'province_id')
+      ->groupBy('id', 'description', 'province_id', 'price', 'price_id')
       ->get();
 
     // $distritos  = DB::select('select * from districts where active = ? order by 3', [1]);
@@ -266,12 +273,43 @@ class IndexController extends Controller
 
 
     $url_env = env('APP_URL');
-    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados'));
+    $culqi_public_key = env('CULQI_PUBLIC_KEY');
+
+    $addresses = Address::where('email', $user->email)->get();
+    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados', 'culqi_public_key', 'addresses'));
   }
 
   public function procesarPago(Request $request)
   {
+    $response = new Response();
+    $culqi = new Culqi(['api_key' => env('CULQI_PRIVATE_KEY')]);
+    try {
 
+      $charge = $culqi->Charges->create([
+        "amount" => 1000,
+        "capture" => true,
+        "currency_code" => "PEN",
+        "description" => "Compra en Decotab",
+        "email" => "test@culqi.com",
+        "installments" => 0,
+        "antifraud_details" => array(
+          "address" => "Av. Lima 123",
+          "address_city" => "LIMA",
+          "country_code" => "PE",
+          "first_name" => "Test_Nombre",
+          "last_name" => "Test_apellido",
+          "phone_number" => "9889678986",
+        ),
+        "source_id" => "{token_id o card_id}"
+      ]);
+      $response->status = 200;
+      $response->message = 'El cargo se ha generado correctamente';
+    } catch (\Throwable $th) {
+      $response->status = 400;
+      $response->message = $th->getMessage();
+    } finally {
+      return response($response->toArray(), $response->status);
+    }
     $codigoAleatorio = '';
     $mensajes2compra = [
       'email.required' => 'El campo Email es obligatorio.',
@@ -364,13 +402,14 @@ class IndexController extends Controller
     return $codigoAleatorio;
   }
 
-  public function agradecimiento()
+  public function agradecimiento(Request $request)
   {
-    //
+    if (!$request->code) return redirect('/');
+
     $categorias = Category::all();
-    return view('public.checkout_agradecimiento', compact(
-      'categorias'
-    ));
+    return view('public.checkout_agradecimiento')
+      ->with('categorias', $categorias)
+      ->with('code', $request->code);
   }
 
   public function cambiofoto(Request $request)
@@ -406,6 +445,7 @@ class IndexController extends Controller
     $name = $request->name;
     $lastname = $request->lastname;
     $email = $request->email;
+    $phone = $request->phone;
     $user = User::findOrFail($request->id);
 
 
@@ -421,12 +461,14 @@ class IndexController extends Controller
     }
 
 
-    if ($user->name == $name &&  $user->lastname == $lastname) {
+    if ($user->name == $name &&  $user->lastname == $lastname && $user->email == $email && $user->phone == $phone) {
       $imprimir = "Sin datos que actualizar";
       $alert = "question";
     } else {
       $user->name = $name;
       $user->lastname = $lastname;
+      $user->email = $email;
+      $user->phone = $phone;
       $alert = "success";
       $imprimir = "Datos actualizados";
     }
@@ -439,23 +481,67 @@ class IndexController extends Controller
   public function micuenta()
   {
     $user = Auth::user();
-    return view('public.dashboard', compact('user'));
+    $categorias = Category::all();
+    return view('public.dashboard', compact('user', 'categorias'));
   }
 
 
   public function pedidos()
   {
     $user = Auth::user();
-    return view('public.dashboard_order',  compact('user'));
+    $categorias = Category::all();
+    $statuses = [];
+    return view('public.dashboard_order',  compact('user', 'categorias', 'statuses'));
   }
 
 
   public function direccion()
   {
     $user = Auth::user();
-    $direcciones = UserDetails::where('email', $user->email)->get();
+    $addresses = Address::with([
+      'price.district',
+      'price.district.province',
+      'price.district.province.department'
+    ])
+      ->where('email', $user->email)
+      ->get();
 
-    return view('public.dashboard_direccion', compact('user', 'direcciones'));
+    $departments = Price::select([
+      'departments.id AS id',
+      'departments.description AS description',
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->join('provinces', 'provinces.id', 'districts.province_id')
+      ->join('departments', 'departments.id', 'provinces.department_id')
+      ->where('departments.active', 1)
+      ->groupBy('id', 'description')
+      ->get();
+
+    $provinces = Price::select([
+      'provinces.id AS id',
+      'provinces.description AS description',
+      'provinces.department_id AS department_id'
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->join('provinces', 'provinces.id', 'districts.province_id')
+      ->where('provinces.active', 1)
+      ->groupBy('id', 'description', 'department_id')
+      ->get();
+
+    $districts = Price::select([
+      'districts.id AS id',
+      'districts.description AS description',
+      'districts.province_id AS province_id',
+      'prices.id AS price_id',
+      'prices.price AS price'
+    ])
+      ->join('districts', 'districts.id', 'prices.distrito_id')
+      ->where('districts.active', 1)
+      ->groupBy('id', 'description', 'province_id', 'price', 'price_id')
+      ->get();
+    $categorias = Category::all();
+
+    return view('public.dashboard_direccion', compact('user', 'addresses', 'categorias', 'departments', 'provinces', 'districts'));
   }
 
   public function error()

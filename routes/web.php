@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AttributesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
@@ -28,11 +29,14 @@ use App\Http\Controllers\LogosClientController;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LibroReclamacionesController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PolyticsConditionController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StrengthController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ValoresAtributosController;
@@ -88,7 +92,7 @@ Route::get('/obtenerDistritos/{provinceId}', [IndexController::class, 'obtenerDi
 Route::get('/politicas-de-devolucion', [IndexController::class, 'politicasDevolucion'])->name('politicas_dev');
 Route::get('/terminos-y-condiciones', [IndexController::class, 'TerminosyCondiciones'])->name('terms_condition');
 
-
+// Route::post('/payment/culqi', [PaymentController::class, 'culqi'])->name('payment.culqi');
 
 
 Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () {
@@ -104,6 +108,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/terminos-y-condiciones', TermsAndConditionController::class);
 
 
+        Route::resource('/pedidos', SaleController::class);
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
@@ -119,6 +124,10 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::resource('/testimonios', TestimonyController::class);
         Route::post('/testimonios/deleteTestimony', [TestimonyController::class, 'deleteTestimony'])->name('testimonios.deleteTestimony');
         Route::post('/testimonios/updateVisible', [TestimonyController::class, 'updateVisible'])->name('testimonios.updateVisible');
+
+        // Estados
+        Route::resource('/estados', StatusController::class);
+        Route::delete('/estados/{estado}', [StatusController::class, 'delete'])->name('estados.delete');
 
         //Categorías
         Route::resource('/categorias', CategoryController::class);
@@ -215,7 +224,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 });
 
 
-Route::middleware(['auth:sanctum', 'verified', 'can:Customer'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/micuenta', [IndexController::class, 'micuenta'])->name('micuenta');
     Route::get('/micuenta/pedidos', [IndexController::class, 'pedidos'])->name('pedidos');

@@ -49,7 +49,15 @@
     <!-- Links -->
     <div class="space-y-8">
       <!-- Pages group -->
-      <x-menu.group title="Mensajes">
+      <x-menu.group title="Pedidos">
+        <x-menu.item id="pedidos" href="{{ route('pedidos.index') }}" icon="fa fa-solid fa-cart-shopping">
+          Pedidos
+          @if ($salesCount !== 0)
+            <x-slot name="tag">
+              {{ $salesCount }}
+            </x-slot>
+          @endif
+        </x-menu.item>
         <x-menu.item id="mensajes" href="{{ route('mensajes.index') }}" icon="fas fa-comments">
           Mensajes
           @if ($mensajes !== 0)
@@ -104,6 +112,9 @@
         </x-menu.item>
         <x-menu.item id="prices" href="{{ route('prices.index') }}" icon="fas fa-truck">
           Costos de Envio
+        </x-menu.item>
+        <x-menu.item id="estados" href="{{ route('estados.index') }}" icon="fas fa-toggle-on">
+          Estados de pedidos
         </x-menu.item>
         <x-menu.item id="faqs" href="{{ route('faqs.index') }}"
           icon="fas fa-question-circle">FAQs</x-menu.item>
