@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Price;
 use App\Models\Products;
 use App\Models\Sale;
@@ -24,7 +25,7 @@ class PaymentController extends Controller
     $sale = new Sale();
     try {
 
-      $productsJpa = Products::select(['id', 'imagen', 'producto', 'precio', 'descuento'])
+      $productsJpa = Products::select(['id', 'imagen', 'producto', 'color', 'precio', 'descuento'])
         ->whereIn('id', array_map(fn ($x) => $x['id'], $body['cart']))
         ->get();
 
@@ -44,7 +45,7 @@ class PaymentController extends Controller
       $sale->phone = $body['contact']['phone'];
       $sale->address_price = 0;
       $sale->total = $totalCost;
-
+      $sale->tipo_comprobante = $body['tipo_comprobante'];
 
       if ($request->address) {
         $price = Price::with([
@@ -65,6 +66,19 @@ class PaymentController extends Controller
           $sale->address_number = $body['address']['number'];
           $sale->address_description = $body['address']['description'];
           $sale->address_price = $price->price;
+          try {
+            if ($request->saveAddress) {
+              Address::create([
+                'email' =>  Auth::check() ? Auth::user()->email : $body['contact']['email'],
+                'price_id' => $price->id,
+                'street' =>  $body['address']['street'],
+                'number' => $body['address']['number'],
+                'description' => $body['address']['description'],
+              ]);
+            }
+          } catch (\Throwable $th) {
+            // dump('No se pudo guardar la direccion', $th);
+          }
         }
       }
 
@@ -83,6 +97,7 @@ class PaymentController extends Controller
           'sale_id' => $sale->id,
           'product_image' => $productJpa->imagen,
           'product_name' => $productJpa->producto,
+          'product_color' => $productJpa->color,
           'quantity' => $quantity,
           'price' => $price
         ]);

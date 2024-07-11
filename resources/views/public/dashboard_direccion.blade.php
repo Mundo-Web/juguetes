@@ -233,11 +233,18 @@
                       <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                         <div class="inline-flex rounded-md shadow-sm" role="group">
                           <button id="btn-edit" data-address="{{ $address }}" type="button"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                            title="Editar direccion" tippy>
                             <i class="fa fa-pen"></i>
                           </button>
+                          <button @if (!$address->isDefault) id="btn-default" data-id="{{$address->id}}" @endif type="button"
+                            class="{{ $address->isDefault ? 'text-yellow-400 cursor-default' : 'text-gray-900 hover:text-yellow-400' }} px-3 py-2 text-sm font-medium  bg-white border-t border-b border-gray-200 hover:bg-gray-100  focus:z-10 focus:ring-2 focus:ring-yellow-500 focus:text-yellow-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-yellow-500 dark:focus:text-white"
+                            @if (!$address->isDefault) title="Marcar direccion como predeterminado" @endif tippy>
+                            <i class="fa fa-star"></i>
+                          </button>
                           <button id="btn-delete" data-id="{{ $address->id }}" type="button"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-2 focus:ring-red-500 focus:text-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500 focus:z-10 focus:ring-2 focus:ring-red-500 focus:text-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white"
+                            title="Eliminar direccion" tippy>
                             <i class="fa fa-trash"></i>
                           </button>
                         </div>
@@ -355,6 +362,38 @@
         Swal.fire({
           title: `Exito!!`,
           text: `Se ha eliminado la direccion correctamente`,
+          icon: "success",
+        });
+
+        location.reload()
+      } catch (error) {
+        Swal.fire({
+          title: `Ups!!`,
+          text: error.message,
+          icon: "error",
+        });
+      }
+    })
+
+    $(document).on('click', '#btn-default', async function() {
+      const id = $(this).attr('data-id')
+      try {
+        const res = await fetch("{{route('address.markasfavorite')}}", {
+          method: 'patch',
+          headers: {
+            'Content-type': 'application/json',
+            'XSRF-TOKEN': decodeURIComponent(Cookies.get('XSRF-TOKEN'))
+          },
+          body: JSON.stringify({
+            _token: $('[name="_token"]').val(),
+            id
+          })
+        })
+        if (!res.ok) throw new Error('Ocurrio un error al marcar la direccion como favorita')
+
+        Swal.fire({
+          title: `Exito!!`,
+          text: `La direccion se marco como favorito`,
           icon: "success",
         });
 

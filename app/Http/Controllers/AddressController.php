@@ -60,6 +60,22 @@ class AddressController extends Controller
         }
     }
 
+    public function markasfavorite(Request $request)
+    {
+
+        Address::where('email', Auth::user()->email)
+            ->where('isDefault', true)
+            ->update([
+                'isDefault' => false
+            ]);
+
+        $address = Address::findOrfail($request->id);
+        $address->isDefault = true;
+        $address->save();
+
+        return response()->json(['message' => 'Direccion marcada como favorito']);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
