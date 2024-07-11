@@ -1,81 +1,69 @@
 <x-app-layout>
-    <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-        {{-- <div>{{ Auth::user()->isAdmin()}}</div> --}}
+  <script src="/js/moment/min/moment.min.js"></script>
+  <script src="/js/moment/locale/es.js"></script>
+  <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+    <x-dashboard.welcome-banner />
 
-    
-        <!-- Welcome banner -->
-        <x-dashboard.welcome-banner />
+    <div class="grid grid-cols-12 gap-6">
 
-        <!-- Dashboard actions -->
-        <div class="sm:flex sm:justify-between sm:items-center mb-8">
+      <!-- Line chart (Acme Plus) -->
+      <x-dashboard.simplecard title="Reporte de ventas" sub-title="{{ $salesLastMonth->month }}"
+        amount="S/. {{ number_format($salesLastMonth ? $salesLastMonth->total : 0, 2, '.', ',') }}"
+        badge="{{ $salesLastMonth ? $salesLastMonth->quantity : 0 }} ventas" />
+      <x-dashboard.simplecard title="Reporte de ventas" sub-title="{{ $salesThisMonth->month }}"
+        amount="S/. {{ number_format($salesThisMonth->total, 2, '.', ',')  }}" badge="{{ $salesThisMonth->quantity }} ventas" />
+      <x-dashboard.simplecard title="Pedidos por atender" amount="{{$pendingSales}}" >
+        <x-slot name="subTitle">
+          <a href="{{route('pedidos.index')}}" class="hover:underline">
+            Ver pedidos
+            <i class="fa fa-arrow-right"></i>
+          </a>
+        </x-slot>
+      </x-dashboard.simplecard>
+      <x-dashboard.simplecard title="Pedidos atendidos" sub-title="" amount="{{$servedSales}}" >
+        <x-slot name="subTitle">
+          <a href="{{route('pedidos.index')}}" class="hover:underline">
+            Ver pedidos
+            <i class="fa fa-arrow-right"></i>
+          </a>
+        </x-slot>
+      </x-dashboard.simplecard>
 
-            <!-- Left: Avatars -->
-            <x-dashboard.dashboard-avatars />
+      <x-dashboard.perday :data="$salesPerDay"/>
+      
+      {{-- <!-- Bar chart (Direct vs Indirect) -->
+      <x-dashboard.dashboard-card-04 />
 
-            <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+      <!-- Line chart (Real Time Value) -->
+      <x-dashboard.dashboard-card-05 /> --}}
 
-                <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+      
 
-                <!-- Datepicker built with flatpickr -->
-                <x-datepicker />
+      <!-- Table (Top Channels) -->
+      <x-dashboard.top10 title="Top 10 productos mas vendidos" :data="$topProducts" />
 
-                <!-- Add view button -->
-                <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                    <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
-                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                    </svg>
-                    <span class="hidden xs:block ml-2">Add View</span>
-                </button>
-                
-            </div>
+      <!-- Doughnut chart (Top Countries) -->
+      <x-dashboard.topdistritos :data="$topDistricts"/>
 
-        </div>
-        
-        <!-- Cards -->
-        <div class="grid grid-cols-12 gap-6">
+      {{-- <!-- Line chart (Sales Over Time)  -->
+      <x-dashboard.dashboard-card-08 />
 
-            <!-- Line chart (Acme Plus) -->
-            <x-dashboard.dashboard-card-01 :dataFeed="$dataFeed" />
+      <!-- Stacked bar chart (Sales VS Refunds) -->
+      <x-dashboard.dashboard-card-09 />
 
-            <!-- Line chart (Acme Advanced) -->
-            <x-dashboard.dashboard-card-02 :dataFeed="$dataFeed" />
+      <!-- Card (Customers)  -->
+      <x-dashboard.dashboard-card-10 />
 
-            <!-- Line chart (Acme Professional) -->
-            <x-dashboard.dashboard-card-03 :dataFeed="$dataFeed" />
+      <!-- Card (Reasons for Refunds)   -->
+      <x-dashboard.dashboard-card-11 />
 
-            <!-- Bar chart (Direct vs Indirect) -->
-            <x-dashboard.dashboard-card-04 />
+      <!-- Card (Recent Activity) -->
+      <x-dashboard.dashboard-card-12 />
 
-            <!-- Line chart (Real Time Value) -->
-            <x-dashboard.dashboard-card-05 />
-
-            <!-- Doughnut chart (Top Countries) -->
-            <x-dashboard.dashboard-card-06 />
-
-            <!-- Table (Top Channels) -->
-            <x-dashboard.dashboard-card-07 />
-
-            <!-- Line chart (Sales Over Time)  -->
-            <x-dashboard.dashboard-card-08 />
-
-            <!-- Stacked bar chart (Sales VS Refunds) -->
-            <x-dashboard.dashboard-card-09 />
-
-            <!-- Card (Customers)  -->
-            <x-dashboard.dashboard-card-10 />
-
-            <!-- Card (Reasons for Refunds)   -->
-            <x-dashboard.dashboard-card-11 />             
-
-            <!-- Card (Recent Activity) -->
-            <x-dashboard.dashboard-card-12 />
-            
-            <!-- Card (Income/Expenses) -->
-            <x-dashboard.dashboard-card-13 />
-
-        </div>
+      <!-- Card (Income/Expenses) -->
+      <x-dashboard.dashboard-card-13 />  --}}
 
     </div>
+
+  </div>
 </x-app-layout>

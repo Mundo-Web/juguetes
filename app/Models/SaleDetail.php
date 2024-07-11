@@ -13,6 +13,7 @@ class SaleDetail extends Model
         'sale_id',
         'product_image',
         'product_name',
+        'product_color',
         'quantity',
         'price',
     ];

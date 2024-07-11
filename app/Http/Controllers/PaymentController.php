@@ -25,7 +25,7 @@ class PaymentController extends Controller
     $sale = new Sale();
     try {
 
-      $productsJpa = Products::select(['id', 'imagen', 'producto', 'precio', 'descuento'])
+      $productsJpa = Products::select(['id', 'imagen', 'producto', 'color', 'precio', 'descuento'])
         ->whereIn('id', array_map(fn ($x) => $x['id'], $body['cart']))
         ->get();
 
@@ -97,6 +97,7 @@ class PaymentController extends Controller
           'sale_id' => $sale->id,
           'product_image' => $productJpa->imagen,
           'product_name' => $productJpa->producto,
+          'product_color' => $productJpa->color,
           'quantity' => $quantity,
           'price' => $price
         ]);

@@ -49,7 +49,8 @@
     <!-- Links -->
     <div class="space-y-8">
       <!-- Pages group -->
-      <x-menu.group title="Pedidos">
+      <x-menu.group title="Sistema">
+        <x-menu.item id="dashboard" href="{{ route('dashboard') }}" icon="fas fa-home">Dashboard</x-menu.item>
         <x-menu.item id="pedidos" href="{{ route('pedidos.index') }}" icon="fa fa-solid fa-cart-shopping">
           Pedidos
           @if ($salesCount !== 0)
