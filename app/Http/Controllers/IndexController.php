@@ -275,8 +275,23 @@ class IndexController extends Controller
     $url_env = env('APP_URL');
     $culqi_public_key = env('CULQI_PUBLIC_KEY');
 
-    $addresses = Address::where('email', $user->email)->get();
-    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados', 'culqi_public_key', 'addresses'));
+    $addresses = [];
+    $hasDefaultAddress = false;
+    if (Auth::check()) {
+      $addresses = Address::with([
+        'price',
+        'price.district',
+        'price.district.province',
+        'price.district.province.department'
+      ])
+        ->where('email', $user->email)
+        ->get();
+      $hasDefaultAddress = Address::where('email', $user->email)
+        ->where('isDefault', true)
+        ->exists();
+    }
+
+    return view('public.checkout_pago', compact('url_env', 'districts', 'provinces', 'departments', 'detalleUsuario', 'categorias', 'destacados', 'culqi_public_key', 'addresses', 'hasDefaultAddress'));
   }
 
   public function procesarPago(Request $request)

@@ -27,6 +27,7 @@ Route::post('/payment/culqi', [PaymentController::class, 'culqi'])->name('paymen
 Route::middleware(['web', 'auth:sanctum', 'verified'])->group(function () {
     Route::post('/address', [AddressController::class, 'save'])->name('address.save');
     Route::delete('/address/{id}', [AddressController::class, 'delete'])->name('address.delete');
+    Route::patch('/address/markasfavorite', [AddressController::class, 'markasfavorite'])->name('address.markasfavorite');
 
     Route::post('/sales/paginate', [SaleController::class, 'paginate'])->name('sales.paginate');
     Route::post('/sales/confirmation', [SaleController::class, 'confirmation'])->name('sales.confirmation');

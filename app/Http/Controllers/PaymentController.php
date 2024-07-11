@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Price;
 use App\Models\Products;
 use App\Models\Sale;
@@ -44,7 +45,7 @@ class PaymentController extends Controller
       $sale->phone = $body['contact']['phone'];
       $sale->address_price = 0;
       $sale->total = $totalCost;
-
+      $sale->tipo_comprobante = $body['tipo_comprobante'];
 
       if ($request->address) {
         $price = Price::with([
@@ -65,6 +66,19 @@ class PaymentController extends Controller
           $sale->address_number = $body['address']['number'];
           $sale->address_description = $body['address']['description'];
           $sale->address_price = $price->price;
+          try {
+            if ($request->saveAddress) {
+              Address::create([
+                'email' =>  Auth::check() ? Auth::user()->email : $body['contact']['email'],
+                'price_id' => $price->id,
+                'street' =>  $body['address']['street'],
+                'number' => $body['address']['number'],
+                'description' => $body['address']['description'],
+              ]);
+            }
+          } catch (\Throwable $th) {
+            // dump('No se pudo guardar la direccion', $th);
+          }
         }
       }
 

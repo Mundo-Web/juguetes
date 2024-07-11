@@ -83,9 +83,9 @@
                     </h2>
                     <ul class="grid w-full gap-6 md:grid-cols-3">
                       <li>
-                        <input type="radio" name="envio" id="react-option" value="recoger" class="hidden peer"
-                          required checked>
-                        <label for="react-option"
+                        <input type="radio" name="envio" id="recoger-option" value="recoger" class="hidden peer"
+                          required @if (!$hasDefaultAddress) checked @endif>
+                        <label for="recoger-option"
                           class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-3 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-[#74A68D] hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div class="block">
                             <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
@@ -102,8 +102,9 @@
                         </label>
                       </li>
                       <li>
-                        <input type="radio" name="envio" id="flowbite-option" value="express" class="hidden peer">
-                        <label for="flowbite-option"
+                        <input type="radio" name="envio" id="express-option" value="express" class="hidden peer"
+                          @if ($hasDefaultAddress) checked @endif>
+                        <label for="express-option"
                           class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border-3 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-[#74A68D] hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                           <div class="block">
                             <svg class="w-6 h-6 mb-2 text-gray-800 dark:text-white" aria-hidden="true"
@@ -126,18 +127,17 @@
                         @if (count($addresses) > 0)
                           <div class="flex flex-col gap-5 md:flex-row">
                             <div class="basis-2/3 flex flex-col gap-2 z-[45]">
-                              <label class="font-medium text-[12px] text-[#6C7275]">Lista de direcciones<span
+                              <label class="font-medium text-[12px] text-[#6C7275]">Tu lista de direcciones<span
                                   class="text-red-500">*</span></label>
                               <div class="w-full">
                                 <div class="dropdown w-full">
                                   <select id="addresses"
                                     class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select2-hidden-accessible"
                                     data-address>
+                                    <option value>Agregar una nueva direccion</option>
                                     @foreach ($addresses as $address)
-                                      <option value="{{ $address->id }}" data="{{$address}}">
-                                        <b class="block font-bold">Lima lima lima</b>
-                                        {{ $address->street }} #{{ $address->number }}
-                                      </option>
+                                      <option value="{{ $address->id }}" data="{{ $address }}"
+                                        @if ($address->isDefault) selected @endif></option>
                                     @endforeach
                                   </select>
                                 </div>
@@ -145,7 +145,7 @@
                             </div>
                           </div>
                         @endif
-                        <div class="flex flex-col gap-5 md:flex-row">
+                        <div data-show="new" class="flex flex-col gap-5 md:flex-row">
                           <div class="basis-1/3 flex flex-col gap-2 z-[45]">
                             <label class="font-medium text-[12px] text-[#6C7275]">Departamento <span
                                 class="text-red-500">*</span></label>
@@ -205,7 +205,7 @@
                           </div>
                         </div>
 
-                        <div class="flex flex-col gap-2">
+                        <div data-show="new" class="flex flex-col gap-2">
                           <label for="nombre_calle" class="font-medium text-[12px] text-[#6C7275]">Avenida / Calle /
                             Jirón <span class="text-red-500">*</span></label>
 
@@ -216,7 +216,7 @@
                         </div>
                       </div>
                       <div>
-                        <div class="flex flex-col md:flex-row gap-5">
+                        <div data-show="new" class="flex flex-col md:flex-row gap-5">
                           <div class="basis-1/2 flex flex-col gap-2">
                             <label for="numero_calle" class="font-medium text-[12px] text-[#6C7275]">Número <span
                                 class="text-red-500">*</span></label>
@@ -248,16 +248,27 @@
           </x-ecommerce.gateway.container>
         </div>
         <div
-          class="basis-4/12 flex flex-col justify-start gap-10 py-4 order-1 2md:order-2 2md:sticky top-4 h-max border rounded-md">
+          class="basis-4/12 flex flex-col justify-start gap-0 py-4 order-1 2md:order-2 2md:sticky top-4 h-min border rounded-md">
           <h2 class="font-semibold text-[20px] text-[#151515] px-4">
             Resumen del pedido
           </h2>
-
+          <div class="p-4 pb-0">
+            <hr>
+          </div>
           <div class="p-4">
-            <div class="flex flex-col gap-10" id="itemsCarritoPago">
-            </div>
-
-            <div class="font-poppins flex flex-col gap-5 mt-10">
+            <label for="tipo-comprobante" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de comprobante</label>
+            <select id="tipo-comprobante" name="comprobante"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>Nota de venta</option>
+              <option>Boleta</option>
+              <option>Factura</option>
+            </select>
+          </div>
+          <div class="p-4 py-0">
+            <hr>
+          </div>
+          <div class="p-4">
+            <div class="font-poppins flex flex-col gap-5">
               <div class="text-[#141718] flex justify-between items-center border-b-[1px] border-[#E8ECEF] pb-5">
                 <p class="font-normal text-[16px]">Envío</p>
                 <p id="precioEnvio" class="font-semibold text-[16px]">Gratis</p>
@@ -286,6 +297,8 @@
   <script src="https://checkout.culqi.com/js/v4"></script>
   <script>
     $('#direccionContainer').fadeOut(0)
+
+    const hasDefaultAddress = {{ $hasDefaultAddress ? 'true' : 'false' }};
     Culqi.publicKey = "{{ $culqi_public_key }}";
 
     const culqi = async () => {
@@ -305,7 +318,9 @@
               phone: $('#celular').val()
             },
             address: null,
-            culqi: Culqi.token
+            saveAddress: !Boolean($('#addresses').val()),
+            culqi: Culqi.token,
+            tipo_comprobante: $('#tipo-comprobante').val()
           }
           if ($('[name="envio"]:checked').val() == 'express') {
             body.address = {
@@ -396,33 +411,68 @@
     const provinces = @json($provinces);
     const districts = @json($districts);
 
-    $('#addresses').select2({
-      templateResult: (address) => {
-        if (!address.id) {
-          return address.text;
-        }
+    const addressTemplate = ({
+      id,
+      text,
+      element
+    }) => {
+      if (!id) return text
 
-        var $address = $(
-          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
-        );
-
-        return $address;
-      },
-      templateSelection: (address) => {
-        if (!address.id) {
-          return address.text;
-        }
-
-        var $address = $(
-          '<div><b class="block font-bold">Lima lima lima</b> ' + address.text + '</div>'
-        );
-
-        return $address;
+      const data = JSON.parse(element.getAttribute('data'))
+      let price = 'Gratis'
+      let className = 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
+      if (data.price.price > 0) {
+        price = `S/. ${data.price.price.toFixed(2)}`
+        className = 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
       }
+      return $(`<div class="relative">
+        <b class="block">
+          ${data.price.district.province.department.description},
+          ${data.price.district.province.description},
+          ${data.price.district.description}
+        </b>
+        ${data.street} #${data.number}
+        <span class="absolute right-2 top-[50%] translate-y-[-50%] w-max block mx-auto text-xs font-medium px-2.5 py-0.5 mb-1 rounded-full ${className}">
+          ${price}  
+        </span>
+      </div>`)
+    }
+
+    $('#addresses').select2({
+      templateResult: addressTemplate,
+      templateSelection: addressTemplate
     })
     $('#departamento_id').select2()
     $('#provincia_id').select2()
     $('#distrito_id').select2()
+
+    $('#addresses').on('change', function() {
+      const address = $(this).val()
+      if (!address) {
+        $('[data-show="new"]').fadeIn()
+        $('#departamento_id')
+          .val(null)
+          .trigger('change')
+        $('#nombre_calle').val(null)
+        $('#numero_calle').val(null)
+        $('#direccion').val(null)
+        return
+      }
+      const data = JSON.parse($(this).find('option:selected').attr('data'))
+      $('[data-show="new"]').fadeOut()
+      $('#departamento_id')
+        .val(data.price.district.province.department.id)
+        .trigger('change')
+      $('#provincia_id')
+        .val(data.price.district.province.id)
+        .trigger('change')
+      $('#distrito_id')
+        .val(data.price.district.id)
+        .trigger('change')
+      $('#nombre_calle').val(data.street)
+      $('#numero_calle').val(data.number)
+      $('#direccion').val(data.description)
+    })
 
     $('#departamento_id').on('change', function() {
       $('#provincia_id').html('<option value>Seleccione una provincia</option>')
@@ -465,6 +515,11 @@
       }
       calcularTotal()
     })
+
+    if (hasDefaultAddress) {
+      $('#express-option').trigger('click')
+      $('#addresses').trigger('change')
+    }
   </script>
 
 
