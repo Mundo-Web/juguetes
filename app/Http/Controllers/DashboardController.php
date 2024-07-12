@@ -25,16 +25,16 @@ class DashboardController extends Controller
             ->orderBy('month', 'desc')
             ->get();
 
-        $salesThisMonth = $sales->get(0) ?? [];
-        $salesLastMonth = $sales->get(1) ?? [];
+        $salesThisMonth = $sales->get(0) ?? json_decode('{"month": null}');
+        $salesLastMonth = $sales->get(1) ?? json_decode('{"month": null}');
 
-        if (isset($salesThisMonth)) {
+        if ($salesThisMonth->month) {
             $date = Carbon::createFromFormat('Y-m', $salesThisMonth->month);
             $salesThisMonth->month = $date->locale('es')->translatedFormat('F Y');
         } else {
             $salesThisMonth->month = 'Mes actual';
         }
-        if (isset($salesLastMonth)) {
+        if ($salesLastMonth->month) {
             $date = Carbon::createFromFormat('Y-m', $salesLastMonth->month);
             $salesLastMonth->month = $date->locale('es')->translatedFormat('F Y');
         } else {
