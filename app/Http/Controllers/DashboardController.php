@@ -25,8 +25,8 @@ class DashboardController extends Controller
             ->orderBy('month', 'desc')
             ->get();
 
-        $salesThisMonth = $sales->get(0);
-        $salesLastMonth = $sales->get(1);
+        $salesThisMonth = $sales->get(0) ?? [];
+        $salesLastMonth = $sales->get(1) ?? [];
 
         if (isset($salesThisMonth)) {
             $date = Carbon::createFromFormat('Y-m', $salesThisMonth->month);
