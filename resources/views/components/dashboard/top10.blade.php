@@ -76,7 +76,7 @@
             <td class="p-2">
               <div class="flex items-center">
                 <img class="object-center object-cover rounded-md me-2" src="/${row.image}"
-                  alt="{{ $item->name }}" width="36" height="36">
+                  alt="${row.name}" width="36" height="36">
                 <div class="text-slate-800 dark:text-slate-100">${row.name}
                   ${row.color ? `- ${row.color}`: ''}
                 </div>
