@@ -82,7 +82,7 @@ class DashboardController extends Controller
 
         return view('pages/dashboard/dashboard')
             ->with('salesThisMonth', $salesThisMonth)
-            ->with('salesLastMonth', $sales->get(1) ?? null)
+            ->with('salesLastMonth', $salesLastMonth)
             ->with('salesPerDay', $salesPerDay)
             ->with('pendingSales', $pendingSales)
             ->with('servedSales', $servedSales)
