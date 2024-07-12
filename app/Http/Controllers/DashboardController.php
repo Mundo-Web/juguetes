@@ -25,8 +25,8 @@ class DashboardController extends Controller
             ->orderBy('month', 'desc')
             ->get();
 
-        $salesThisMonth = $sales->get(0) ?? json_decode('{}', false);
-        $salesLastMonth = $sales->get(1) ?? json_decode('{}', false);
+        $salesThisMonth = $sales->get(0) ?? json_decode('{"month": null}', false);
+        $salesLastMonth = $sales->get(1) ?? json_decode('{"month": null}', false);
 
         $date = Carbon::createFromFormat('Y-m', $salesThisMonth->month);
         $salesThisMonth->month = $date->locale('es')->translatedFormat('F Y');
