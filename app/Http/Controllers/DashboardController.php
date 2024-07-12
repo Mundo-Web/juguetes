@@ -25,7 +25,6 @@ class DashboardController extends Controller
             ->orderBy('month', 'desc')
             ->get();
 
-        
         $salesThisMonth = $sales->get(0);
         $salesLastMonth = $sales->get(1);
 
