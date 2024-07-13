@@ -1,6 +1,7 @@
-<div x-data="{ showCarrusel: false }" @mouseenter="showCarrusel = true" @mouseleave="showCarrusel = false"
+<div 
     class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-    <div class="bg-[#F3F3F3] flex flex-col justify-center relative rounded-xl lg:rounded-3xl overflow-hidden">
+    <div x-data="{ showCarrusel: false }" @mouseenter="showCarrusel = true" @mouseleave="showCarrusel = false"
+        class="bg-[#F3F3F3] flex flex-col justify-center relative rounded-xl lg:rounded-3xl overflow-hidden">
         <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
             @foreach ($item->tags as $tag)
                 <span style="background-color: {{ $tag->color }};"
@@ -8,7 +9,7 @@
                     {{ $tag->name }}</span>
             @endforeach
         </div>
-        <div class="flex justify-center items-center">
+        <div  class="flex justify-center items-center">
             <div id="carouselproduct-{{ $item->id }}"  class="swiper carouselproduct ">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">

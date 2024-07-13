@@ -15,7 +15,7 @@
                 <div class="swiper-wrapper">
                   @foreach ($slider as $item)  
                     <div class="swiper-slide">
-                        <div class="gap-20 bg-no-repeat object-top bg-cover w-full px-[5%] h-[550px] md:h-[600px] xl:h-[650px] flex flex-row  items-center"
+                        <div class="gap-20 bg-no-repeat object-top bg-center md:bg-cover w-full px-[5%] h-[550px] md:h-[600px] xl:h-[650px] flex flex-row  items-center"
                             style=" background-image: 
                                 @if ($item->name_image) url('{{ asset($item->url_image . $item->name_image) }}')
                                 @else
@@ -96,7 +96,8 @@
         </section>
        @endif 
 
-
+       @if ($destacados->isEmpty()) 
+       @else 
         <section class="py-12 lg:py-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
             <div class="flex flex-col gap-4 md:flex-row justify-between">
                 <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
@@ -113,7 +114,7 @@
             </div>
 
         </section>
-
+       @endif 
 
         <section class="flex flex-col lg:flex-row gap-0 lg:gap-12 relative w-full pl-[5%] lg:pl-[5%] bg-cover bg-no-repeat"
             style="background-image: url('{{ asset('images/img/jl_textura2.webp') }}');">
@@ -747,36 +748,6 @@
                 },
                 1024: {
                     slidesPerView: 1,
-                },
-            },
-        });
-
-        var swiper = new Swiper(".carouselproduct", {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            loop: true,
-            grabCursor: true,
-            centeredSlides: false,
-            initialSlide: 0,
-            navigation: {
-                nextEl: ".swiper-button-prev-product",
-                prevEl: ".swiper-button-next-product",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-            },
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                },
-                768: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                },
-                1024: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
                 },
             },
         });
