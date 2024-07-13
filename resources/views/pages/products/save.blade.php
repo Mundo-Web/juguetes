@@ -762,7 +762,7 @@
     $('#categoria_id').on('change', function() {
       console.log(this.value)
       const value = this.value
-      $('#subcategoria_id option[data-category]').addAttr('hidden')
+      $('#subcategoria_id option[data-category]').attr('hidden', 'hidden')
       $(`#subcategoria_id option[data-category="${value}"]`).removeAttr('hidden')
     })
   </script>
