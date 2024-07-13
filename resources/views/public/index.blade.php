@@ -106,76 +106,7 @@
                         los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
             </div>
 
-            <div class="grid grid-cols-2 2md:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-8">
-
-                <div 
-                    class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div x-data="{ showCarrusel: false }" @mouseenter="showCarrusel = true" @mouseleave="showCarrusel = false"
-                        class="bg-[#F3F3F3] flex flex-col justify-center relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div 
-                            class="flex justify-center items-center">
-                            <div class="swiper carouselproduct ">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}"
-                                                alt="impresora"
-                                                class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
-                                    </div>
-                                    <div class="swiper-slide ">
-                                        <a href="#"><img src="{{ asset('/images/img/create_decotab.png') }}"
-                                                alt="impresora"
-                                                class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div x-show="showCarrusel"
-                             class="custom-swiper-buttons z-10 w-full flex flex-row justify-center items-center absolute 2xs:-mt-8 xl:-mt-12 pb-4 bottom-0 hidden md:flex"
-                              x-transition:enter="transition ease-out duration-300 transform"
-                            x-transition:enter-start="translate-y-full opacity-0"
-                            x-transition:enter-end="translate-y-0 opacity-100"
-                            x-transition:leave="transition ease-in duration-300 transform"
-                            x-transition:leave-start="translate-y-0 opacity-100"
-                            x-transition:leave-end="translate-y-full opacity-0">
-                           
-                            <div class="flex flex-row gap-2 lg:gap-3">
-                                <a class="swiper-button-prev-product">
-                                    <img class="w-10" src="{{ asset('images/svg/jl_rightttestimonio.svg') }}" />
-                                </a>
-                                <a class="swiper-button-next-product">
-                                    <img class="w-10" src="{{ asset('images/svg/jl_lefttestimonios.svg') }}" />
-                                </a>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
+            <div class="grid grid-cols-2 2md:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-8">  
                 @foreach ($destacados as $item)
                     <x-product.container-carousel :item="$item" />  
                 @endforeach
