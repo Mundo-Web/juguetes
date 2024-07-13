@@ -760,9 +760,10 @@
     })
 
     $('#categoria_id').on('change', function() {
+      console.log(this.value)
       const value = this.value
-      $('#subcategoria_id option[data-category]').prop('hidden', true)
-      $(`#subcategoria_id option[data-category="${value}"]`).prop('hidden', false)
+      $('#subcategoria_id option[data-category]').addAttr('hidden')
+      $(`#subcategoria_id option[data-category="${value}"]`).removeAttr('hidden')
     })
   </script>
 </x-app-layout>
