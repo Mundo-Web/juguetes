@@ -1,6 +1,6 @@
 @php
-  $pageName = Route::currentRouteName();
-  $isIndex = $pageName == 'index';
+    $pageName = Route::currentRouteName();
+    $isIndex = $pageName == 'index';
 @endphp
 
 <style>
@@ -38,135 +38,135 @@
         transform-origin: left;
     }
 
-  nav li {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
+    nav li {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 </style>
 
 <div class="navigation shadow-xl" style="z-index: 9999; background-color: #fff !important">
-  <button aria-label="hamburguer" type="button" class="hamburger" id="position" onclick="show()">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 2L2 18M18 18L2 2" stroke="#272727" stroke-width="2.66667" stroke-linecap="round" />
-    </svg>
-  </button>
-  <nav class="w-full h-full overflow-y-auto p-8" x-data="{ openCatalogo: true, openSubMenu: null }">
-    <ul class="space-y-1">
-      <li>
-        <a href="/"
-          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
-          <span class="underline-this">
-            <svg
-              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-            </svg>
-            Home
-          </span>
-        </a>
-      </li>
-      <li>
-        <a @click="openCatalogo = !openCatalogo" href="javascript:void(0)"
-          class="text-[#272727] flex justify-between items-center font-medium font-poppins text-sm py-2 px-3 hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">
-          <span class="underline-this">
-            <svg
-              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-              <path
-                d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z" />
-              <path
-                d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z" />
-            </svg>
-            Catalogo
-          </span>
-          <span :class="{ 'rotate-180': openCatalogo }"
-            class="ms-1 inline-block transform transition-transform duration-300">↓</span>
-        </a>
-        <ul x-show="openCatalogo" x-transition class="ml-3 mt-1 space-y-1 border-l border-gray-300">
-          <li>
-            <a href="{{ route('catalogo.all') }}"
-              class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
-              <span class="underline-this">
-                Todas las categorías
-              </span>
-            </a>
-          </li>
-          @foreach ($categorias as $category)
-            @if (count($category->subcategories()))
-              <li>
-                <a @click="openSubMenu === {{ $category->id }} ? openSubMenu = null : openSubMenu = {{ $category->id }}"
-                  href="javascript:void(0)"
-                  class="text-[#272727] flex justify-between items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
-                  <span class="underline-this">
-                    {{ $category->name }}
-                  </span>
-                  <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
-                    class="ms-1 inline-block transform transition-transform duration-300">↓</span>
+    <button aria-label="hamburguer" type="button" class="hamburger" id="position" onclick="show()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 2L2 18M18 18L2 2" stroke="#272727" stroke-width="2.66667" stroke-linecap="round" />
+        </svg>
+    </button>
+    <nav class="w-full h-full overflow-y-auto p-8" x-data="{ openCatalogo: true, openSubMenu: null }">
+        <ul class="space-y-1">
+            <li>
+                <a href="/"
+                    class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
+                    <span class="underline-this">
+                        <svg class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                        </svg>
+                        Home
+                    </span>
                 </a>
-                <ul x-show="openSubMenu === {{ $category->id }}" x-transition
-                  class="ml-3 mt-1 space-y-1 border-l border-gray-300">
-                  <li>
-                    <a href="/catalogo/{{ $category->slug }}"
-                      class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
-                      <span class="underline-this">
-                        Ver todo {{ $category->name }}
-                      </span>
-                    </a>
-                  </li>
-                  @foreach ($category->subcategories() as $subcategory)
+            </li>
+            <li>
+                <a @click="openCatalogo = !openCatalogo" href="javascript:void(0)"
+                    class="text-[#272727] flex justify-between items-center font-medium font-poppins text-sm py-2 px-3 hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}">
+                    <span class="underline-this">
+                        <svg class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783ZM6 2h6a1 1 0 1 1 0 2H6a1 1 0 0 1 0-2Zm7 5H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Z" />
+                            <path
+                                d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z" />
+                        </svg>
+                        Catalogo
+                    </span>
+                    <span :class="{ 'rotate-180': openCatalogo }"
+                        class="ms-1 inline-block transform transition-transform duration-300">↓</span>
+                </a>
+                <ul x-show="openCatalogo" x-transition class="ml-3 mt-1 space-y-1 border-l border-gray-300">
                     <li>
-                      <a href="/catalogo/{{ $category->slug }}/{{ $subcategory->slug }}"
-                        class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
-                        <span class="underline-this">{{ $subcategory->name }}</span>
-                      </a>
+                        <a href="{{ route('catalogo.all') }}"
+                            class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                            <span class="underline-this">
+                                Todas las categorías
+                            </span>
+                        </a>
                     </li>
-                  @endforeach
+                    @foreach ($categorias as $category)
+                        @if (count($category->subcategories()))
+                            <li>
+                                <a @click="openSubMenu === {{ $category->id }} ? openSubMenu = null : openSubMenu = {{ $category->id }}"
+                                    href="javascript:void(0)"
+                                    class="text-[#272727] flex justify-between items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                    <span class="underline-this">
+                                        {{ $category->name }}
+                                    </span>
+                                    <span :class="{ 'rotate-180': openSubMenu === {{ $category->id }} }"
+                                        class="ms-1 inline-block transform transition-transform duration-300">↓</span>
+                                </a>
+                                <ul x-show="openSubMenu === {{ $category->id }}" x-transition
+                                    class="ml-3 mt-1 space-y-1 border-l border-gray-300">
+                                    <li>
+                                        <a href="/catalogo/{{ $category->slug }}"
+                                            class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                            <span class="underline-this">
+                                                Ver todo {{ $category->name }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @foreach ($category->subcategories() as $subcategory)
+                                        <li>
+                                            <a href="/catalogo/{{ $category->slug }}/{{ $subcategory->slug }}"
+                                                class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                                <span class="underline-this">{{ $subcategory->name }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ route('catalogo', $category->slug) }}"
+                                    class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
+                                    <span class="underline-this">
+                                        {{ $category->name }}
+                                    </span>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
-              </li>
-            @else
-              <li>
-                <a href="{{ route('catalogo', $category->slug) }}"
-                  class="text-[#272727] flex items-center py-2 px-3 hover:opacity-75 transition-opacity duration-300">
-                  <span class="underline-this">
-                    {{ $category->name }}
-                  </span>
+            </li>
+            <li>
+                <a href="{{ route('contacto') }}"
+                    class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
+                    <span class="underline-this">
+                        <svg class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 14 20">
+                            <path
+                                d="M12 0H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM7.5 17.5h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2ZM12 13H2V4h10v9Z" />
+                        </svg>
+                        Contacto
+                    </span>
                 </a>
-              </li>
-            @endif
-          @endforeach
+            </li>
+            <li>
+                <a href="{{ route('comentario') }}"
+                    class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
+                    <span class="underline-this">
+                        <svg class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="M19 4h-1a1 1 0 1 0 0 2v11a1 1 0 0 1-2 0V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1ZM3 4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4Zm9 13H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Z" />
+                            <path d="M6 5H5v1h1V5Z" />
+                        </svg>
+                        Comentar
+                    </span></a>
+            </li>
         </ul>
-      </li>
-      <li>
-        <a href="{{ route('contacto') }}"
-          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
-          <span class="underline-this">
-            <svg
-              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
-              <path
-                d="M12 0H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM7.5 17.5h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2ZM12 13H2V4h10v9Z" />
-            </svg>
-            Contacto
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="{{ route('comentario') }}"
-          class="text-[#272727] font-medium font-poppins text-sm py-2 px-3 block hover:opacity-75 transition-opacity duration-300 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
-          <span class="underline-this">
-            <svg
-              class="inline-block w-3 h-3 mb-0.5 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M19 4h-1a1 1 0 1 0 0 2v11a1 1 0 0 1-2 0V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1ZM3 4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4Zm9 13H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Z" />
-              <path d="M6 5H5v1h1V5Z" />
-            </svg>
-            Comentar
-          </span></a>
-      </li>
-    </ul>
-  </nav>
+    </nav>
 
 </div>
 
@@ -201,15 +201,14 @@
     <div class="relative">
         <div class="relative">
             <div id="header-menu"
-                class="py-3  z-1 {{ $isIndex ? ' ' : 'relative' }} top-0 flex justify-between space-x-2 items-center w-[100%] px-[2%] md:px-[4%] z-20">
-                
+                class="py-3  z-1 {{ $isIndex ? ' ' : 'relative' }} top-0 flex justify-between space-x-2 items-center w-[100%] px-[2%] md:px-[4%] z-20 lg:shadow-sm lg:border-b-[1px]">
+
                 <div id="menu-burguer" class="lg:hidden z-10 w-max">
                     <img class="h-auto w-10 cursor-pointer" src="{{ asset('images/img/menu_hamburguer.png') }}"
                         alt="menu hamburguesa" onclick="show()" />
                 </div>
 
-                <div
-                    class="flex flex-row md:items-center md:w-max ">
+                <div class="flex flex-row md:items-center md:w-max ">
                     <a href="{{ route('index') }}">
                         <img id="logo-decotab" class="py-2 w-[90%]"
                             src="{{ asset($isIndex ? 'images/svg/jl_logoap.svg' : 'images/svg/jl_logoap.svg') }}"
@@ -218,43 +217,9 @@
                 </div>
 
                 <div class="hidden lg:flex items-center w-max">
-                    <div>
-                        <nav id="menu-items"
-                            class="{{ $isIndex ? 'text-colorJL' : 'text-colorJL' }} flex gap-2 items-center justify-center text-center"
-                            x-data="{ openCatalogo: false, openSubMenu: null }">
-                            <a href="{{ route('index') }}"
-                                class="py-5  font-medium font-poppins text-text16 px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
-                                <span class="underline-this">Inicio</span>
-                            </a>
-                            
-                            <a href="{{ route('catalogo.all') }}"
-                                    class="font-medium font-poppins text-text16 hover:opacity-75 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}"
-                                    aria-haspopup="true">
-                                    <span class="underline-this">Juguetes</span>
-                            </a>
-                          
 
-                            <a href="{{ route('blog')}}"
-                                class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
-                                <span class="underline-this">Blog</span>
-                            </a>
-
-                            <a href="{{ route('post') }}"
-                                class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
-                                <span class="underline-this">Post</span>
-                            </a>
-
-                            <a href="{{ route('contacto') }}"
-                                class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
-                                <span class="underline-this">Contacto</span>
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="flex justify-end w-max md:w-auto md:justify-center items-center gap-0 md:gap-2">
-
-                    <div class="relative w-full  lg:w-[50%] pb-8 lg:py-0 border-b lg:border-0 border-transparent hidden xl:block">
+                    <div
+                        class="relative w-[500px] pb-8 lg:py-0 border-b lg:border-0 border-transparent hidden lg:block -ml-[8%]">
                         <input id="buscarproducto" type="text" placeholder="Buscar..."
                             class="w-full pl-8 pr-10 py-2 border border-transparent lg:border-[#CCCCCC] rounded-2xl focus:outline-none focus:ring-0 focus:border-[#CCCCCC] text-[#082252] placeholder:text-[#082252] lg:placeholder:text-[#CCCCCC]">
 
@@ -271,6 +236,11 @@
                         <div class="bg-white z-60 shadow-2xl top-12 w-full absolute overflow-y-auto max-h-[200px]"
                             id="resultados"></div>
                     </div>
+
+
+                </div>
+
+                <div class="flex justify-end w-max md:w-auto md:justify-center items-center gap-0 md:gap-2">
 
                     @if (Auth::user() == null)
                         <a href="{{ route('login') }}"><img class="bg-white rounded-lg p-1 w-10 "
@@ -320,7 +290,7 @@
                             </div>
                         </div>
                     @endif
-                
+
                     <div class="flex justify-center items-center pl-1">
                         {{-- <div id="open-cart" class="relative inline-block cursor-pointer" >
                             <span id="itemsCount"
@@ -328,34 +298,70 @@
                             <img src="{{ asset('images/svg/header_bag.svg') }}"
                                 class="bg-white rounded-lg p-1 max-w-full h-auto cursor-pointer w-10" />
                         </div> --}}
-                        
-                         <x-ecommerce.cart.button
+
+                        <x-ecommerce.cart.button
                             class="relative cursor-pointer {{ $pageName == 'carrito' || $pageName == 'pago' ? 'hidden' : 'inline-block' }}" />
-                        
-                          <x-ecommerce.cart.modal />
+
+                        <x-ecommerce.cart.modal />
 
                     </div>
                 </div>
 
 
             </div>
-            <div class="relative w-full pb-3 px-2 md:px-[5%] border-b lg:border-0 border-[transparent] block xl:hidden">
-                        <input id="buscarproducto" type="text" placeholder="Buscar..."
-                            class="w-full pl-8 pr-10 py-2 border border-[#CCCCCC] lg:border-[#CCCCCC] rounded-2xl focus:outline-none focus:ring-0 focus:border-[#CCCCCC] text-[#082252] placeholder:text-[#082252] lg:placeholder:text-[#CCCCCC]">
 
-                        <span
-                            class="absolute inset-y-0 left-0 flex items-center px-3 md:px-[5.5%] pb-4 ">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M14.6851 13.6011C14.3544 13.2811 13.8268 13.2898 13.5068 13.6206C13.1868 13.9514 13.1955 14.4789 13.5263 14.7989L14.6851 13.6011ZM16.4206 17.5989C16.7514 17.9189 17.2789 17.9102 17.5989 17.5794C17.9189 17.2486 17.9102 16.7211 17.5794 16.4011L16.4206 17.5989ZM15.2333 9.53333C15.2333 12.6814 12.6814 15.2333 9.53333 15.2333V16.9C13.6018 16.9 16.9 13.6018 16.9 9.53333H15.2333ZM9.53333 15.2333C6.38531 15.2333 3.83333 12.6814 3.83333 9.53333H2.16667C2.16667 13.6018 5.46484 16.9 9.53333 16.9V15.2333ZM3.83333 9.53333C3.83333 6.38531 6.38531 3.83333 9.53333 3.83333V2.16667C5.46484 2.16667 2.16667 5.46484 2.16667 9.53333H3.83333ZM9.53333 3.83333C12.6814 3.83333 15.2333 6.38531 15.2333 9.53333H16.9C16.9 5.46484 13.6018 2.16667 9.53333 2.16667V3.83333ZM13.5263 14.7989L16.4206 17.5989L17.5794 16.4011L14.6851 13.6011L13.5263 14.7989Z"
-                                    fill="#CCCCCC" class="fill-fillAzulPetroleo lg:fill-fillPink" />
-                            </svg>
-                        </span>
+            <div>
+                <div class="hidden lg:block">
+                    <nav id="menu-items"
+                        class="{{ $isIndex ? 'text-colorJL' : 'text-colorJL' }} flex gap-2 items-center justify-center text-center"
+                        x-data="{ openCatalogo: false, openSubMenu: null }">
+                        <a href="{{ route('index') }}"
+                            class="py-5  font-medium font-poppins text-text16 px-3 hover:opacity-75 {{ $pagina == 'index' ? 'text-[#FF5E14]' : '' }}">
+                            <span class="underline-this">Inicio</span>
+                        </a>
 
-                        <div class="bg-white z-60 shadow-2xl top-12 w-full absolute overflow-y-auto max-h-[200px]"
-                            id="resultados"></div>
+                        <a href="{{ route('catalogo.all') }}"
+                            class="font-medium font-poppins text-text16 hover:opacity-75 {{ $pagina == 'catalogo' ? 'text-[#FF5E14]' : '' }}"
+                            aria-haspopup="true">
+                            <span class="underline-this">Juguetes</span>
+                        </a>
+
+
+                        <a href="{{ route('blog') }}"
+                            class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
+                            <span class="underline-this">Ofertas</span>
+                        </a>
+
+                        <a href="{{ route('post') }}"
+                            class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
+                            <span class="underline-this">Mayoristas & Corporativos</span>
+                        </a>
+
+                        <a href="{{ route('contacto') }}"
+                            class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'contacto' ? 'text-[#FF5E14]' : '' }}">
+                            <span class="underline-this">Contacto</span>
+                        </a>
+                    </nav>
+                </div>
+                <div
+                    class="relative w-full pb-3 px-2 md:px-[5%] border-b lg:border-0 border-[transparent] block lg:hidden">
+                    <input id="buscarproducto" type="text" placeholder="Buscar..."
+                        class="w-full pl-8 pr-10 py-2 border border-[#CCCCCC] lg:border-[#CCCCCC] rounded-2xl focus:outline-none focus:ring-0 focus:border-[#CCCCCC] text-[#082252] placeholder:text-[#082252] lg:placeholder:text-[#CCCCCC]">
+
+                    <span class="absolute inset-y-0 left-0 flex items-center px-3 md:px-[5.5%] pb-4 ">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14.6851 13.6011C14.3544 13.2811 13.8268 13.2898 13.5068 13.6206C13.1868 13.9514 13.1955 14.4789 13.5263 14.7989L14.6851 13.6011ZM16.4206 17.5989C16.7514 17.9189 17.2789 17.9102 17.5989 17.5794C17.9189 17.2486 17.9102 16.7211 17.5794 16.4011L16.4206 17.5989ZM15.2333 9.53333C15.2333 12.6814 12.6814 15.2333 9.53333 15.2333V16.9C13.6018 16.9 16.9 13.6018 16.9 9.53333H15.2333ZM9.53333 15.2333C6.38531 15.2333 3.83333 12.6814 3.83333 9.53333H2.16667C2.16667 13.6018 5.46484 16.9 9.53333 16.9V15.2333ZM3.83333 9.53333C3.83333 6.38531 6.38531 3.83333 9.53333 3.83333V2.16667C5.46484 2.16667 2.16667 5.46484 2.16667 9.53333H3.83333ZM9.53333 3.83333C12.6814 3.83333 15.2333 6.38531 15.2333 9.53333H16.9C16.9 5.46484 13.6018 2.16667 9.53333 2.16667V3.83333ZM13.5263 14.7989L16.4206 17.5989L17.5794 16.4011L14.6851 13.6011L13.5263 14.7989Z"
+                                fill="#CCCCCC" class="fill-fillAzulPetroleo lg:fill-fillPink" />
+                        </svg>
+                    </span>
+
+                    <div class="bg-white z-60 shadow-2xl top-12 w-full absolute overflow-y-auto max-h-[200px]"
+                        id="resultados"></div>
+                </div>
             </div>
+
         </div>
     </div>
 </header>
@@ -374,7 +380,6 @@
     })
 </script>
 <script>
-  
     $(document).ready(function() {
         if ({{ $isIndex ? 1 : 0 }}) {
             $(window).scroll(function() {
@@ -393,9 +398,9 @@
                     items
                         .removeClass('text-text16')
                         .addClass('text-sm')
-                  //  username
-                  //      .removeClass('text-white')
-                  //      .addClass('text-[#272727]')
+                    //  username
+                    //      .removeClass('text-white')
+                    //      .addClass('text-[#272727]')
                     // burguer
                     //   .removeClass('absolute')
                     //   .addClass('fixed')
@@ -408,9 +413,9 @@
                     items
                         .removeClass('text-sm')
                         .addClass('text-text16')
-                   //username
-                   //     .removeClass('text-[#272727]')
-                   //     .addClass('text-white')
+                    //username
+                    //     .removeClass('text-[#272727]')
+                    //     .addClass('text-white')
                     // burguer
                     //   .removeClass('fixed')
                     //   .addClass('absolute')

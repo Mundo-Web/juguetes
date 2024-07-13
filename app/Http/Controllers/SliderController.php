@@ -69,6 +69,7 @@ class SliderController extends Controller
         $slider ->botontext2 = $request->botontext2;
         $slider ->link2 = $request->link2;
         $slider ->title = $request->title;
+        $slider ->subtitle = $request->subtitle;
         $slider ->description = $request->description;
         
 
@@ -104,6 +105,7 @@ class SliderController extends Controller
     {
         $slider = Slider::findOrfail($id);
         $slider->title = $request->title;
+        $slider ->subtitle = $request->subtitle;
         $slider->description = $request->description;
         $slider ->botontext1 = $request->botontext1;
         $slider ->link1 = $request->link1;
@@ -126,7 +128,7 @@ class SliderController extends Controller
             $rutanueva = 'storage/images/slider/';
             $nombreImagen = Str::random(10) . '_' . $request->file('imagen')->getClientOriginalName();
             $img =  $manager->read($request->file('imagen'));
-            $img->coverDown(1440, 808, 'center');
+            $img->coverDown(1440, 715, 'center');
            
             if (!file_exists($rutanueva)) {
                 mkdir($rutanueva, 0777, true); // Se crea la ruta con permisos de lectura, escritura y ejecución
