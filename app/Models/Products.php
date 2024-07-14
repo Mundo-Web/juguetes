@@ -41,10 +41,7 @@ class Products extends Model
 
   public function subcategory()
   {
-    $subcategory =
-      Subcategory::find($this->subcategory_id);
-    if (!$subcategory) $subcategory = new SubCategory();
-    return $subcategory;
+    return SubCategory::find($this->subcategory_id);
   }
 
   public function galeria()
