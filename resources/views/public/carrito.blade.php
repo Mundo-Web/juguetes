@@ -11,12 +11,12 @@
 <main>
     <section class="font-poppins w-11/12 mx-auto my-12 flex flex-col gap-10">
       <div>
-        <a href="index.html" class="font-normal text-[14px] text-[#6C7275]"
+        <a href="/" class="font-normal text-[14px] text-[#6C7275]"
           >Home</a
         >
         <span>/</span>
         <a
-          href="carrito.html"
+          href="{{route('carrito')}}"
           class="font-semibold text-[14px] text-[#141718]"
           >Carrito</a
         >
