@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout title="Blogs">
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
         
         <section class="py-4 border-b border-slate-100 dark:border-slate-700">
@@ -20,21 +20,21 @@
                     <table id="tabladatos" class="display text-lg" style="width:100%" >
                         <thead>
                             <tr>
-                                <th class="w-32">Imagen</th>
                                 <th>Titulo</th>
                                 <th>Categoría</th>
-                                <th class="w-32">Visible</th>
-                                <th class="w-32">Acciones</th>
+                                <th>Imagen</th>
+                                <th>Visible</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach($posts as $item)
                                 <tr>
-                                    <td class="px-3 py-2 dark:bg-slate-800"><img class="w-20" src="{{ asset('storage/images/posts/'.$item->name_image) }}" alt=""></td>
-                                    <td class="dark:bg-slate-800">{{$item->title}}</td>
-                                    <td class="dark:bg-slate-800">{{$item->categories->name}}</td>
-                                    <td class="dark:bg-slate-800">
+                                    <td>{{$item->title}}</td>
+                                    <td>{{$item->categories->name}}</td>
+                                    <td class="px-3 py-2"><img class="w-20" src="{{ asset($item->url_image.$item->name_image) }}" alt=""></td>
+                                    <td>
                                         <form method="POST" action="">
                                           @csrf
                                             <input type="checkbox" id="hs-basic-usage" class="check_v btn_swithc relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent 
@@ -50,7 +50,7 @@
                                        
 
                                     </td>
-                                    <td class="flex flex-row justify-end items-center gap-5 dark:bg-slate-800">
+                                    <td class="flex flex-row justify-end items-center gap-5">
                                   
                                         <a href="{{ route('blog.edit', $item) }}" class="bg-yellow-400 px-3 py-2 rounded text-white  "><i class="fa-regular fa-pen-to-square"></i></a>
                                         {{-- {{  route('servicios.destroy', $item->id) }} --}}
@@ -88,54 +88,9 @@
 
         $('document').ready(function(){
            
-            new DataTable('#tabladatos', {
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-            layout: {
-                topStart: 'buttons'
-            },
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sSearch": "Buscar:",
-                
-                 "sProcessing":"Procesando...",
-            },
-            buttons:[ 
-           
-            {
-                extend:    'excelHtml5',
-                text:      '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                className: 'btn btn-success',
-            },
-            {
-                extend:    'pdfHtml5',
-                text:      '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-            },
-            {
-                extend:    'csvHtml5',
-                text:      '<i class="fas fa-file-csv"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
-            {
-                extend:    'print',
-                text:      '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                className: 'btn btn-info',
-            },
-            {
-                extend:    'copy',
-                text:      '<i class="fas fa-copy"></i> ',
-                titleAttr: 'Copiar',
-                className: 'btn btn-success',
-            },
-        ]
-        });
+            new DataTable('#tabladatos',{
+                responsive: true
+            });
 
             $( ".btn_delete" ).on( "click", function(e) {
                 

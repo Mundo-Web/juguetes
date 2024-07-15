@@ -72,8 +72,11 @@ class StrengthController extends Controller
 			}
 	
 			$fortaleza->titulo = $request->titulo;
+			$fortaleza->botontext1 = $request->botontext1;
+			$fortaleza->link1 = $request->link1;
 			$fortaleza->descripcionshort = $request->descripcionshort;
 			$fortaleza->descripcion = $request->descripcion;
+			$fortaleza->status = 0;
 			$fortaleza->save();
 
 			return redirect()->route('strength.index')->with('success', 'Publicación creado exitosamente.');
@@ -142,6 +145,8 @@ class StrengthController extends Controller
 			}
 	
 			$fortaleza->titulo = $request->titulo;
+			$fortaleza->botontext1 = $request->botontext1;
+			$fortaleza->link1 = $request->link1;
 			$fortaleza->descripcionshort = $request->descripcionshort;
 			$fortaleza->descripcion = $request->descripcion;
 			$fortaleza->save();
@@ -169,16 +174,39 @@ class StrengthController extends Controller
 		}
 
 		$strength->delete();
-		return response()->json(['message'=>'Logo eliminado']);
+		return response()->json(['message'=>'Banner eliminado']);
 	}
 
 	public function updateVisible(Request $request){
-		$id = $request->id; 
-		$stauts = $request->status; 
-		$staff = Strength::find($id);
-		$staff->status = $stauts; 
+		$id = $request->id;
 
-		$staff->save();
-		return response()->json(['message'=> 'registro actualizado']);
+        $field = $request->field;
+
+        $status = $request->status;
+
+		$cantidad = $this->contarCategoriasDestacadas();
+
+		if ($field == 'status') {
+            if ($cantidad >= 1 && $request->status == 1) {
+                return response()->json(['message' => 'Solo puedes hacer visible 1 banner'], 409);
+            }
+        }
+	
+		$category = Strength::findOrFail($id);
+
+        $category->$field = $status;
+
+        $category->save();
+
+        $cantidad = $this->contarCategoriasDestacadas();
+
+		return response()->json(['message'=> 'registro actualizado',  'cantidad' => $cantidad]);
 }
+
+	public function contarCategoriasDestacadas()
+		{
+			$cantidad = Strength::where('status', '=', 1)->count();
+
+			return $cantidad;
+		}
 }

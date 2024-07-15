@@ -66,7 +66,7 @@ class IndexController extends Controller
     $testimonie = Testimony::where('status', '=', 1)->where('visible', '=', 1)->get();
     $slider = Slider::where('status', '=', 1)->where('visible', '=', 1)->get();
     $category = Category::where('status', '=', 1)->where('destacar', '=', 1)->get();
-
+    
 
 
     return view('public.index', compact('url_env', 'productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category'));

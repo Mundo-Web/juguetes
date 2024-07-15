@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('name')->nullable();
             $table->string('email')->nullable();
+            $table->string('url_video')->nullable();
             $table->string('ocupation')->nullable();
             $table->text('testimonie')->nullable();
             $table->boolean('visible')->default(false);

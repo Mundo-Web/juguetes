@@ -12,5 +12,7 @@ class Strength extends Model
     'descripcion',
     'icono',
     'imagen',
+    'botontext1',
+    'link1',
     'status'] ; 
 }

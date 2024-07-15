@@ -16,10 +16,12 @@ class CategorySeeder extends Seeder
     {
         //
         $cat = ['Wall Panel', 'Marmol UV', 'Piso Click SPC', 'Piedra PU'];
+        $slug = ['wall-panell', 'marmol', 'piso', 'piedra'];
         for ($i = 0; $i < 4; $i++) {
             Category::create([
                 'name' => $cat[$i],
                 'description' => 'Aquí va la descripción de la categoria '.$cat[$i],
+                'slug' => $slug[$i],
                 'status' => 1,
                 'visible' => 1,
             ]);

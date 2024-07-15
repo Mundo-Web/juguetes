@@ -30,6 +30,22 @@ class TestimonyController extends Controller
         return view('pages.testimonies.create');
     }
 
+
+    private function getYTVideoId($url)
+    {
+        $patterns = [
+            '/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', // URL estándar
+            '/(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)/', // URL corta
+            '/(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]+)/', // URL embebida
+            '/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(?:&.*)?/', // URL estándar con parámetros adicionales
+        ];
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $url, $matches)) {
+            return $matches[1];
+            }
+        }
+        return null;
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -40,6 +56,8 @@ class TestimonyController extends Controller
         $testimony->name = $request->name;
         $testimony->ocupation = $request->ocupation;
         $testimony->testimonie = $request->testimonie;
+        $url = $request->video;
+        $testimony->url_video = $this->getYTVideoId($url);
         $testimony->status = 1;
         $testimony->visible = 1;
 
@@ -79,7 +97,13 @@ class TestimonyController extends Controller
         // $testimony->testimonie = $request->testimonie;
         // $testimony->ocupation = $request->ocupation;
         // $testimony->status = $request->status;
-
+        $url = $request->video;
+    
+        if ($testimony->url_video == $url) {
+        $testimony->url_video == $url;
+        }else{
+        $testimony->url_video = $this->getYTVideoId($url);
+        }
         $testimony->update($request->all());
 
         $testimony->save();

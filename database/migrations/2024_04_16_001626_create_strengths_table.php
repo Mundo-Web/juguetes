@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->string('icono')->nullable();
             $table->string('imagen')->nullable();
+            $table->string('botontext1')->nullable();
+            $table->string('link1')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
