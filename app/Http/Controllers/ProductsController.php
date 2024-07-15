@@ -18,6 +18,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
+use function PHPUnit\Framework\isNull;
+
 class ProductsController extends Controller
 {
   /**
@@ -98,10 +100,11 @@ class ProductsController extends Controller
       $request->validate([
         'producto' => 'required',
         'precio' => 'min:0|required|numeric',
-        'descuento' => 'lt:' . $request->input('precio'),
+        // 'descuento' => 'lt:' . $request->input('precio'),
       ]);
 
       // Imagenes
+      $data['descuento'] = $data['descuento'] ?? 0; 
       $data['image_texture'] = $this->saveImg($request, 'image_texture');
       $data['imagen_ambiente'] = $this->saveImg($request, 'imagen_ambiente');
       $data['imagen'] = $this->saveImg($request, 'imagen');
@@ -197,7 +200,7 @@ class ProductsController extends Controller
 
       return redirect()->route('products.index')->with('success', 'Publicación creado exitosamente.');
     } catch (\Throwable $th) {
-      // dump($th->getMessage());
+      dump($th->getMessage());
     }
   }
 

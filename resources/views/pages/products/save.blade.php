@@ -237,7 +237,7 @@
                 </div>
                 <div class="md:col-span-5 flex justify-between gap-4">
                   <div class="w-full">
-                    <label for="precio">Precio</label>
+                    <label for="precio">Precio <span class="text-red-500 font-bold">*</span></label>
                     <div class="relative mb-2  mt-2">
                       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <i class="text-lg text-gray-500 dark:text-gray-400 fas fa-money-bill"></i>
@@ -245,7 +245,7 @@
                       <input type="number" id="precio" name="precio" value="{{ $product->precio }}"
                         step="0.1"
                         class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="precio">
+                        placeholder="precio" required>
                     </div>
 
                   </div>
@@ -280,12 +280,12 @@
                   </div>
                 </div>
                 <div class="md:col-span-5">
-                  <label for="categoria_id">Categoria</label>
+                  <label for="categoria_id">Categoria <span class="text-red-500 font-bold">*</span></label>
                   <div class="relative mb-2  mt-2">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <i class="text-lg text-gray-500 dark:text-gray-400 fas fa-folder"></i>
                     </div>
-                    <select id="categoria_id" name="categoria_id"
+                    <select id="categoria_id" name="categoria_id" required
                       class="mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <option value="">Seleccionar Categoria </option>
                       @foreach ($categoria as $item)
@@ -760,9 +760,10 @@
     })
 
     $('#categoria_id').on('change', function() {
+      console.log(this.value)
       const value = this.value
-      $('#subcategoria_id option[data-category]').prop('hidden', true)
-      $(`#subcategoria_id option[data-category="${value}"]`).prop('hidden', false)
+      $('#subcategory_id option[data-category]').prop('hidden', true)
+      $(`#subcategory_id option[data-category="${value}"]`).prop('hidden', false)
     })
   </script>
 </x-app-layout>

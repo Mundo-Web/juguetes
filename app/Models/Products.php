@@ -36,39 +36,37 @@ class Products extends Model
 
   public function categoria()
   {
-      return Category::find($this->categoria_id);
+    return Category::find($this->categoria_id);
   }
 
   public function subcategory()
   {
-      return Subcategory::find($this->subcategory_id);
+    return SubCategory::find($this->subcategory_id);
   }
 
-  public function galeria(){
+  public function galeria()
+  {
     return $this->hasMany(Galerie::class, 'product_id');
   }
 
   public function tags()
   {
-      return $this->belongsToMany(Tag::class, 'tags_xproducts', 'producto_id', 'tag_id');
+    return $this->belongsToMany(Tag::class, 'tags_xproducts', 'producto_id', 'tag_id');
   }
-  
+
   public function scopeActiveDestacado($query)
   {
-      return $query->where('status', true)->where('destacar', true);
+    return $query->where('status', true)->where('destacar', true);
   }
 
   public function attributeValues()
   {
-      return $this->hasMany(AttributesValues::class, 'product_id');
-                
+    return $this->hasMany(AttributesValues::class, 'product_id');
   }
-  
+
   public function attributes()
   {
-      return $this->belongsToMany(Attributes::class, 'attribute_product_values', 'product_id', 'attribute_id')
-          ->withPivot('attribute_value_id');
-          
+    return $this->belongsToMany(Attributes::class, 'attribute_product_values', 'product_id', 'attribute_id')
+      ->withPivot('attribute_value_id');
   }
-  
 }
