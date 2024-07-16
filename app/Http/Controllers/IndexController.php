@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateIndexRequest;
 use App\Models\Address;
 use App\Models\Attributes;
 use App\Models\AttributesValues;
+use App\Models\Blog;
 use App\Models\Faqs;
 use App\Models\General;
 use App\Models\Index;
@@ -66,10 +67,10 @@ class IndexController extends Controller
     $testimonie = Testimony::where('status', '=', 1)->where('visible', '=', 1)->get();
     $slider = Slider::where('status', '=', 1)->where('visible', '=', 1)->get();
     $category = Category::where('status', '=', 1)->where('destacar', '=', 1)->get();
-    
+    $posts = Blog::where('status', '=', 1)->where('visible', '=', 1)->get();
 
 
-    return view('public.index', compact('url_env', 'productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category'));
+    return view('public.index', compact('url_env', 'productos', 'destacados', 'descuentos', 'general', 'benefit', 'faqs', 'testimonie', 'slider', 'categorias', 'category', 'posts'));
   }
 
   public function catalogo(Request $request, ?string $category = '0', ?string $subcategory = '0')
@@ -165,6 +166,16 @@ class IndexController extends Controller
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
     return view('public.comentario', compact('comentarios', 'contarcomentarios', 'url_env', 'categorias', 'destacados'));
+  }
+
+  public function detalleBlog($id)
+  {
+      $post = Blog::where('status', '=', 1)->where('visible', '=', 1)->where('id', '=', $id)->first();
+      $meta_title = $post->meta_title ?? $post->title;
+      $meta_description = $post->meta_description  ?? Str::limit($post->extract, 160);
+      $meta_keywords = $post->meta_keywords ?? '';
+
+      return view('public.post', compact('meta_title','meta_description','meta_keywords','post'));
   }
 
   public function hacerComentario(Request $request)
@@ -1047,8 +1058,8 @@ class IndexController extends Controller
   public function librodereclamaciones()
   {
     $departamentofiltro = DB::select('select * from departments where active = ? order by 2', [1]);
-
-    return view('public.librodereclamaciones', compact('departamentofiltro'));
+    $categorias = Category::all();
+    return view('public.librodereclamaciones', compact('departamentofiltro', 'categorias'));
   }
 
   public function obtenerProvincia($departmentId)
@@ -1065,8 +1076,9 @@ class IndexController extends Controller
 
   public function politicasDevolucion()
   {
+    $categorias = Category::all();
     $politicDev = PolyticsCondition::first();
-    return view('public.politicasdeenvio', compact('politicDev'));
+    return view('public.politicasdeenvio', compact('politicDev', 'categorias'));
   }
 
   public function TerminosyCondiciones()

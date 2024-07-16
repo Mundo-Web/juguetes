@@ -29,6 +29,7 @@ use App\Http\Controllers\LogosClientController;
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LibroReclamacionesController;
+use App\Http\Controllers\NewsletterSubscriberController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PolyticsConditionController;
 use App\Http\Controllers\PriceController;
@@ -68,12 +69,13 @@ Route::get('/contacto', [IndexController::class, 'contacto'])->name('contacto');
 Route::get('/libro-de-reclamaciones', [IndexController::class, 'librodereclamaciones'])->name('librodereclamaciones');
 Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
 Route::get('/post', [IndexController::class, 'post'])->name('post');
-
+Route::get('/post/{id}', [IndexController::class, 'detalleBlog'])->name('detalleBlog');
 /* Proceso de pago */
 Route::get('/carrito', [IndexController::class, 'carrito'])->name('carrito');
 Route::get('/pago', [IndexController::class, 'pago'])->name('pago');
 Route::post('/procesar/pago', [IndexController::class, 'procesarPago'])->name('procesar.pago');
 Route::get('/agradecimiento', [IndexController::class, 'agradecimiento'])->name('agradecimiento');
+Route::post('/subscripciones/guardar', [NewsletterSubscriberController::class, 'saveSubscripciones'])->name('subscripciones.guardar');
 /* Catálogo y producto */
 Route::get('/producto/{id}', [IndexController::class, 'producto'])->name('producto');
 Route::get('/catalogo', [IndexController::class, 'catalogo'])->name('catalogo.all');
@@ -107,8 +109,12 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
 
         Route::resource('/terminos-y-condiciones', TermsAndConditionController::class);
 
-
+        //Suscripciones
+        Route::get('/subscripciones', [NewsletterSubscriberController::class, 'showSubscripciones'])->name('subscripciones');
+        
+        //Pedidos
         Route::resource('/pedidos', SaleController::class);
+        
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
@@ -135,6 +141,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::post('/categorias/updateVisible', [CategoryController::class, 'updateVisible'])->name('categorias.updateVisible');
         Route::get('/categorias/contarCategorias', [CategoryController::class, 'contarCategoriasDestacadas'])->name('categorias.contarCategoriasDestacadas');
 
+        //Subcategoria
         Route::resource('/subcategories', SubCategoryController::class);
         Route::delete('/subcategories', [SubCategoryController::class, 'delete'])->name('subcategories.delete');
         Route::post('/subcategories', [SubCategoryController::class, 'save'])->name('subcategories.save');
@@ -184,7 +191,7 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::post('/attributes/updateVisible', [AttributesController::class, 'updateVisible'])->name('attributes.updateVisible');
         Route::post('/attributes/borrar', [AttributesController::class, 'borrar'])->name('attributes.borrar');
 
-        //valores atributes
+        //Valores atributes
         Route::resource('/valoresattributes', ValoresAtributosController::class);
         Route::post('/valoresattributes/borrar', [ValoresAtributosController::class, 'borrar'])->name('valoresattributes.borrar');
         Route::post('/valoresattributes/updateVisible', [ValoresAtributosController::class, 'updateVisible'])->name('valoresattributes.updateVisible');

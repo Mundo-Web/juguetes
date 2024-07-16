@@ -103,7 +103,7 @@
                 <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
                     Destacados
                 </h2>
-                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todos
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a href="{{ route('catalogo.all') }}">Ver todos
                         los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
             </div>
 
@@ -145,7 +145,7 @@
                 <h2 class=" font-poppins font-bold text-3xl  leading-none text-colorJL">
                     En oferta
                 </h2>
-                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todos
+                <div  class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a href="{{ route('catalogo.all') }}">Ver todos
                         los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
             </div>
 
@@ -212,7 +212,8 @@
         </section>
        @endif  
 
-        
+       @if ($posts->isEmpty()) 
+       @else  
         <section class="py-12 lg:py-20 flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col lg:flex-row justify-start lg:justify-between items-start gap-10">
@@ -223,100 +224,20 @@
                         <p class="text-lg font-normal font-poppins text-colorJL">Nuestras últimas publicaciones</p>
                     </div>
 
-                    <div
+                    <a href="{{ route('blog', 0) }}"
                         class="flex flex-row items-center gap-1 px-5 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-auto">
-                        Ver más Publicaciones <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                        Ver más Publicaciones <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></a>
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-                    <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post3.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer
-                                    porta cursus metus,
-                                    sit amet malesuada</h2>
-                            </a>
-                            <p
-                                class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post2.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer
-                                    porta cursus metus,
-                                    sit amet malesuada</h2>
-                            </a>
-                            <p
-                                class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
-                            <p class="text-color3JL font-poppins font-normal text-sm">
-                                Leido hace 5 min
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post1.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer
-                                    porta cursus metus,
-                                    sit amet malesuada</h2>
-                            </a>
-                            <p
-                                class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
-                            <p class="text-color3JL font-poppins font-normal text-sm">
-                                Leido hace 5 min
-                            </p>
-
-                        </div>
-                    </div>
-
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                  @foreach ($posts as $post)
+                    <x-blog.container-post :post="$post" />  
+                  @endforeach   
                 </div>
             </div>
         </section>
-
+        @endif 
     </main>
 
 

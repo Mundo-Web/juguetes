@@ -67,6 +67,9 @@
             </x-slot>
           @endif
         </x-menu.item>
+         <x-menu.item id="subscripciones" href="{{ route('subscripciones') }}" icon="fas fa-comments">
+          Suscripciones
+        </x-menu.item>
         <x-menu.item id="reclamo" href="{{ route('reclamo.index') }}" icon="fas fa-comment-dots">
           Reclamaciones
           @if ($reclamo !== 0)

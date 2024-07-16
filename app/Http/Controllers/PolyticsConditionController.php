@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PolyticsCondition;
 use App\Http\Requests\StorePolyticsConditionRequest;
 use App\Http\Requests\UpdatePolyticsConditionRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PolyticsConditionController extends Controller
@@ -37,7 +38,8 @@ class PolyticsConditionController extends Controller
      * Display the specified resource.
      */
     public function show()
-    {
+    {   
+        
         $politicDev = PolyticsCondition::first();
         return view('public.popupPolyticsCondition', compact('politicDev'));
     }

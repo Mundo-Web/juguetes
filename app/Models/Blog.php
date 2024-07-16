@@ -17,6 +17,10 @@ class Blog extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function categoria()
+    {
+      return Category::find($this->category_id);
+    }
 
     public static function boot()
     {

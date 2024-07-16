@@ -12,8 +12,8 @@
                 <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
             </span>
         @endif
-        <h2 class="col-span-4 font-bold text-4xl leading-none md:leading-tight text-center pt-3">Libro de Reclamaciones</h2>
-        <form class="flex flex-col gap-5" id="formLibroReclamo" action="" method="POST" enctype='multipart/form-data'>
+        <h2 class="col-span-4 font-bold text-4xl leading-none md:leading-tight text-center pt-3 text-colorJL">Libro de Reclamaciones</h2>
+        <form class="flex flex-col gap-5 text-colorJL" id="formLibroReclamo " action="" method="POST" enctype='multipart/form-data'>
             <div class=" my-16 grid grid-cols-1  lg:grid-cols-4 gap-5 justify-center items-center">
                 @csrf
 
@@ -187,7 +187,7 @@
 
                 <div class="flex flex-row col-span-2 gap-2 ">
                     <input type="submit" value="Enviar a libro de reclamaciones" id="btnAjax"
-                        class="col-span-4 text-white bg-[#74A68D] py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block" />
+                        class="col-span-4 text-white bg-coloBkprimJl py-3 rounded-2xl cursor-pointer border-2 font-semibold text-[16px] text-center border-none w-full md:w-auto px-10 inline-block" />
                 </div>
 
             </div>
