@@ -111,12 +111,20 @@
             </div>
 
             <div class="flex flex-wrap gap-2 pb-5">
-                <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_facebook.svg') }}"
-                        alt="facebook" /></a>
-                <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_instagram.svg') }}"
-                        alt="instagram" /></a>
-                <a href="#"><img class="w-10" src="{{ asset('images/svg/jl_whatsapp2.svg') }}"
-                        alt="whatsapp" /></a>
+               
+                @if ($dato->facebook)
+                        <a href="{{ $dato->facebook }}" target="_blank"><img class="w-10"
+                                src="{{ asset('/images/svg/jl_facebook.svg') }}" alt="facebook" /></a>
+                @endif
+                @if ($dato->instagram)
+                        <a href="{{ $dato->instagram }}" target="_blank"><img class="w-10"
+                                src="{{ asset('/images/svg/jl_instagram.svg') }}" alt="instagram" /></a>
+                @endif
+                @if ($dato->whatsapp)
+                        <a href="{{ $dato->whatsapp }}" target="_blank"><img class="w-10" 
+                            src="{{ asset('/images/svg/jl_whatsapp2.svg') }}"
+                                alt="whatsapp" /></a>
+                @endif
             </div>
         </div>
     @endforeach

@@ -82,23 +82,17 @@ class IndexController extends Controller
     $rangeto = $request->query('rangeto');
     $url_env = env('APP_URL');
 
-
-
-
     try {
       $general = General::all();
       $faqs = Faqs::where('status', '=', 1)->where('visible', '=', 1)->get();
-
       $categorias = Category::all();
-
       $testimonie = Testimony::where('status', '=', 1)->where('visible', '=', 1)->get();
-
-
 
       if ($category == 0) {
         $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);
         $categoria = Category::all();
-      } else {
+        $valorparapintar = 0;
+      }else {
         $productos = Products::select('products.*')
           ->join('categories', 'products.categoria_id', '=', 'categories.id')
           ->where('categories.slug', '=', $category)
@@ -106,9 +100,10 @@ class IndexController extends Controller
           ->where('products.visible', '=', 1)
           ->paginate(9);
         $categoria = Category::where('slug', $category)->first();
+        $valorparapintar = $categoria->id;
       }
 
-      if ($rangefrom !== null && $rangeto !== null) {
+      if($rangefrom !== null && $rangeto !== null) {
 
         if ($category == 0) {
           $productos = Products::where('status', '=', 1)->where('visible', '=', 1)->paginate(9);

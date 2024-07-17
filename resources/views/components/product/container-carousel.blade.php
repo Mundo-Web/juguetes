@@ -13,13 +13,15 @@
             <div id="carouselproduct-{{ $item->id }}"  class="swiper carouselproduct ">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
+                        <a href="{{ route('producto', $item->id) }}"><img src="{{ asset($item->imagen) }}" alt="impresora"
                                 class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
                     </div>
-                    <div class="swiper-slide ">
-                        <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
-                    </div>
+                    @foreach ($item->galeria as $galeria)
+                        <div class="swiper-slide">
+                            <a href="{{ route('producto', $item->id) }}"><img src="{{ asset($galeria->imagen) }}" alt="galeria"
+                                    class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

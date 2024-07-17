@@ -66,10 +66,15 @@
                         data-aos-offset="150">
                         <div class="flex flex-col xl:flex-row justify-start md:justify-between items-start">
                          <div class="w-full xl:w-[70%] flex justify-start items-start">   
-                          <h2 class="font-poppins font-bold text-3xl text-colorJL">Nombre de producto</h2>
+                          <h2 class="font-poppins font-bold text-3xl text-colorJL">{{ $product->producto }}</h2>
                          </div>
-                         <div class="w-full xl:w-[30%] flex justify-start xl:justify-end items-start">
-                          <p class="font-poppins font-bold text-3xl text-color3JL">S/ 1213.00</p>
+                         <div class="w-full xl:w-[30%] flex flex-col justify-start xl:justify-end items-start">
+                          @if ($product->descuento > 0)
+                           <p class="font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->descuento }}</p>
+                           <p class="font-poppins font-bold text-xl text-color4JL line-through">S/ {{ $product->precio }}</p> 
+                          @else
+                           <p class="font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->precio }}</p> 
+                          @endif
                          </div>
                         </div>
                         <div>
@@ -77,12 +82,10 @@
                                 step="1">
                         </div>
 
-                        <p class="text-[#565656] text-text16 md:text-text20 font-normal font-poppins">
-                        Nullam nec iaculis libero, vitae commodo magna. Quisque tincidunt dolor et augue tempus, vitae interdum purus interdum. Mauris sagittis risus ac purus mollis efficitur. Sed maximus aliquam lectus, id luctus justo luctus ut.
-                        </p> 
-                        <p class="text-[#565656] text-text16 md:text-text20 font-normal font-poppins"> 
-                        Aliquam bibendum molestie nibh, ac bibendum mi semper sed. Aenean purus velit, posuere vitae dolor eget, tincidunt efficitur.
-                        </p>
+                        <div class="text-[#565656] text-text16 md:text-text20 font-normal font-poppins">
+                            {!! $product->extract !!}
+                        </div> 
+   
 
                         <div class="flex justify-between items-center font-poppins font-semibold text-white text-sm  md:text-base gap-5 pt-3"
                             data-aos="fade-up" data-aos-offset="150">
@@ -106,7 +109,7 @@
 
                     <div class="pt-5" data-aos="fade-up" data-aos-offset="150">
                         <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
-                            Categoría: <span class="text-color2JL">Categoría</span>
+                            Categoría: <span class="text-color2JL"></span>
                         </p>
                         <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
                             SKU: <span class="text-color2JL">Cod.1235</span>

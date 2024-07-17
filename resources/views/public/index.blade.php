@@ -127,9 +127,11 @@
                     <h3 class="font-poppins font-bold text-colorJL text-4xl">{{$beneficios->descripcionshort}}</h3>
                 </div>
                 <div class="font-poppins font-normal text-colorJL text-xl">{!!$beneficios->descripcion!!}</div>
+               @if (isset($beneficios->link1) && isset($beneficios->botontext1) && !empty($beneficios->link1) && !empty($beneficios->botontext1))
                 <a href="{{$beneficios->link1}}"><div
                     class="flex flex-row items-center gap-1 px-5 py-3 text-base text-white bg-coloBkprimJl font-poppins font-bold rounded-3xl w-auto">
-                    {{$beneficios->botontext1}} <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div></a>
+                    {{$beneficios->botontext1}} <img src="{{ asset('/images/svg/jl_flechablanca.svg') }}" /></div></a>
+               @endif 
                @endforeach
             </div>
             <div class="flex flex-col items-end justify-end w-[100%] lg:w-[60%] p-0">
