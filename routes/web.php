@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AttributesController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DashboardController;
@@ -40,6 +41,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StrengthController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ValoresAtributosController;
 
 use App\Http\Controllers\TagController;
@@ -67,8 +69,8 @@ Route::get('/comentario', [IndexController::class, 'comentario'])->name('comenta
 Route::post('/comentario/nuevo', [IndexController::class, 'hacerComentario'])->name('nuevocomentario');
 Route::get('/contacto', [IndexController::class, 'contacto'])->name('contacto');
 Route::get('/libro-de-reclamaciones', [IndexController::class, 'librodereclamaciones'])->name('librodereclamaciones');
-Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
-Route::get('/post', [IndexController::class, 'post'])->name('post');
+Route::get('/blog/{filtro}', [IndexController::class, 'blog'])->name('blog');
+// Route::get('/post', [IndexController::class, 'post'])->name('post');
 Route::get('/post/{id}', [IndexController::class, 'detalleBlog'])->name('detalleBlog');
 /* Proceso de pago */
 Route::get('/carrito', [IndexController::class, 'carrito'])->name('carrito');
@@ -86,6 +88,9 @@ Route::post('carrito/buscarProducto', [CarritoController::class, 'buscarProducto
 Route::get('/404', [IndexController::class, 'error'])->name('error');
 /* Formulario de contacto */
 Route::post('guardarContactos', [IndexController::class, 'guardarContacto'])->name('guardarContactos');
+
+Route::post('guardarProveedor', [IndexController::class, 'guardarProveedor'])->name('guardarProveedor');
+
 Route::post('guardarformulario', [LibroReclamacionesController::class, 'storePublic'])->name('guardarFormReclamo');
 
 Route::get('/obtenerProvincia/{departmentId}', [IndexController::class, 'obtenerProvincia'])->name('obtenerProvincia');
@@ -118,6 +123,11 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         //messages
         Route::resource('/mensajes', MessageController::class);
         Route::post('/mensajes/borrar', [MessageController::class, 'borrar'])->name('mensajes.borrar');
+
+        //Solicitud Proveedor
+        Route::resource('/proveedores', SupplierController::class);
+        Route::post('/proveedores/borrar', [SupplierController::class, 'borrar'])->name('proveedores.borrar');
+        Route::post('/proveedores/verify', [SupplierController::class, 'createProveedor'])->name('createProveedor');
 
         //Libro de reclamaciones
         Route::resource('/reclamo', LibroReclamacionesController::class);
@@ -222,6 +232,10 @@ Route::middleware(['auth:sanctum', 'verified', 'can:Admin'])->group(function () 
         Route::post('/galerie', [GalerieController::class, 'store'])->name('galerie.store');
         Route::post('/galerie/updateVisible', [GalerieController::class, 'updateVisible'])->name('galerie.updateVisible');
         Route::post('/galerie/borrar', [GalerieController::class, 'borrar'])->name('galerie.borrar');
+
+        Route::resource('/banners', BannerController::class);
+        Route::post('/banners/deleteBanner', [BannerController::class, 'store'])->name('banners.deleteBanner');
+        Route::post('/banners/updateVisible', [BannerController::class, 'store'])->name('banner.updateVisible');
 
         Route::fallback(function () {
             return view('pages/utility/404');

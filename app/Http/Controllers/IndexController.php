@@ -25,6 +25,7 @@ use App\Models\Price;
 use App\Models\Sale;
 use App\Models\Specifications;
 use App\Models\Status;
+use App\Models\Supplier;
 use App\Models\TermsAndCondition;
 use App\Models\User;
 use App\Models\UserDetails;
@@ -164,13 +165,15 @@ class IndexController extends Controller
   }
 
   public function detalleBlog($id)
-  {
+  {   
+      $categorias = Category::where('status', '=', 1)->where('visible', '=', 1)->get();
       $post = Blog::where('status', '=', 1)->where('visible', '=', 1)->where('id', '=', $id)->first();
+      $postsrelacionados = Blog::where('status', '=', 1)->where('visible', '=', 1)->get();
       $meta_title = $post->meta_title ?? $post->title;
       $meta_description = $post->meta_description  ?? Str::limit($post->extract, 160);
       $meta_keywords = $post->meta_keywords ?? '';
 
-      return view('public.post', compact('meta_title','meta_description','meta_keywords','post'));
+      return view('public.post', compact('meta_title','meta_description','meta_keywords','post', 'categorias', 'postsrelacionados'));
   }
 
   public function hacerComentario(Request $request)
@@ -205,13 +208,13 @@ class IndexController extends Controller
 
   public function contacto()
   {
-    $general = General::all();
+    $datosgenerales = General::all();
     $categorias = Category::all();
     $url_env = env('APP_URL');
     $destacados = Products::where('destacar', '=', 1)->where('status', '=', 1)
       ->where('visible', '=', 1)->with('tags')->activeDestacado()->get();
 
-    return view('public.contact', compact('general', 'url_env', 'categorias', 'destacados'));
+    return view('public.contact', compact('datosgenerales', 'url_env', 'categorias', 'destacados'));
   }
 
   public function carrito()
@@ -460,6 +463,8 @@ class IndexController extends Controller
     }
   }
 
+ 
+
   public function actualizarPerfil(Request $request)
   {
 
@@ -683,26 +688,50 @@ class IndexController extends Controller
   {
 
     $data = $request->all();
-    $data['full_name'] = $request->name . ' ' . $request->last_name;
+    // $data['full_name'] = $request->name . ' ' . $request->last_name;
 
     try {
       $reglasValidacion = [
-        'name' => 'required|string|max:255',
+        'full_name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
       ];
       $mensajes = [
-        'name.required' => 'El campo nombre es obligatorio.',
+        'full_name.required' => 'El campo nombre es obligatorio.',
         'email.required' => 'El campo correo electrónico es obligatorio.',
         'email.email' => 'El formato del correo electrónico no es válido.',
-        'email.max' => 'El campo correo electrónico no puede tener más de :max caracteres.',
       ];
       $request->validate($reglasValidacion, $mensajes);
       $formlanding = Message::create($data);
-      $this->envioCorreo($formlanding);
+      // $this->envioCorreo($formlanding);
 
       return response()->json(['message' => 'Mensaje enviado con exito']);
     } catch (ValidationException $e) {
 
+      return response()->json(['message' => $e->validator->errors()], 400);
+    }
+  }
+
+
+  public function guardarProveedor(Request $request)
+  {
+    $data = $request->all();
+    // $data['full_name'] = $request->name . ' ' . $request->last_name;
+    try {
+      $reglasValidacion = [
+        'full_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+      ];
+      $mensajes = [
+        'full_name.required' => 'El campo nombre es obligatorio.',
+        'email.required' => 'El campo correo electrónico es obligatorio.',
+        'email.email' => 'El formato del correo electrónico no es válido.',
+      ];
+      $request->validate($reglasValidacion, $mensajes);
+      $formlanding = Supplier::create($data);
+      // $this->envioCorreo($formlanding);
+
+      return response()->json(['message' => 'Mensaje enviado con exito']);
+    } catch (ValidationException $e) {
       return response()->json(['message' => $e->validator->errors()], 400);
     }
   }
@@ -1082,18 +1111,36 @@ class IndexController extends Controller
     return view('public.terminosycondiciones', compact('termsAndCondicitions'));
   }
 
-  public function blog()
-  {
-    $categorias = Category::all();
+  public function blog($filtro)
+  { 
+    $posts = Blog::where('status', '=', 1)->where('visible', '=', 1)->get();
+    $categorias = Category::where('status', '=', 1)->where('visible', '=', 1)->get();
     $url_env = env('APP_URL');
-    return view('public.blog', compact('url_env', 'categorias'));
+
+      if ($filtro == 0) {
+          $posts = Blog::where('status', '=', 1)->where('visible', '=', 1)->get();
+
+          $categoria = Category::where('status', '=', 1)->where('visible', '=', 1)->get();
+
+          $lastpost = Blog::where('status', '=', 1)->where('visible', '=', 1)->orderBy('created_at', 'desc')->first();
+      } else {
+          $posts = Blog::where('status', '=', 1)->where('visible', '=', 1)->where('category_id', '=', $filtro)->get();
+
+          $categoria = Category::where('status', '=', 1)->where('visible', '=', 1)->where('id', '=', $filtro)->get();
+
+          $lastpost = Blog::where('status', '=', 1)->where('visible', '=', 1)->orderBy('created_at', 'desc')->where('category_id', '=', $filtro)->first();
+      }
+
+    return view('public.blog', compact('url_env', 'categorias', 'posts', 'filtro', 'lastpost'));
   }
 
-  public function post()
-  {
-    $categorias = Category::all();
-    $url_env = env('APP_URL');
-    return view('public.post', compact('url_env', 'categorias'));
-  }
+  // public function post()
+  // {
+  //   $categorias = Category::all();
+  //   $url_env = env('APP_URL');
+  //   return view('public.post', compact('url_env', 'categorias'));
+  // }
 
 }
+
+

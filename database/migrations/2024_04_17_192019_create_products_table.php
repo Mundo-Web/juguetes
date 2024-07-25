@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('precio', 12, 2)->default(0);
             $table->decimal('descuento', 12, 2)->default(0);
+            $table->decimal('proveedor', 12, 2)->default(0);
             $table->decimal('stock', 12, 2)->default(0);
             $table->decimal('costo_x_art', 12, 2)->default(0);
             $table->decimal('peso', 12, 2)->default(0);

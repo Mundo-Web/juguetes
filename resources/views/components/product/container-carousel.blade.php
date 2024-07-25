@@ -14,12 +14,12 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <a href="{{ route('producto', $item->id) }}"><img src="{{ asset($item->imagen) }}" alt="impresora"
-                                class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
+                                class="w-full h-[180px] 2xs:w-full 2xs:h-[220px]  sm:h-[300px] xl:h-[300px] 2xl:h-[400px] object-cover"></a>
                     </div>
                     @foreach ($item->galeria as $galeria)
                         <div class="swiper-slide">
                             <a href="{{ route('producto', $item->id) }}"><img src="{{ asset($galeria->imagen) }}" alt="galeria"
-                                    class="w-[150px] h-[180px] 2xs:w-full 2xs:h-[250px]  sm:h-[400px] xl:h-[350px] 2xl:h-[400px] object-cover"></a>
+                                    class="w-full h-[180px] 2xs:w-full 2xs:h-[220px]  sm:h-[300px] xl:h-[300px] 2xl:h-[400px] object-cover"></a>
                         </div>
                     @endforeach
                 </div>

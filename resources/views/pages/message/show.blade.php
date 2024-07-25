@@ -16,6 +16,9 @@
               <p class="font-bold">Correo:</p>
               <p> {{ $message->email }} </p>
               <br>
+              <p class="font-bold">Teléfono:</p>
+              <p> {{ $message->phone }} </p>
+              <br>
               <p class="font-bold">Mensaje:</p>
               <p class="mb-5">
                 {{ $message->message }}

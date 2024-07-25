@@ -105,6 +105,7 @@ class ProductsController extends Controller
 
       // Imagenes
       $data['descuento'] = $data['descuento'] ?? 0; 
+      $data['proveedor'] = $data['proveedor'] ?? 0; 
       $data['image_texture'] = $this->saveImg($request, 'image_texture');
       $data['imagen_ambiente'] = $this->saveImg($request, 'imagen_ambiente');
       $data['imagen'] = $this->saveImg($request, 'imagen');

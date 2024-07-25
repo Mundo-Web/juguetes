@@ -327,12 +327,12 @@
                         </a>
 
 
-                        <a href="{{ route('blog') }}"
+                        <a href="{{ route('blog', 0) }}"
                             class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
                             <span class="underline-this">Ofertas</span>
                         </a>
 
-                        <a href="{{ route('post') }}"
+                        <a href="#"
                             class="py-5  font-medium font-poppins px-3 text-text16 hover:opacity-75 {{ $pagina == 'comentario' ? 'text-[#FF5E14]' : '' }}">
                             <span class="underline-this">Mayoristas & Corporativos</span>
                         </a>

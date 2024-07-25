@@ -12,6 +12,7 @@ class Products extends Model
     'producto',
     'precio',
     'descuento',
+    'proveedor',
     'stock',
     'imagen',
     'imagen_2',

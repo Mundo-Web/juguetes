@@ -79,7 +79,7 @@ var carrouselBeneficios = new Swiper(".myBeneficios", {
 /* --------------------------------------------- */
 
 var carrosuelDestacados = new Swiper('.productos-home', {
-  slidesPerView: 2,
+  slidesPerView: 4,
   spaceBetween: 20,
   loop: true,
   grab: false,
@@ -98,21 +98,15 @@ var carrosuelDestacados = new Swiper('.productos-home', {
     el: '.swiper-scrollbar-productos-home',
   },
   breakpoints: {
-    512: {
+    0: {
       slidesPerView: 2
     },
     640: {
       slidesPerView: 3
     },
-    768: {
-      slidesPerView: 4
-    },
     1024: {
-      slidesPerView: 5
-    },
-    1280: {
-      slidesPerView: 6
-    },
+      slidesPerView: 4
+    }
   },
 });
 

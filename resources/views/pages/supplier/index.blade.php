@@ -3,9 +3,9 @@
         
         <div class="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
             <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-                <h2 class="font-semibold text-slate-800 dark:text-slate-100 text-2xl tracking-tight">Mis Mensajes</h2>
+                <h2 class="font-semibold text-slate-800 dark:text-slate-100 text-2xl tracking-tight">Solicitud de proveedores</h2>
             </header>
-            <div class="p-3">
+            <div class="p-3">  
         
                 <!-- Table -->
                 <div class="overflow-x-auto">
@@ -20,14 +20,13 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach($mensajes as $item)
                                 <tr>
                                     <td class="dark:bg-slate-800">
                                         @if($item->is_read == "0")
-                                            <a href="{{ route('mensajes.show', $item->id) }}"><span class="mr-4"><i class="fa-regular fa-envelope"></i></span><span class="font-bold dark:text-white">{{$item->full_name}}</span></a>
+                                            <a href="{{ route('proveedores.show', $item->id) }}"><span class="mr-4"><i class="fa-regular fa-envelope"></i></span><span class="font-bold dark:text-white">{{$item->full_name}}</span></a>
                                         @else
-                                            <a href="{{ route('mensajes.show', $item->id) }}"><span class="mr-4"><i class="fa-regular fa-envelope-open"></i></span><span>{{$item->full_name}}</span></a>
+                                            <a href="{{ route('proveedores.show', $item->id) }}"><span class="mr-4"><i class="fa-regular fa-envelope-open"></i></span><span>{{$item->full_name}}</span></a>
                                         @endif
                                         
                                     </td>
@@ -40,7 +39,6 @@
                                     </td>
                                 </tr>    
                             @endforeach
-                            
                         </tbody>
                         <tfoot>
                             <tr>

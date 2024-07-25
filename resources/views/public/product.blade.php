@@ -37,27 +37,16 @@
         @csrf
 
         <section class="w-full px-[5%] py-12 md:py20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
-                <div class="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-0">
-                    <div
-                        class="flex flex-row justify-between md:flex-col md:justify-start md:items-center h-full md:gap-10 md:basis-1/4 order-2 md:order-1 w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+                <div class="flex flex-col justify-center items-center gap-5">
 
-                        <img src="{{ asset('/images/img/jl_producto1.png') }}" alt="computer"
-                            class="w-[70px] h-[90px] object-cover" data-aos="fade-up" data-aos-offset="150">
-                        <img src="{{ asset('/images/img/jl_producto1.png') }}" alt="computer"
-                            class="w-[70px] h-[90px] object-cover" data-aos="fade-up" data-aos-offset="150">
-                        <img src="{{ asset('/images/img/jl_producto1.png') }}" alt="computer"
-                            class="w-[70px] h-[90px] object-cover" data-aos="fade-up" data-aos-offset="150">
-                        <img src="{{ asset('/images/img/jl_producto1.png') }}" alt="computer"
-                            class="w-[70px] h-[90px] object-cover" data-aos="fade-up" data-aos-offset="150">
-
-
-                    </div>
-
-                    <div class="md:basis-3/4 flex justify-center items-center order-1 md:order-2 w-full">
-                        <img src="{{ asset('/images/img/jl_producto1.png') }}" alt="computer" class="w-full h-full"
+                    <div id="containerProductosdetail" class="w-full flex justify-center items-center h-[330px] 2xs:h-[400px] sm:h-[450px] xl:h-[550px] rounded-3xl overflow-hidden">
+                        <img src="{{ asset($product->imagen) }}" alt="computer" class="w-full h-full object-cover"
                             data-aos="fade-up" data-aos-offset="150">
                     </div>
+                    
+                    <x-product-slider :product="$product" />
+
                 </div>
 
                 <div class="flex flex-col gap-5">
@@ -66,24 +55,24 @@
                         data-aos-offset="150">
                         <div class="flex flex-col xl:flex-row justify-start md:justify-between items-start">
                          <div class="w-full xl:w-[70%] flex justify-start items-start">   
-                          <h2 class="font-poppins font-bold text-3xl text-colorJL">{{ $product->producto }}</h2>
+                          <h2 id="nombreproducto" class="font-poppins font-bold text-3xl text-colorJL">{{ $product->producto }}</h2>
                          </div>
                          <div class="w-full xl:w-[30%] flex flex-col justify-start xl:justify-end items-start">
                           @if ($product->descuento > 0)
-                           <p class="font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->descuento }}</p>
-                           <p class="font-poppins font-bold text-xl text-color4JL line-through">S/ {{ $product->precio }}</p> 
+                           <p id="pricediscount" class="font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->descuento }}</p>
+                           <p class="pricenormal font-poppins font-bold text-xl text-color4JL line-through">S/ {{ $product->precio }}</p> 
                           @else
-                           <p class="font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->precio }}</p> 
+                           <p class="pricenormal font-poppins font-bold text-3xl text-color3JL">S/ {{ $product->precio }}</p> 
                           @endif
                          </div>
                         </div>
                         <div>
-                            <input type="number" id="cantidadInput" class="text-color2JL border-2 rounded-lg w-16 border-[#FF3131]" value="01"
+                            <input type="number" id="cantidadSpan" class="text-color2JL border-2 rounded-lg w-16 border-[#FF3131]" value="01"
                                 step="1">
                         </div>
 
                         <div class="text-[#565656] text-text16 md:text-text20 font-normal font-poppins">
-                            {!! $product->extract !!}
+                             {{$product->extract }}
                         </div> 
    
 
@@ -91,8 +80,8 @@
                             data-aos="fade-up" data-aos-offset="150">
                             <button href="#" id='btnAgregarCarrito'
                                 class="bg-[#0051FF] w-full py-3 px-2 md:px-10 text-center rounded-3xl">Quiero comprar</button>
-                            <a href="#"
-                                class="bg-[#25D366] flex justify-center items-center w-full py-3 px-2 md:px-10 text-center gap-2 rounded-3xl">
+                            <a  id="chatonline"
+                                class="bg-[#25D366] flex justify-center items-center w-full py-3 px-2 md:px-10 text-center gap-2 rounded-3xl cursor-pointer">
                                 <span>Cotizar aquí</span>
                                 <div>
                                     <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
@@ -108,222 +97,89 @@
 
 
                     <div class="pt-5" data-aos="fade-up" data-aos-offset="150">
-                        <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
-                            Categoría: <span class="text-color2JL"></span>
-                        </p>
-                        <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
-                            SKU: <span class="text-color2JL">Cod.1235</span>
-                        </p>
-                        <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
+                        @if (!empty(($product->categoria()->name)))
+                            <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
+                                Categoría: <span class="text-color2JL">{{$product->categoria()->name}}</span>
+                            </p>
+                        @endif
+                        {{-- <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
+                            SKU: <span class="text-color2JL">{{$product->sku}}</span>
+                        </p> --}}
+                        {{-- <p class="font-poppins font-medium text-sm md:text-base text-colorJL">
                             Marca:
                             <span class="text-color2JL">
                                 Marca</span>
 
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-5 pt-10 md:pt-16 font-poppins font-bold text-3xl text-colorJL pb-5" data-aos="fade-up" data-aos-offset="150">
-                Descripción
-            </div>
-
-            <div class="text-[#565656] text-base font-normal font-poppins" data-aos="fade-up" data-aos-offset="150">
-                <p>Nullam nec iaculis libero, vitae commodo magna. Quisque tincidunt dolor et augue tempus, 
-                vitae interdum purus interdum. Mauris sagittis risus ac purus mollis efficitur. Sed maximus 
-                aliquam lectus, id luctus justo luctus ut. Nunc vestibulum quam erat, a imperdiet nunc sodales 
-                elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; 
-                Suspendisse pellentesque sem commodo erat mollis dictum vel sit amet augue. Aliquam bibendum molestie 
-                nibh, ac bibendum mi semper sed. Aenean purus velit, posuere vitae dolor eget, tincidunt efficitur ante. 
-                Nullam fermentum placerat sem quis laoreet.</p>
-                <br>
-                <p>Nullam nec iaculis libero, vitae commodo magna. Quisque tincidunt dolor et augue tempus, 
-                vitae interdum purus interdum. Mauris sagittis risus ac purus mollis efficitur. Sed maximus 
-                aliquam lectus, id luctus justo luctus ut. Nunc vestibulum quam erat, a imperdiet nunc sodales 
-                elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; 
-                Suspendisse pellentesque sem commodo erat mollis dictum vel sit amet augue. Aliquam bibendum molestie 
-                nibh, ac bibendum mi semper sed. Aenean purus velit, posuere vitae dolor eget, tincidunt efficitur ante. 
-                Nullam fermentum placerat sem quis laoreet.</p>  
-            </div>
-            <div class="flex flex-col gap-5">
-                <h3 class="flex flex-col gap-5 pt-10 md:pt-16 font-poppins font-bold text-3xl text-colorJL">Características técnicas</h3>
-                <div class="mx-6" data-aos="fade-up" data-aos-offset="150">
-                    <ul class="font-poppins font-normal text-base list-disc text-[#565656]">
-                        <li>
-                            Característica 1: Descripción 1
-                        </li>
-                        <li>
-                            Característica 2: Descripción 2
-                        </li>
-                        <li>
-                            Característica 3: Descripción 3
-                        </li>
-                        <li>
-                            Característica 4: Descripción 4
-                        </li>
-                    </ul>
+            @if (!empty(strip_tags($product->description)))
+                <div class="flex flex-col gap-5 pt-10 md:pt-16 font-poppins font-bold text-3xl text-colorJL pb-5" data-aos="fade-up" data-aos-offset="150">
+                    Descripción
                 </div>
-            </div>
+
+                <div class="text-[#565656] text-base font-normal font-poppins" data-aos="fade-up" data-aos-offset="150">
+                    {!! $product->description !!}
+                </div> 
+            @endif
+            
+            @if (!$especificaciones->isEmpty())
+                <div class="flex flex-col gap-5">
+                    <h3 class="flex flex-col gap-5 pt-10 md:pt-16 font-poppins font-bold text-3xl text-colorJL">Características técnicas</h3>
+                    <div class="mx-6" data-aos="fade-up" data-aos-offset="150">
+                        <ul class="font-poppins font-normal text-base list-disc text-[#565656]">
+                        @foreach ($especificaciones as $especificacion)
+                        <li>
+                                {{ $especificacion->tittle }}: {{ $especificacion->specifications }}
+                            </li> 
+                        @endforeach 
+                        </ul>
+                    </div>
+                </div> 
+            @endif    
+            
         </section>
 
-        <section class="pt-5 pb-20 md:pt-10  flex flex-col gap-12 relative w-full px-[5%] lg:px-[5%]">
+        @if ($ProdComplementarios->isEmpty()) 
+        @else
+        <section class="pt-5 pb-20 md:pt-10 gap-12 relative w-full px-[5%] lg:px-[5%]">
             <div class="flex flex-col gap-4 md:flex-row justify-between">
                 <h2 class="font-poppins font-bold text-3xl  leading-none text-colorJL">
                     Productos relacionados
                 </h2>
-                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a>Ver todos
+                <div class="font-bold font-poppins text-base text-color2JL flex flex-row items-center gap-2"><a href="{{ route('catalogo.all') }}">Ver todos
                         los productos</a><img src="{{ asset('/images/svg/jl_arrow.svg') }}" /></div>
             </div>
 
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+            {{-- <div class="flex gap-5 lg:gap-8"> --}}
 
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
+                <div class="productos-home swiper my-5 mt-16">
+                    <div class="swiper-wrapper mt-2 mb-4">
+                      @foreach ($ProdComplementarios as $item)
+                        <div class="swiper-slide rounded-2xl">
+                          <x-product.container-carousel :item="$item" />
                         </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
+                      @endforeach
                     </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-4" data-aos="fade-up" data-aos-offset="150">
-                    <div
-                        class="bg-[#F3F3F3] flex flex-col justify-center pt-5 gap-20 relative rounded-xl lg:rounded-3xl overflow-hidden">
-                        <div class="flex justify-start items-center absolute top-[5%] left-[5%]">
-
-                            <span
-                                class="font-poppins font-medium text-xs md:text-base bg-coloBkprimJl text-white py-1 px-2 rounded-xl">
-                                -20%</span>
-
-                        </div>
-                        <div class="flex justify-center items-center py-6 md:py-3 xl:py-10">
-                            <a href="#"><img src="{{ asset('/images/img/jl_producto1.png') }}" alt="impresora"
-                                    class="w-[150px] h-[110px] 2xs:w-auto 2xs:h-auto object-cover"></a>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex flex-col gap-1">
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL">Categoria</h3>
-                            <a href="#">
-                                <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Nombre del
-                                    producto</h2>
-                            </a>
-
-                            <p
-                                class="text-sm font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                            <p class="text-colorJL text-lg md:text-2xl font-poppins font-bold pt-1">
-                                S/ 89.99
-                            </p>
-                        </div>
-                    </div>
-
-                </div>  
-            </div>
+                    {{-- <div class="swiper-scrollbar-productos-home h-2"></div>
+                    <div class="mt-4 text-end">
+                      <button type="button"
+                        class="swiper-button-prev-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                        ←
+                      </button>
+                      <button type="button"
+                        class="swiper-button-next-productos-home text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-4 py-2 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 ">
+                        →
+                      </button>
+                    </div> --}}
+                  </div>
+                  
+            {{-- </div> --}}
 
         </section>
-
+        @endif 
 
 
 
@@ -376,21 +232,57 @@
         }
         // })
         $('#disminuir').on('click', function() {
-            let cantidad = Number($('#cantidadSpan span').text())
+            let cantidad = Number($('#cantidadSpan ').val())
             if (cantidad > 0) {
                 cantidad--
-                $('#cantidadSpan span').text(cantidad)
+                $('#cantidadSpan').text(cantidad)
             }
 
 
         })
         // cantidadSpan
         $('#aumentar').on('click', function() {
-            let cantidad = Number($('#cantidadSpan span').text())
+            let cantidad = Number($('#cantidadSpan').val())
             cantidad++
-            $('#cantidadSpan span').text(cantidad)
+            $('#cantidadSpan').text(cantidad)
 
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#chatonline').click(function() {
+
+                function isMobile() {
+                    if (sessionStorage.desktop)
+                        return false;
+                    else if (localStorage.mobile)
+                        return true;
+                    var mobile = ['iphone', 'ipad', 'android', 'blackberry', 'nokia', 'opera mini',
+                        'windows mobile', 'windows phone', 'iemobile'
+                    ];
+                    for (var i in mobile)
+                        if (navigator.userAgent.toLowerCase().indexOf(mobile[i].toLowerCase()) > 0)
+                            return true;
+                    return false;
+                }
+
+                setTimeout(function() {
+                    let currentUrl = window.location.href;
+                    let price = $('#nombreproducto').text();
+                    let telefono2 = '+51917994653';
+                    let nombre2 = $('#nombreproducto').text();
+                    let mensaje2 = 'send?phone=' + telefono2 +
+                        '&text=Hola, quiero comunicarme con un asesor.%0AEstoy interesad@ en el producto *' +
+                        nombre2 + '*.%0A' + currentUrl;
+
+                    if (isMobile()) {
+                        window.open('https://api.whatsapp.com/' + mensaje2, '_blank');
+                    } else {
+                        window.open('https://web.whatsapp.com/' + mensaje2, '_blank');
+                    }
+                }, 200);
+            });
+        });
     </script>
     <script>
         let articulosCarrito = [];
@@ -478,7 +370,7 @@
             let url = window.location.href;
             let partesURl = url.split('/')
             let item = partesURl[partesURl.length - 1]
-            let cantidad = Number($('#cantidadSpan span').text())
+            let cantidad = Number($('#cantidadSpan').val())
             item = item.replace('#', '')
 
 
@@ -573,17 +465,17 @@
         // })
     </script>
 
-    <script>
-        var swiper2 = new Swiper(".product-prev", {
-            loop: true,
-            spaceBetween: 32,
-            effect: "fade",
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-    </script>
+    // <script>
+    //     var swiper2 = new Swiper(".product-prev", {
+    //         loop: true,
+    //         spaceBetween: 32,
+    //         effect: "fade",
+    //         pagination: {
+    //             el: '.swiper-pagination',
+    //             clickable: true,
+    //         },
+    //     });
+    // </script>
 
     <script type="text/javascript">
         // $('#product-swiper').on('click', (e) => {

@@ -10,49 +10,29 @@
         <section class="w-full px-[5%] flex flex-col gap-10 pt-10" data-aos="fade-up" data-aos-offset="150">
             <div class="flex flex-col gap-6">
                 <div class="flex flex-row gap-3 justify-start lg:justify-center items-center">
-                    <h3 class="font-semibold font-poppins text-base text-color3JL">Categoría</h3>
+                    <h3 class="font-semibold font-poppins text-base text-color3JL">{{ $post->categories->name }}</h3>
                     <span class="font-bold text-2xl -mt-3">.</span>
-                    <p class="font-semibold font-poppins text-base text-color3JL">24 de Agosto 1996</p>
+                    <p class="font-semibold font-poppins text-base text-color3JL">{{ \Carbon\Carbon::parse($post->created_at)->translatedFormat('d F, Y') }}</p>
                 </div>
 
                 <div class="flex flex-row gap-3 justify-center items-center max-w-5xl mx-auto">
                     <h2
                         class="font-bold font-poppins text-3xl lg:text-5xl text-colorJL leading-tight tracking-tight lg:text-center">
-                        Nunc lacinia ultrices quam ut volutpat. Curabitur quis porttitor nulla
+                        {{$post->title}}
                     </h2>
                 </div>
-
-                <div class="w-full mt-2" data-aos="fade-up" data-aos-offset="150">
-                    <img src="{{ asset('images/img/jl_blog.png') }}" alt="catedral"
-                        class="w-full h-[400px] lg:h-[563px] object-cover rounded-xl" />
-                </div>
+                
+                @if($post->url_image)
+                    <div class="w-full mt-2" data-aos="fade-up" data-aos-offset="150">
+                        <img src="{{asset($post->url_image . $post->name_image)}}" alt="catedral"
+                            class="w-full h-[400px] lg:h-[563px] object-cover rounded-xl" />
+                    </div>
+                @endif
 
 
                 <div class="flex flex-col gap-6 text-colorJL py-4 text-base font-normal font-poppins" data-aos="fade-up"
                     data-aos-offset="150">
-
-                    <p>Nullam nec iaculis libero, vitae commodo magna. Quisque tincidunt dolor et augue tempus,
-                        vitae interdum purus interdum. Mauris sagittis risus ac purus mollis efficitur. Sed maximus
-                        aliquam lectus, id luctus justo luctus ut. Nunc vestibulum quam erat, a imperdiet nunc sodales
-                        elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                        curae;
-                        Suspendisse pellentesque sem commodo erat mollis dictum vel sit amet augue. Aliquam bibendum
-                        molestie
-                        nibh, ac bibendum mi semper sed. Aenean purus velit, posuere vitae dolor eget, tincidunt
-                        efficitur ante.
-                        Nullam fermentum placerat sem quis laoreet.</p>
-
-                    <p>Nullam nec iaculis libero, vitae commodo magna. Quisque tincidunt dolor et augue tempus,
-                        vitae interdum purus interdum. Mauris sagittis risus ac purus mollis efficitur. Sed maximus
-                        aliquam lectus, id luctus justo luctus ut. Nunc vestibulum quam erat, a imperdiet nunc sodales
-                        elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                        curae;
-                        Suspendisse pellentesque sem commodo erat mollis dictum vel sit amet augue. Aliquam bibendum
-                        molestie
-                        nibh, ac bibendum mi semper sed. Aenean purus velit, posuere vitae dolor eget, tincidunt
-                        efficitur ante.
-                        Nullam fermentum placerat sem quis laoreet.</p>
-
+                    {!!$post->description!!}
                 </div>
 
             </div>
@@ -72,23 +52,23 @@
                     <div class="flex flex-col gap-2 py-10" data-aos="fade-up" data-aos-offset="150">
                         <p class="font-poppins font-bold text-color2JL">Compartir</p>
                         <div class="flex justify-start items-center gap-5">
-                            <a href="#"
+                            <a 
                                 class="rounded-full w-8 h-8 bg-[#F4F4F4] flex justify-center items-center copy-link-btn"
-                                data-link="#">
+                                data-link="{{ route('post', $post->id) }}">
                                 <img src="{{ asset('images/svg/lj_compartir.svg') }}" alt="enlace">
                             </a>
                             <a target="_blank"
-                                href="#"
+                                href="https://www.linkedin.com/shareArticle?mini=true&url{{ urlencode(route('post', $post->id)) }}"
                                 class="rounded-full w-8 h-8 bg-[#F4F4F4] flex justify-center items-center">
                                 <img src="{{ asset('images/svg/lj_compartir2.svg') }}" alt="linkedin">
                             </a>
                             <a target="_blank"
-                                href="#"
+                                href="https://x.com/intent/post?url={{ route('post', $post->id) }}&text=Este+blog+me+pareció+interesante+{{ $post->title }}"
                                 class="rounded-full w-8 h-8 bg-[#F4F4F4] flex justify-center items-center">
                                 <img src="{{ asset('images/svg/lj_compartir3.svg') }}" alt="x">
                             </a>
                             <a target="_blank"
-                                href="#"
+                                href="https://www.facebook.com/sharer/sharer.php?u={{ route('post', $post->id) }}"
                                 class="rounded-full w-8 h-8 bg-[#F4F4F4] flex justify-center items-center">
                                 <img src="{{ asset('images/svg/lj_compartir4.svg') }}" alt="facebook">
                             </a>
@@ -110,103 +90,39 @@
                         Aenean dignissim nec sem quis consequata.</p>
                     </div>
 
-                    <div
+                    <a href="{{ route('blog', 0) }}"
                     class="flex flex-row items-center gap-1 px-5 py-3 text-base text-colorJL bg-coloBkthirdJL font-poppins font-bold rounded-3xl w-auto">
-                    Ver más Publicaciones <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></div>
+                    Ver más Publicaciones <img src="{{ asset('/images/svg/jl_arrow2.svg') }}" /></a>
 
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-
-                     <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post3.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
-                                 sit amet malesuada</h2>
-                            </a>
-                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
-                            <p class="text-color3JL font-poppins font-normal text-sm">
-                                Leido hace 5 min
-                            </p>
-
-                        </div>
-                    </div>
-
-                     <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post2.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
-                                 sit amet malesuada</h2>
-                            </a>
-                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
-                            <p class="text-color3JL font-poppins font-normal text-sm">
-                                Leido hace 5 min
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="flex justify-center items-center">
-                                <a href="#" class="w-full"><img src="{{ asset('images/img/jl_post1.png') }}"
-                                        class="w-full object-cover rounded-xl" alt="blog"></a>
-                            </div>
-                            <h3 class="text-base font-poppins	font-semibold text-color3JL pt-2">Categoria</h3>
-                            <a href="#">
-                                 <h2 class="text-lg md:text-2xl font-poppins	font-bold text-colorJL leading-none">Integer porta cursus metus, 
-                                 sit amet malesuada</h2>
-                            </a>
-                             <p class="text-sm md:text-base font-poppins	font-medium text-color4JL  leading-tight pt-1 line-clamp-2 md:line-clamp-none">
-                                Praesent non euismod arcu, eu dignissim erat. Aliquam erat volutpat...
-                            </p>
-                        </div>
-
-                        <div class="flex justify-start items-center gap-2">
-                            <p class="text-color3JL font-poppins font-normal text-sm">Publicado
-                                el 29 de julio de 2023</p>
-                            <b class="text-4xl text-[#FFBA03] -mt-5">.</b>
-                            <p class="text-color3JL font-poppins font-normal text-sm">
-                                Leido hace 5 min
-                            </p>
-
-                        </div>
-                    </div>
-
-                </div>
+                @if (!$postsrelacionados->isEmpty())
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        @foreach ($postsrelacionados as $postrelacionado)
+                            <x-blog.container-post :post="$postrelacionado" />  
+                        @endforeach   
+                    </div>    
+                @endif
+                
             </div>
         </section>
 
     </main>
 
 @section('scripts_importados')
-
+<script>
+    $(document).ready(function() {
+      $('.copy-link-btn').click(function(e) {
+        e.preventDefault()
+        var link = $(this).data('link');
+        navigator.clipboard.writeText(link).then(function() {
+          alert('Enlace copiado al portapapeles: ' + link);
+        }, function(err) {
+          console.error('Error al copiar el enlace: ', err);
+        });
+      });
+    });
+  </script>
 @stop
 
 @stop

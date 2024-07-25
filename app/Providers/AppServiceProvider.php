@@ -7,6 +7,7 @@ use App\Models\LibroReclamaciones;
 use App\Models\Message;
 use App\Models\PolyticsCondition;
 use App\Models\Sale;
+use App\Models\Supplier;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Facades\View;
@@ -47,11 +48,13 @@ class AppServiceProvider extends ServiceProvider
             $salesCount = Sale::where('status_id', 3)->count();
             $mensajes = Message::where('is_read', '!=', 1)->where('status', '!=', 0)->count(); // Suponiendo que tienes un modelo Footer y un método footerData() en él
             $reclamo =  LibroReclamaciones::where('is_read', '!=', 1)->where('status', '!=', 0)->count();
+            $proveedores = Supplier::where('is_read', '!=', 1)->where('status', '!=', 0)->count();
             // Pasar los datos a la vista
             $view
                 ->with('salesCount', $salesCount)
                 ->with('mensajes', $mensajes)
-                ->with('reclamo', $reclamo);
+                ->with('reclamo', $reclamo)
+                ->with('proveedores', $proveedores);
         });
 
         PaginationPaginator::useTailwind();

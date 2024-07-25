@@ -14,7 +14,9 @@ export default {
     darkMode: 'class',
     theme: {
         extend: {
-
+            colors: {
+                azulboost: '#006BF6',
+            },
             fontWeight: {
                 medium: "500",
                 regular: "400",
